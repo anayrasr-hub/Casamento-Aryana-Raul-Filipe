@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1">
+
+<title>Lista de Presentes - Aryana & Raul Filipe</title>
+
+<link
+rel="stylesheet"
+href="css/style.css">
+
+<link
+rel="stylesheet"
+href="css/presentes.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     CABEÇALHO
+========================================= -->
+
+<header class="cabecalho">
+
+    <img
+        src="imagens/casal.jpg"
+        alt="Aryana & Raul Filipe"
+        class="foto-casal">
+
+    <h1>
+        Aryana & Raul Filipe
+    </h1>
+
+    <p>
+        Nossa Lista de Presentes
+    </p>
+
+</header>
+
+
+
+<!-- =========================================
+     INTRODUÇÃO
+========================================= -->
+
+<section class="intro">
+
+    <p>
+
+        Sua presença é o nosso maior presente.
+
+        Caso deseje nos presentear,
+        escolha um dos itens abaixo.
+
+    </p>
+
+</section>
+
+
+
+<!-- =========================================
+     PESQUISA
+========================================= -->
+
+<section class="pesquisa">
+
+    <input
+        type="text"
+        id="buscar"
+        placeholder="🔍 Procurar presente"
+        autocomplete="off">
+
+</section>
+
+
+
+<!-- =========================================
+     CATEGORIAS
+========================================= -->
+
+<section class="categorias">
+
+    <button
+        type="button"
+        data-cat="Todos"
+        class="ativo">
+
+        Todos
+
+    </button>
+
+
+    <button
+        type="button"
+        data-cat="Sala">
+
+        Sala
+
+    </button>
+
+
+    <button
+        type="button"
+        data-cat="Sala de Jantar">
+
+        Sala de Jantar
+
+    </button>
+
+
+    <button
+        type="button"
+        data-cat="Cozinha">
+
+        Cozinha
+
+    </button>
+
+
+    <button
+        type="button"
+        data-cat="Quarto">
+
+        Quarto
+
+    </button>
+
+
+    <button
+        type="button"
+        data-cat="Lavanderia">
+
+        Lavanderia
+
+    </button>
+
+
+    <button
+        type="button"
+        data-cat="Escritório">
+
+        Escritório
+
+    </button>
+
+</section>
+
+
+
+<!-- =========================================
+     CONTADOR
+========================================= -->
+
+<div
+    id="contadorPresentes"
+    class="contador-presentes">
+</div>
+
+
+
+<!-- =========================================
+     LISTA DE PRESENTES
+========================================= -->
+
+<section
+    id="listaPresentes"
+    class="grid">
+
+</section>
+
+
+
+<!-- =========================================
+     MODAL ESCOLHER PRESENTE
+========================================= -->
+
+<div
+    id="modalPresente"
+    class="modal">
+
+
+    <div
+        class="modal-conteudo">
+
+
+        <span
+            class="fechar"
+            aria-label="Fechar">
+
+            &times;
+
+        </span>
+
+
+        <h2
+            id="tituloPresente">
+        </h2>
+
+
+        <img
+            id="imagemPresente"
+            class="imagem-modal"
+            src=""
+            alt="">
+
+
+        <p
+            id="valorPresente">
+        </p>
+
+
+        <input
+            type="text"
+            id="nomeConvidado"
+            placeholder="Seu nome"
+            autocomplete="name">
+
+
+        <textarea
+            id="mensagem"
+            placeholder="Mensagem (opcional)">
+        </textarea>
+
+
+        <button
+            type="button"
+            id="confirmarEscolha">
+
+            Confirmar Escolha
+
+        </button>
+
+
+    </div>
+
+</div>
+
+
+<!-- =========================================
+     FIREBASE / DADOS / PRESENTES
+========================================= -->
+
+<script src="js/data.js"></script>
+
+<script type="module"
+src="js/firebase-service.js"></script>
+
+<script type="module"
+src="js/presentes.js"></script>
+
+<!-- =========================================
+     MODAL PIX
+========================================= -->
+
+<div id="modalPix" class="modal">
+
+    <div class="modal-conteudo modal-pix">
+
+        <button
+            type="button"
+            class="fechar-pix"
+            onclick="fecharPix()">
+            &times;
+        </button>
+
+        <h2>Presentear com PIX</h2>
+
+        <p class="pix-descricao">
+            Você escolheu presentear:
+        </p>
+
+        <h3 id="nomePresentePix">
+            -
+        </h3>
+
+        <div class="pix-area">
+
+            <label for="chavePix">
+                Chave PIX
+            </label>
+
+            <div class="pix-chave">
+
+                <input
+                    type="text"
+                    id="chavePix"
+                    value="anayrasr@gmail.com"
+                    readonly>
+
+                <button
+                    type="button"
+                    class="btn-copiar-pix"
+                    onclick="copiarPix()">
+
+                    Copiar chave
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="pix-area">
+
+            <label for="nomeConvidadoPix">
+                Seu nome
+            </label>
+
+            <input
+                type="text"
+                id="nomeConvidadoPix"
+                placeholder="Digite seu nome">
+
+        </div>
+
+        <button
+            type="button"
+            class="btn-escolher-pix"
+            onclick="registrarPix()">
+
+            Escolher PIX
+
+        </button>
+
+        <button
+            type="button"
+            class="btn-cancelar-pix"
+            onclick="fecharPix()">
+
+            Cancelar
+
+        </button>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
