@@ -1920,3 +1920,6 @@ function escaparHTML(valor){
 FIM DO PRESENTES.JS
 ================================================
 */
+window.registrarPix = registrarPix;
+window.fecharPix = fecharPix;
+window.copiarPix = copiarPix;
