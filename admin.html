@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Administração | Aryana & Raul Filipe
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="css/admin.css"
+    >
+
+</head>
+
+
+<body>
+
+    <header class="admin-header">
+
+        <div>
+
+            <h1>
+                Aryana & Raul Filipe
+            </h1>
+
+            <p>
+                Painel Administrativo
+            </p>
+
+        </div>
+
+        <button
+            id="btnSair"
+            class="btn-sair"
+            type="button"
+        >
+            Sair
+        </button>
+
+    </header>
+
+
+    <main class="admin-container">
+
+
+        <!-- =========================
+             RESUMO
+        ========================== -->
+
+        <section class="dashboard">
+
+            <div class="card-resumo">
+
+                <span class="icone">
+                    🎁
+                </span>
+
+                <div>
+
+                    <span class="titulo-resumo">
+                        Presentes
+                    </span>
+
+                    <strong id="totalPresentes">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="card-resumo">
+
+                <span class="icone">
+                    ❤️
+                </span>
+
+                <div>
+
+                    <span class="titulo-resumo">
+                        Escolhas
+                    </span>
+
+                    <strong id="totalEscolhas">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="card-resumo">
+
+                <span class="icone">
+                    💰
+                </span>
+
+                <div>
+
+                    <span class="titulo-resumo">
+                        PIX
+                    </span>
+
+                    <strong id="totalPix">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="card-resumo">
+
+                <span class="icone">
+                    💒
+                </span>
+
+                <div>
+
+                    <span class="titulo-resumo">
+                        Confirmações
+                    </span>
+
+                    <strong id="totalConvidados">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             ABAS
+        ========================== -->
+
+        <nav class="admin-tabs">
+
+            <button
+                class="tab ativo"
+                data-tab="presentes"
+                type="button"
+            >
+                🎁 Presentes
+            </button>
+
+            <button
+                class="tab"
+                data-tab="pix"
+                type="button"
+            >
+                💰 PIX
+            </button>
+
+            <button
+                class="tab"
+                data-tab="convidados"
+                type="button"
+            >
+                💒 Confirmações
+            </button>
+
+        </nav>
+
+
+        <!-- =========================
+             PRESENTES
+        ========================== -->
+
+        <section
+            id="abaPresentes"
+            class="aba ativa"
+        >
+
+            <div class="secao-topo">
+
+                <div>
+
+                    <h2>
+                        Lista de Presentes
+                    </h2>
+
+                    <p>
+                        Acompanhe as escolhas realizadas pelos convidados.
+                    </p>
+
+                </div>
+
+
+                <input
+                    type="search"
+                    id="buscarPresenteAdmin"
+                    placeholder="Pesquisar presente..."
+                >
+
+            </div>
+
+
+            <div
+                id="listaAdminPresentes"
+                class="lista-admin"
+            >
+
+                <div class="carregando">
+                    Carregando presentes...
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PIX
+        ========================== -->
+
+        <section
+            id="abaPix"
+            class="aba"
+        >
+
+            <div class="secao-topo">
+
+                <div>
+
+                    <h2>
+                        Registros de PIX
+                    </h2>
+
+                    <p>
+                        Pessoas que informaram intenção de presentear via PIX.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="listaAdminPix"
+                class="lista-admin"
+            >
+
+                <div class="carregando">
+                    Carregando registros...
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             CONVIDADOS
+        ========================== -->
+
+        <section
+            id="abaConvidados"
+            class="aba"
+        >
+
+            <div class="secao-topo">
+
+                <div>
+
+                    <h2>
+                        Confirmações de Presença
+                    </h2>
+
+                    <p>
+                        Lista de convidados que responderam ao formulário.
+                    </p>
+
+                </div>
+
+
+                <input
+                    type="search"
+                    id="buscarConvidadoAdmin"
+                    placeholder="Pesquisar convidado..."
+                >
+
+            </div>
+
+
+            <div
+                id="listaAdminConvidados"
+                class="lista-admin"
+            >
+
+                <div class="carregando">
+                    Carregando convidados...
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =========================
+         MODAL DETALHES
+    ========================== -->
+
+    <div
+        id="modalAdmin"
+        class="modal-admin"
+    >
+
+        <div class="modal-conteudo">
+
+            <button
+                id="fecharModalAdmin"
+                class="fechar-modal"
+                type="button"
+            >
+                ×
+            </button>
+
+            <div id="conteudoModalAdmin"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- DATA.JS -->
+
+    <script src="js/data.js"></script>
+
+
+    <!-- FIREBASE -->
+
+    <script
+        type="module"
+        src="js/firebase-service.js"
+    ></script>
+
+
+    <!-- ADMIN -->
+
+    <script
+        type="module"
+        src="js/admin.js"
+    ></script>
+
+<script
+    type="module"
+    src="js/admin-auth.js"
+></script>
+
+<div
+    id="mensagemAdmin"
+    aria-live="polite"
+></div>
+
+</body>
+
+</html>

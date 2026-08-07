@@ -14,7 +14,10 @@ import {
     addDoc,
     getDocs,
     query,
-    orderBy
+    orderBy,
+    doc,
+    updateDoc,
+    deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 import { db } from "./firebase-config.js";
@@ -287,6 +290,166 @@ async function buscarConvidados() {
 
 }
 
+/*
+==================================================
+BUSCAR REGISTROS DE PIX
+==================================================
+*/
+
+async function buscarPix() {
+
+    try {
+
+        const consulta = query(
+            collection(
+                db,
+                "pix"
+            ),
+            orderBy(
+                "data",
+                "desc"
+            )
+        );
+
+        const snapshot =
+            await getDocs(
+                consulta
+            );
+
+        const lista = [];
+
+        snapshot.forEach(
+            doc => {
+
+                lista.push({
+
+                    id:
+                        doc.id,
+
+                    ...doc.data()
+
+                });
+
+            }
+        );
+
+        console.log(
+            "Registros de PIX:",
+            lista
+        );
+
+        return lista;
+
+    } catch (error) {
+
+        console.error(
+            "Erro ao buscar registros de PIX:",
+            error
+        );
+
+        return [];
+
+    }
+
+}
+
+/*
+==================================================
+ADMINISTRADOR
+EDITAR REGISTRO
+==================================================
+*/
+
+async function editarRegistro(
+    colecao,
+    id,
+    dados
+) {
+
+    try {
+
+        const referencia =
+            doc(
+                db,
+                colecao,
+                id
+            );
+
+        await updateDoc(
+            referencia,
+            dados
+        );
+
+        console.log(
+            "Registro atualizado:",
+            colecao,
+            id
+        );
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "Erro ao editar registro:",
+            error
+        );
+
+        return false;
+
+    }
+
+}
+
+
+/*
+==================================================
+ADMINISTRADOR
+EXCLUIR REGISTRO
+==================================================
+*/
+
+async function excluirRegistro(
+    colecao,
+    id
+) {
+
+    try {
+
+        const referencia =
+            doc(
+                db,
+                colecao,
+                id
+            );
+
+        await deleteDoc(
+            referencia
+        );
+
+        console.log(
+            "Registro excluído:",
+            colecao,
+            id
+        );
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "Erro ao excluir registro:",
+            error
+        );
+
+        return false;
+
+    }
+
+}
+
+
+
 
 /*
 ================================================
@@ -309,3 +472,18 @@ window.salvarConfirmacao =
 
 window.buscarConvidados =
     buscarConvidados;
+
+window.buscarPix =
+buscarPix;
+
+window.editarRegistro =
+editarRegistro;
+
+window.excluirRegistro =
+excluirRegistro;
+
+window.editarRegistro =
+    editarRegistro;
+
+window.excluirRegistro =
+    excluirRegistro;

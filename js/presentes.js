@@ -621,6 +621,20 @@ function carregarPresentes(){
     }
 
 
+    listaPresentes.forEach(
+        presente => {
+
+            criarCardPresente(
+                presente,
+                container
+            );
+
+        }
+    );
+
+}
+
+
 /*
 ------------------------------
 CRIAR CARD
@@ -878,9 +892,10 @@ if(
     );
 
 }
-================================================
+/*
+==================================================
 ESCOLHER PRESENTE
-================================================
+==================================================
 */
 
 function escolherPresente(id){
