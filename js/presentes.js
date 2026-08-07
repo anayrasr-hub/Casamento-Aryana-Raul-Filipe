@@ -381,10 +381,8 @@ async function carregarStatusPresentes(){
 
         }
 
-
         presentesEscolhidos =
             await window.buscarPresentesEscolhidos();
-
 
         if(
             !Array.isArray(
@@ -396,12 +394,10 @@ async function carregarStatusPresentes(){
 
         }
 
-
         console.log(
             "Presentes já escolhidos:",
             presentesEscolhidos.length
         );
-
 
     }catch(error){
 
@@ -410,13 +406,11 @@ async function carregarStatusPresentes(){
             error
         );
 
-
         presentesEscolhidos = [];
 
     }
 
 }
-
 
 /*
 ================================================
@@ -627,30 +621,10 @@ function carregarPresentes(){
     }
 
 
-    /*
-    ------------------------------
-    CRIAR CARDS
-    ------------------------------
-    */
-
-    listaPresentes.forEach(
-        presente => {
-
-            criarCardPresente(
-                presente,
-                container
-            );
-
-        }
-    );
-
-}
-
-
 /*
-================================================
+------------------------------
 CRIAR CARD
-================================================
+------------------------------
 */
 
 function criarCardPresente(
@@ -667,6 +641,52 @@ function criarCardPresente(
     card.className =
         "card-presente";
 
+
+    /*
+    ------------------------------
+    VERIFICAR SE JÁ FOI ESCOLHIDO
+    ------------------------------
+    */
+
+    const escolhas =
+        Array.isArray(
+            presentesEscolhidos
+        )
+        ?
+        presentesEscolhidos.filter(
+            escolha =>
+                Number(
+                    escolha.presenteId
+                )
+                ===
+                Number(
+                    presente.id
+                )
+        )
+        :
+        [];
+
+const quantidadeEscolhas =
+    escolhas.length;
+
+let avisoEscolhido =
+    "";
+
+if(
+    quantidadeEscolhas > 0
+){
+
+    avisoEscolhido = `
+
+        <div class="aviso-ja-escolhido">
+
+            ❤️ Já escolhido
+
+        </div>
+
+    `;
+
+}
 
     /*
     ------------------------------
@@ -717,6 +737,9 @@ function criarCardPresente(
                 )}
 
             </h3>
+
+
+            ${avisoEscolhido}
 
 
             <div class="acoes-presente">
@@ -855,9 +878,6 @@ function criarCardPresente(
     );
 
 }
-
-
-/*
 ================================================
 ESCOLHER PRESENTE
 ================================================
