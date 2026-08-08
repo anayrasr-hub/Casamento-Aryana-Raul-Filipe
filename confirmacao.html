@@ -1,145 +1,54 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>
-Confirmar Presença - Aryana & Raul Filipe
-</title>
-
+<title>Confirmar Presença - Aryana & Raul Filipe</title>
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/confirmacao.css">
-
-<style>
-
-body {
-    margin: 0;
-    background: #f7ede7;
-}
-
-.topo {
-    text-align: center;
-    padding: 30px 20px;
-}
-
-.topo h1 {
-    margin: 20px auto 50px;
-}
-
-.formulario {
-    max-width: 900px;
-    margin: 20px auto 50px;
-    padding: 25px;
-    background: #fffaf6;
-    border-radius: 25px;
-    box-shadow: 0 10px 25px rgba(0,0,0,.12);
-    box-sizing: border-box;
-}
-
-.foto-casal {
-    display: block;
-    width: 100%;
-    max-width: 650px;
-    height: auto;
-    margin: 0 auto 25px;
-    border-radius: 18px;
-}
-
-.formulario h2 {
-    text-align: center;
-    color: #a94f34;
-    margin-bottom: 25px;
-}
-
-.area-confirmacao {
-    width: 100%;
-    overflow: hidden;
-    border-radius: 18px;
-}
-
-/*
-  O formulário abaixo é o formulário oficial do
-  Google Apps Script. Ele é o responsável por:
-
-  - cadastrar os convidados;
-  - gerar os códigos CONV-XXXXXX;
-  - gravar na planilha;
-  - gerar o convite PDF;
-  - disponibilizar o envio pelo WhatsApp.
-*/
-
-.area-confirmacao iframe {
-    display: block;
-    width: 100%;
-    min-height: 1050px;
-    border: 0;
-    border-radius: 18px;
-    background: #fffaf6;
-}
-
-@media (max-width: 600px) {
-
-    .formulario {
-        margin: 10px;
-        padding: 15px;
-        border-radius: 18px;
-    }
-
-    .foto-casal {
-        border-radius: 14px;
-    }
-
-    .area-confirmacao iframe {
-        min-height: 1250px;
-    }
-
-}
-
-</style>
-
 </head>
+<body class="pagina-confirmacao">
 
-<body>
+<section class="formulario-confirmacao">
 
-<header class="topo">
+    <div class="confirmacao-topo">
 
-<h1>
-CONFIRME SUA PRESENÇA
-</h1>
+        <img
+            src="imagens/casal.jpg"
+            alt="Aryana & Raul Filipe"
+            class="foto-casal-confirmacao"
+        >
 
-<h1>
-Aryana & Raul Filipe
-</h1>
+        <h1>CONFIRME SUA PRESENÇA</h1>
 
-<h1>
-11 de Outubro de 2026 às 09:00
-</h1>
+        <h2>Aryana &amp; Raul Filipe</h2>
 
-</header>
+        <p class="data-confirmacao">
+            11 de Outubro de 2026 às 09:00
+        </p>
 
-<section class="formulario">
+    </div>
 
-<img
-src="imagens/casal.jpg"
-class="foto-casal"
-alt="Aryana e Raul Filipe">
+    <div class="area-confirmacao">
 
-<div class="area-confirmacao">
+        <iframe
+            src="https://script.google.com/macros/s/AKfycbwxoY3KVrIxOjRvZ8nWJOhwA3dWoK_OVnR3Wj893rZLONMIhIpE_TrOFaRLsmm41q1Q/exec"
+            title="Confirmação de presença"
+            loading="lazy">
+        </iframe>
 
-<iframe
-src="https://script.google.com/macros/s/AKfycbwxoY3KVrIxOjRvZ8nWJOhwA3dWoK_OVnR3Wj893rZLONMIhIpE_TrOFaRLsmm41q1Q/exec"
-title="Confirmação de presença">
-</iframe>
+    </div>
 
-</div>
+    <div class="area-voltar-confirmacao">
+        <a
+            href="index.html"
+            class="btn-voltar-confirmacao"
+            id="btnVoltarConfirmacao">
+            ← Voltar
+        </a>
+    </div>
 
 </section>
 
 </body>
-
 </html>

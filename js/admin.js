@@ -252,7 +252,7 @@ function obterPresentesAdmin() {
 
 /*
 ==================================================
-RESUMO
+RESUMO ADMINISTRATIVO
 ==================================================
 */
 
@@ -282,13 +282,40 @@ function atualizarResumo() {
         );
 
 
+    /*
+    ------------------------------------------
+    PRESENTES DIFERENTES ESCOLHIDOS
+    ------------------------------------------
+    */
+
+    const presentesEscolhidosUnicos =
+        todosPresentesAdmin.filter(
+            presente =>
+                contarEscolhasPresente(
+                    presente.id
+                ).length > 0
+        );
+
+
+    /*
+    ------------------------------------------
+    TOTAL DE PRESENTES ESCOLHIDOS
+    ------------------------------------------
+    */
+
     if (totalPresentes) {
 
         totalPresentes.textContent =
-            todosPresentesAdmin.length;
+            presentesEscolhidosUnicos.length;
 
     }
 
+
+    /*
+    ------------------------------------------
+    TOTAL DE ESCOLHAS
+    ------------------------------------------
+    */
 
     if (totalEscolhas) {
 
@@ -298,6 +325,12 @@ function atualizarResumo() {
     }
 
 
+    /*
+    ------------------------------------------
+    TOTAL PIX
+    ------------------------------------------
+    */
+
     if (totalPix) {
 
         totalPix.textContent =
@@ -305,6 +338,12 @@ function atualizarResumo() {
 
     }
 
+
+    /*
+    ------------------------------------------
+    TOTAL CONVIDADOS
+    ------------------------------------------
+    */
 
     if (totalConvidados) {
 
@@ -314,7 +353,6 @@ function atualizarResumo() {
     }
 
 }
-
 
 /*
 ==================================================
@@ -341,7 +379,15 @@ function contarEscolhasPresente(
 
 /*
 ==================================================
-LISTA DE PRESENTES
+LISTA DE PRESENTES ESCOLHIDOS
+==================================================
+
+IMPORTANTE:
+O painel administrativo NÃO exibe todos os
+presentes do data.js.
+
+Somente aparecem os presentes que possuem
+pelo menos uma escolha registrada no Firebase.
 ==================================================
 */
 
@@ -371,11 +417,32 @@ function carregarListaPresentesAdmin(
         );
 
 
-    let lista =
-        [
-            ...todosPresentesAdmin
-        ];
+    /*
+    ------------------------------------------
+    SOMENTE PRESENTES ESCOLHIDOS
+    ------------------------------------------
+    */
 
+    let lista =
+        todosPresentesAdmin.filter(
+            presente => {
+
+                const escolhas =
+                    contarEscolhasPresente(
+                        presente.id
+                    );
+
+                return escolhas.length > 0;
+
+            }
+        );
+
+
+    /*
+    ------------------------------------------
+    PESQUISA
+    ------------------------------------------
+    */
 
     if (texto !== "") {
 
@@ -383,19 +450,27 @@ function carregarListaPresentesAdmin(
             lista.filter(
                 presente => {
 
-                    return (
-
+                    const nome =
                         normalizarTextoAdmin(
                             presente.nome
-                        ).includes(
+                        );
+
+
+                    const categoria =
+                        normalizarTextoAdmin(
+                            presente.categoria
+                        );
+
+
+                    return (
+
+                        nome.includes(
                             texto
                         )
 
                         ||
 
-                        normalizarTextoAdmin(
-                            presente.categoria
-                        ).includes(
+                        categoria.includes(
                             texto
                         )
 
@@ -406,6 +481,12 @@ function carregarListaPresentesAdmin(
 
     }
 
+
+    /*
+    ------------------------------------------
+    ORDENAR
+    ------------------------------------------
+    */
 
     lista.sort(
         (a, b) => {
@@ -423,15 +504,32 @@ function carregarListaPresentesAdmin(
     );
 
 
+    /*
+    ------------------------------------------
+    NENHUM PRESENTE ESCOLHIDO
+    ------------------------------------------
+    */
+
     if (
         lista.length === 0
     ) {
 
         container.innerHTML = `
 
-            <div class="carregando">
+            <div class="admin-vazio">
 
-                Nenhum presente encontrado.
+                <div class="admin-vazio-icone">
+                    🎁
+                </div>
+
+                <h3>
+                    Nenhum presente escolhido
+                </h3>
+
+                <p>
+                    Assim que um convidado escolher
+                    um presente, ele aparecerá aqui.
+                </p>
 
             </div>
 
@@ -441,6 +539,12 @@ function carregarListaPresentesAdmin(
 
     }
 
+
+    /*
+    ------------------------------------------
+    CRIAR CARDS
+    ------------------------------------------
+    */
 
     lista.forEach(
         presente => {

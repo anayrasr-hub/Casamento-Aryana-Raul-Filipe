@@ -1,809 +1,732 @@
-/* ==================================================
-   CASAMENTO ARYANA & RAUL FILIPE
-   PAINEL ADMINISTRATIVO
-================================================== */
+/*
+==================================================
+CASAMENTO ARYANA & RAUL FILIPE
+PAINEL ADMINISTRATIVO
+==================================================
+*/
+
+:root {
+
+    --terracota:
+        #C86B4A;
+
+    --terracota-dark:
+        #9E4F34;
+
+    --terracota-light:
+        #E8B49F;
+
+    --bege:
+        #F6EEE9;
+
+    --creme:
+        #FFF9F4;
+
+    --areia:
+        #E8D7C8;
+
+    --texto:
+        #4A372F;
+
+    --branco:
+        #FFFFFF;
+
+}
+
+
+/*
+==================================================
+RESET
+==================================================
+*/
 
 * {
-    box-sizing: border-box;
+
+    box-sizing:
+        border-box;
+
+    margin:
+        0;
+
+    padding:
+        0;
+
 }
 
 
 body {
 
-    margin: 0;
-
     font-family:
+        "Segoe UI",
         Arial,
-        Helvetica,
         sans-serif;
 
-    background: #f7f3f0;
+    background:
+        var(--bege);
 
-    color: #4a3830;
+    color:
+        var(--texto);
 
 }
 
 
-/* ==================================================
-   HEADER
-================================================== */
+/*
+==================================================
+LOGIN
+==================================================
+*/
+
+.pagina-login-admin {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background:
+        radial-gradient(circle at 15% 15%, rgba(255,255,255,.55), transparent 30%),
+        radial-gradient(circle at 85% 80%, rgba(255,255,255,.35), transparent 28%),
+        linear-gradient(135deg, #A95036 0%, #C86B4A 42%, #E8B49F 72%, #F6EEE9 100%);
+}
+
+.login-admin-container {
+    width: 100%;
+    max-width: 430px;
+}
+
+.login-admin-card {
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 249, 244, .97);
+    border: 1px solid rgba(255,255,255,.85);
+    border-radius: 30px;
+    padding: 34px 30px 28px;
+    box-shadow: 0 24px 60px rgba(74,55,47,.24);
+    text-align: center;
+}
+
+.login-admin-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 7px;
+    background: linear-gradient(90deg, #9E4F34, #C86B4A, #E8B49F);
+}
+
+.login-admin-coracao {
+    width: 58px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px auto 12px;
+    border-radius: 50%;
+    background: #F3DDD3;
+    font-size: 1.55rem;
+    box-shadow: 0 7px 18px rgba(158,79,52,.12);
+}
+
+.login-admin-card h1 {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1.7rem, 6vw, 2.05rem);
+    color: var(--terracota-dark);
+    line-height: 1.15;
+}
+
+.login-admin-card h2 {
+    margin: 10px 0 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.35rem;
+    color: var(--texto);
+}
+
+.login-admin-linha {
+    width: 72px;
+    height: 3px;
+    margin: 14px auto;
+    border-radius: 20px;
+    background: var(--terracota);
+}
+
+.login-admin-subtitulo {
+    margin: 0 auto 24px;
+    max-width: 320px;
+    color: #806458;
+    font-size: .88rem;
+    line-height: 1.5;
+}
+
+.campo-login {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.campo-login label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--terracota-dark);
+    font-size: .84rem;
+    font-weight: 800;
+}
+
+.campo-login input {
+    width: 100%;
+    padding: 12px 13px;
+    border: 1px solid #D8BEB1;
+    border-radius: 12px;
+    background: #fff;
+    color: var(--texto);
+    font-size: .92rem;
+    outline: none;
+    transition: .2s ease;
+}
+
+.campo-login input:focus {
+    border-color: var(--terracota);
+    box-shadow: 0 0 0 4px rgba(200,107,74,.13);
+}
+
+.btn-login-admin {
+    width: 100%;
+    border: 0;
+    border-radius: 12px;
+    padding: 13px;
+    margin-top: 5px;
+    background: linear-gradient(135deg, #B85C38, #9E4F34);
+    color: #fff;
+    font-size: .95rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 8px 18px rgba(158,79,52,.20);
+    transition: .2s ease;
+}
+
+.btn-login-admin:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px rgba(158,79,52,.25);
+}
+
+.btn-login-admin:disabled {
+    opacity: .65;
+    cursor: wait;
+    transform: none;
+}
+
+.erro-login-admin {
+    min-height: 22px;
+    margin-top: 11px;
+    color: #B42318;
+    font-size: .82rem;
+    font-weight: 700;
+}
+
+.voltar-site-admin {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 16px;
+    color: var(--terracota-dark);
+    text-decoration: none;
+    font-size: .84rem;
+    font-weight: 700;
+}
+
+.voltar-site-admin:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 520px) {
+    .pagina-login-admin {
+        padding: 12px;
+    }
+
+    .login-admin-card {
+        padding: 30px 20px 24px;
+        border-radius: 24px;
+    }
+}
+
+/*
+==================================================
+PAINEL
+==================================================
+*/
+
+.admin-container {
+
+    max-width:
+        1200px;
+
+    margin:
+        auto;
+
+    padding:
+        25px 18px 50px;
+
+}
+
 
 .admin-header {
 
     background:
-        linear-gradient(
-            135deg,
-            #a65f4b,
-            #c9826b
-        );
+        var(--creme);
 
-    color: white;
+    border:
+        1px solid
+        #F0DDD5;
+
+    border-radius:
+        20px;
 
     padding:
-        24px
-        5%;
+        24px;
 
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
+    margin-bottom:
+        20px;
 
     box-shadow:
-        0 3px 12px
-        rgba(0,0,0,0.12);
+        0 5px 18px
+        rgba(
+            74,
+            55,
+            47,
+            .08
+        );
 
 }
 
 
 .admin-header h1 {
 
-    margin: 0;
+    font-family:
+        Georgia,
+        serif;
 
-    font-size: 28px;
+    color:
+        var(--terracota-dark);
+
+    font-size:
+        1.8rem;
 
 }
 
 
 .admin-header p {
 
-    margin:
-        5px
-        0
-        0;
+    margin-top:
+        6px;
 
-    opacity: .9;
-
-}
-
-
-/* ==================================================
-   BOTÃO SAIR
-================================================== */
-
-.btn-sair {
-
-    border: 1px solid
-        rgba(255,255,255,.7);
-
-    background:
-        rgba(255,255,255,.15);
-
-    color: white;
-
-    border-radius: 8px;
-
-    padding:
-        10px
-        18px;
-
-    cursor: pointer;
+    color:
+        #806458;
 
 }
 
 
-.btn-sair:hover {
-
-    background:
-        rgba(255,255,255,.25);
-
-}
-
-
-/* ==================================================
-   CONTAINER
-================================================== */
-
-.admin-container {
-
-    width: 92%;
-
-    max-width: 1400px;
-
-    margin:
-        30px
-        auto;
-
-}
-
-
-/* ==================================================
-   CARDS RESUMO
-================================================== */
+/*
+==================================================
+RESUMO
+==================================================
+*/
 
 .dashboard {
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         repeat(
-            4,
-            1fr
+            auto-fit,
+            minmax(
+                170px,
+                1fr
+            )
         );
 
-    gap: 18px;
-
-    margin-bottom: 30px;
-
-}
-
-
-.card-resumo {
-
-    background: white;
-
-    border-radius: 14px;
-
-    padding: 22px;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 18px;
-
-    box-shadow:
-        0 3px 14px
-        rgba(0,0,0,.07);
-
-}
-
-
-.card-resumo .icone {
-
-    font-size: 32px;
-
-}
-
-
-.titulo-resumo {
-
-    display: block;
-
-    font-size: 14px;
-
-    color: #806b61;
-
-}
-
-
-.card-resumo strong {
-
-    display: block;
-
-    margin-top: 5px;
-
-    font-size: 28px;
-
-    color: #a65f4b;
-
-}
-
-
-/* ==================================================
-   ABAS
-================================================== */
-
-.admin-tabs {
-
-    display: flex;
-
-    gap: 8px;
-
-    margin-bottom: 20px;
-
-    border-bottom:
-        1px solid #decfc7;
-
-}
-
-
-.tab {
-
-    border: none;
-
-    background: transparent;
-
-    padding:
-        13px
-        20px;
-
-    cursor: pointer;
-
-    color: #765d52;
-
-    font-size: 15px;
-
-    border-radius:
-        8px
-        8px
-        0
-        0;
-
-}
-
-
-.tab:hover {
-
-    background: #eee3de;
-
-}
-
-
-.tab.ativo {
-
-    background: #a65f4b;
-
-    color: white;
-
-}
-
-
-/* ==================================================
-   ABAS
-================================================== */
-
-.aba {
-
-    display: none;
-
-}
-
-
-.aba.ativa {
-
-    display: block;
-
-}
-
-
-/* ==================================================
-   TOPO DA SEÇÃO
-================================================== */
-
-.secao-topo {
-
-    background: white;
-
-    padding: 20px;
-
-    border-radius:
-        12px
-        12px
-        0
-        0;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 20px;
-
-}
-
-
-.secao-topo h2 {
-
-    margin: 0;
-
-    color: #5a4035;
-
-}
-
-
-.secao-topo p {
-
-    margin:
-        6px
-        0
-        0;
-
-    color: #806b61;
-
-}
-
-
-.secao-topo input {
-
-    width: 280px;
-
-    padding: 11px 14px;
-
-    border:
-        1px solid #d7c5bc;
-
-    border-radius: 8px;
-
-    outline: none;
-
-}
-
-
-.secao-topo input:focus {
-
-    border-color:
-        #a65f4b;
-
-}
-
-
-/* ==================================================
-   LISTA
-================================================== */
-
-.lista-admin {
-
-    background: white;
-
-    padding: 20px;
-
-    border-radius:
-        0
-        0
-        12px
+    gap:
         12px;
 
+    margin-bottom:
+        20px;
+
 }
 
 
-/* ==================================================
-   CARD PRESENTE
-================================================== */
+.dash-card {
+
+    background:
+        white;
+
+    border:
+        1px solid
+        #F0DDD5;
+
+    border-radius:
+        16px;
+
+    padding:
+        17px;
+
+}
+
+
+.dash-card span {
+
+    font-size:
+        .82rem;
+
+    color:
+        #806458;
+
+}
+
+
+.dash-card strong {
+
+    display:
+        block;
+
+    margin-top:
+        5px;
+
+    font-size:
+        1.55rem;
+
+    color:
+        var(--terracota-dark);
+
+}
+
+
+/*
+==================================================
+LISTA ADMIN
+==================================================
+*/
 
 .card-admin-presente {
 
+    display:
+        grid;
+
+    grid-template-columns:
+        72px 1fr auto;
+
+    align-items:
+        center;
+
+    gap:
+        16px;
+
+    background:
+        white;
+
     border:
-        1px solid #eaded8;
+        1px solid
+        #E8D7C8;
 
-    border-radius: 12px;
+    border-radius:
+        15px;
 
-    padding: 16px;
+    padding:
+        14px;
 
-    margin-bottom: 12px;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 18px;
+    margin-bottom:
+        10px;
 
 }
 
 
-.card-admin-presente img {
+.imagem-admin-presente {
 
-    width: 80px;
+    width:
+        72px;
 
-    height: 80px;
+    height:
+        72px;
 
-    object-fit: cover;
+    object-fit:
+        cover;
 
-    border-radius: 10px;
+    border-radius:
+        12px;
+
+    background:
+        var(--bege);
 
 }
 
 
 .card-admin-info {
 
-    flex: 1;
-
-}
-
-
-.card-admin-info h3 {
-
-    margin:
-        0
-        0
-        5px;
+    min-width:
+        0;
 
 }
 
 
 .card-admin-info .categoria {
 
-    color: #92766a;
+    font-size:
+        .72rem;
 
-    font-size: 13px;
+    color:
+        var(--terracota);
+
+    font-weight:
+        800;
+
+}
+
+
+.card-admin-info h3 {
+
+    font-size:
+        1rem;
+
+    margin:
+        3px 0 7px;
 
 }
 
 
 .badge-escolhas {
 
-    background: #f3e3dd;
+    display:
+        inline-block;
 
-    color: #8d4f3c;
+    background:
+        #F2E0D8;
+
+    color:
+        var(--terracota-dark);
+
+    border-radius:
+        999px;
 
     padding:
-        8px
-        12px;
+        5px 10px;
 
-    border-radius: 20px;
+    font-size:
+        .78rem;
 
-    font-size: 13px;
-
-    white-space: nowrap;
+    font-weight:
+        700;
 
 }
 
 
 .btn-detalhes {
 
-    border: none;
+    border:
+        none;
 
-    background: #a65f4b;
+    background:
+        var(--terracota);
 
-    color: white;
+    color:
+        white;
+
+    border-radius:
+        9px;
 
     padding:
-        9px
-        13px;
+        9px 13px;
 
-    border-radius: 7px;
+    font-weight:
+        700;
 
-    cursor: pointer;
+    cursor:
+        pointer;
 
 }
 
 
 .btn-detalhes:hover {
 
-    background: #8e4d3b;
+    background:
+        var(--terracota-dark);
 
 }
 
 
-/* ==================================================
-   TABELAS
-================================================== */
+/*
+==================================================
+NENHUM RESULTADO
+==================================================
+*/
+
+.admin-vazio {
+
+    background:
+        white;
+
+    border:
+        1px solid
+        #E8D7C8;
+
+    border-radius:
+        20px;
+
+    padding:
+        40px 20px;
+
+    text-align:
+        center;
+
+}
+
+
+.admin-vazio-icone {
+
+    font-size:
+        2.8rem;
+
+    margin-bottom:
+        10px;
+
+}
+
+
+.admin-vazio h3 {
+
+    color:
+        var(--terracota-dark);
+
+    margin-bottom:
+        6px;
+
+}
+
+
+.admin-vazio p {
+
+    color:
+        #806458;
+
+    font-size:
+        .9rem;
+
+}
+
+
+/*
+==================================================
+TABELAS
+==================================================
+*/
 
 .tabela-admin {
 
-    width: 100%;
+    width:
+        100%;
 
     border-collapse:
         collapse;
+
+    background:
+        white;
 
 }
 
 
 .tabela-admin th {
 
-    background: #f2e8e3;
+    background:
+        #F2E0D8;
 
-    text-align: left;
+    color:
+        var(--terracota-dark);
 
-    padding: 12px;
+    padding:
+        10px;
 
-    font-size: 13px;
+    text-align:
+        left;
+
+    font-size:
+        .82rem;
 
 }
 
 
 .tabela-admin td {
 
-    padding: 12px;
+    padding:
+        10px;
 
     border-bottom:
-        1px solid #eee3de;
+        1px solid
+        #F0DDD5;
 
-    font-size: 14px;
-
-}
-
-
-/* ==================================================
-   STATUS
-================================================== */
-
-.status-sim {
-
-    color: #54745c;
-
-    font-weight: bold;
+    font-size:
+        .84rem;
 
 }
 
 
-.status-nao {
-
-    color: #9b8378;
-
-}
-
-
-/* ==================================================
-   MODAL
-================================================== */
-
-.modal-admin {
-
-    display: none;
-
-    position: fixed;
-
-    inset: 0;
-
-    background:
-        rgba(0,0,0,.55);
-
-    align-items: center;
-
-    justify-content: center;
-
-    z-index: 9999;
-
-}
-
-
-.modal-conteudo {
-
-    background: white;
-
-    width: 92%;
-
-    max-width: 650px;
-
-    max-height: 85vh;
-
-    overflow-y: auto;
-
-    border-radius: 14px;
-
-    padding: 25px;
-
-    position: relative;
-
-}
-
-
-.fechar-modal {
-
-    position: absolute;
-
-    top: 12px;
-
-    right: 15px;
-
-    border: none;
-
-    background: none;
-
-    font-size: 30px;
-
-    cursor: pointer;
-
-    color: #765d52;
-
-}
-
-
-/* ==================================================
-   CARREGANDO
-================================================== */
-
-.carregando {
-
-    text-align: center;
-
-    padding: 35px;
-
-    color: #806b61;
-
-}
-
-
-/* ==================================================
-   RESPONSIVO
-================================================== */
+/*
+==================================================
+RESPONSIVO
+==================================================
+*/
 
 @media (
-    max-width: 900px
+    max-width: 650px
 ) {
 
-    .dashboard {
+    .login-admin-card {
 
-        grid-template-columns:
-            repeat(
-                2,
-                1fr
-            );
-
-    }
-
-}
-
-
-@media (
-    max-width: 600px
-) {
-
-    .admin-header {
-
-        padding: 18px;
+        padding:
+            30px 22px;
 
     }
 
 
-    .admin-header h1 {
+    .login-admin-card h1 {
 
-        font-size: 21px;
-
-    }
-
-
-    .admin-container {
-
-        width: 94%;
-
-        margin:
-            20px
-            auto;
+        font-size:
+            1.7rem;
 
     }
 
 
-    .dashboard {
+    .login-admin-card h2 {
 
-        grid-template-columns:
-            1fr;
-
-    }
-
-
-    .admin-tabs {
-
-        overflow-x: auto;
-
-    }
-
-
-    .tab {
-
-        white-space: nowrap;
-
-    }
-
-
-    .secao-topo {
-
-        align-items: stretch;
-
-        flex-direction: column;
-
-    }
-
-
-    .secao-topo input {
-
-        width: 100%;
+        font-size:
+            1.3rem;
 
     }
 
 
     .card-admin-presente {
 
-        align-items: flex-start;
-
-        flex-wrap: wrap;
-
-    }
-
-
-    .card-admin-presente img {
-
-        width: 65px;
-
-        height: 65px;
+        grid-template-columns:
+            58px 1fr;
 
     }
 
 
-    .tabela-admin {
+    .imagem-admin-presente {
 
-        font-size: 12px;
+        width:
+            58px;
+
+        height:
+            58px;
 
     }
 
-}
 
-/* ==========================================
-   AÇÕES ADMINISTRATIVAS
-   ========================================== */
+    .btn-detalhes {
 
-.btn-admin-editar,
-.btn-admin-excluir {
+        grid-column:
+            1 / -1;
 
-    border: none;
+        width:
+            100%;
 
-    border-radius: 8px;
-
-    padding: 7px 10px;
-
-    margin: 2px;
-
-    cursor: pointer;
-
-    font-size: 13px;
-
-}
-
-
-.btn-admin-editar {
-
-    background: #ead2c4;
-
-    color: #6b4030;
-
-}
-
-
-.btn-admin-excluir {
-
-    background: #f1d0d0;
-
-    color: #8a3030;
-
-}
-
-
-.btn-admin-editar:hover,
-.btn-admin-excluir:hover {
-
-    opacity: 0.85;
-
-}
-
-
-/* ==========================================
-   MENSAGEM ADMIN
-   ========================================== */
-
-#mensagemAdmin {
-
-    display: none;
-
-    position: fixed;
-
-    bottom: 25px;
-
-    right: 25px;
-
-    z-index: 9999;
-
-    padding: 14px 20px;
-
-    border-radius: 10px;
-
-    background: #8b5e4b;
-
-    color: white;
-
-    box-shadow:
-        0 4px 15px
-        rgba(0,0,0,0.2);
+    }
 
 }

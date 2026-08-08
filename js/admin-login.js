@@ -47,25 +47,25 @@ const form =
 
 const campoEmail =
     document.getElementById(
-        "emailAdmin"
+        "email"
     );
 
 
 const campoSenha =
     document.getElementById(
-        "senhaAdmin"
+        "senha"
     );
 
 
 const botao =
     document.getElementById(
-        "btnLoginAdmin"
+        "btnEntrarAdmin"
     );
 
 
 const mensagem =
     document.getElementById(
-        "mensagemLoginAdmin"
+        "erroLogin"
     );
 
 
@@ -92,7 +92,7 @@ function mostrarMensagem(
 
 
     mensagem.className =
-        `mensagem-login-admin ${tipo}`;
+        `erro-login-admin ${tipo}`;
 
 }
 

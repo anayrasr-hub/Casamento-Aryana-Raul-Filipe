@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 
 <head>
@@ -11,7 +12,7 @@
     >
 
     <title>
-        Administração | Aryana & Raul Filipe
+        Área Administrativa | Aryana & Raul Filipe
     </title>
 
     <link
@@ -25,51 +26,53 @@
 <body class="pagina-login-admin">
 
 
-    <main class="login-admin">
+    <main class="login-admin-container">
 
 
-        <div class="login-card">
+        <section class="login-admin-card">
 
 
-            <div class="login-logo">
-
+            <div class="login-admin-coracao">
                 ❤️
-
             </div>
 
 
             <h1>
-
                 Aryana & Raul Filipe
-
             </h1>
 
 
-            <p class="login-subtitulo">
+            <div class="login-admin-linha">
+            </div>
 
-                Área administrativa
+
+            <h2>
+                Área Administrativa
+            </h2>
+
+
+            <p class="login-admin-subtitulo">
+
+                Acesso exclusivo aos
+                administradores do casamento.
 
             </p>
 
 
-            <form
-                id="formLoginAdmin"
-            >
+            <form id="formLoginAdmin">
 
 
                 <div class="campo-login">
 
-                    <label for="emailAdmin">
-
+                    <label for="email">
                         E-mail
-
                     </label>
 
-
                     <input
+                        id="email"
                         type="email"
-                        id="emailAdmin"
                         autocomplete="username"
+                        placeholder="Digite seu e-mail"
                         required
                     >
 
@@ -78,17 +81,15 @@
 
                 <div class="campo-login">
 
-                    <label for="senhaAdmin">
-
+                    <label for="senha">
                         Senha
-
                     </label>
 
-
                     <input
+                        id="senha"
                         type="password"
-                        id="senhaAdmin"
                         autocomplete="current-password"
+                        placeholder="Digite sua senha"
                         required
                     >
 
@@ -97,7 +98,7 @@
 
                 <button
                     type="submit"
-                    id="btnLoginAdmin"
+                    id="btnEntrarAdmin"
                     class="btn-login-admin"
                 >
 
@@ -107,15 +108,26 @@
 
 
                 <div
-                    id="mensagemLoginAdmin"
-                    class="mensagem-login-admin"
-                ></div>
+                    id="erroLogin"
+                    class="erro-login-admin"
+                >
+                </div>
 
 
             </form>
 
 
-        </div>
+            <a
+                href="index.html"
+                class="voltar-site-admin"
+            >
+
+                ← Voltar para o site
+
+            </a>
+
+
+        </section>
 
 
     </main>
@@ -124,7 +136,8 @@
     <script
         type="module"
         src="js/admin-login.js"
-    ></script>
+    >
+    </script>
 
 
 </body>

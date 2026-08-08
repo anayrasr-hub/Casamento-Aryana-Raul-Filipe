@@ -477,12 +477,6 @@ window.buscarPix =
 buscarPix;
 
 window.editarRegistro =
-editarRegistro;
-
-window.excluirRegistro =
-excluirRegistro;
-
-window.editarRegistro =
     editarRegistro;
 
 window.excluirRegistro =
