@@ -435,20 +435,23 @@ async function excluirRegistro(
 
         return true;
 
-    } catch (error) {
+} catch (error) {
 
-        console.error(
-            "Erro ao excluir registro:",
-            error
-        );
+    console.error(
+        "Erro ao excluir registro:",
+        error
+    );
 
-        return false;
+    console.error(
+        "Código Firebase:",
+        error?.code || "sem código"
+    );
+
+    return false;
 
     }
 
 }
-
-
 
 
 /*
@@ -471,11 +474,16 @@ window.salvarConfirmacao =
     salvarConfirmacao;
 
 window.buscarConvidados =
-    buscarConvidados;
+buscarConvidados;
 
 window.buscarPix =
 buscarPix;
 
+window.editarRegistro =
+editarRegistro;
+
+window.excluirRegistro =
+excluirRegistro;
 window.editarRegistro =
     editarRegistro;
 
