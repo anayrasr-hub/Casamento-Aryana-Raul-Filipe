@@ -3,8 +3,6 @@
 CASAMENTO ARYANA & RAUL FILIPE
 
 PROTEÇÃO DA ÁREA ADMINISTRATIVA
-
-Arquivo: admin-auth.js
 ==================================================
 */
 
@@ -12,21 +10,20 @@ import {
     getAuth,
     onAuthStateChanged,
     signOut
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-import { app }
-from "./firebase-config.js";
+import { app } from "./firebase-config.js";
+
+
+const auth =
+    getAuth(app);
 
 
 /*
 ==================================================
-FIREBASE AUTH
+VERIFICAÇÃO ÚNICA DA AUTENTICAÇÃO
 ==================================================
 */
-
-const auth =
-    getAuth(app);
 
 window.adminAuthReady =
     new Promise(
@@ -39,7 +36,13 @@ window.adminAuthReady =
 
                         unsubscribe();
 
+
                         if (!user) {
+
+                            console.warn(
+                                "Administrador não autenticado."
+                            );
+
 
                             reject(
                                 new Error(
@@ -47,11 +50,13 @@ window.adminAuthReady =
                                 )
                             );
 
-                            window.location.href =
-                                "admin-login.html";
+
+                            window.location.replace(
+                                "admin-login.html"
+                            );
+
 
                             return;
-
                         }
 
 
@@ -75,78 +80,30 @@ window.adminAuthReady =
                         }
 
 
-                        resolve(
-                            user
-                        );
+                        resolve(user);
 
                     },
+
                     error => {
 
-                        reject(
+                        console.error(
+                            "Erro ao verificar autenticação:",
                             error
                         );
+
+
+                        reject(error);
 
                     }
                 );
 
         }
     );
-/*
-==================================================
-VERIFICAR LOGIN
-==================================================
-*/
-
-onAuthStateChanged(
-    auth,
-    user => {
-
-        if (!user) {
-
-            console.warn(
-                "Usuário não autenticado. Redirecionando para o login."
-            );
-
-            window.location.href =
-                "admin-login.html";
-
-            return;
-
-        }
-
-
-        console.log(
-            "Administrador autenticado:",
-            user.email
-        );
-
-
-        /*
-        ------------------------------------------
-        MOSTRAR E-MAIL DO ADMIN
-        ------------------------------------------
-        */
-
-        const elementoEmail =
-            document.getElementById(
-                "emailAdministrador"
-            );
-
-
-        if (elementoEmail) {
-
-            elementoEmail.textContent =
-                user.email;
-
-        }
-
-    }
-);
 
 
 /*
 ==================================================
-FUNÇÃO SAIR
+SAIR
 ==================================================
 */
 
@@ -154,19 +111,26 @@ async function sairAdmin() {
 
     try {
 
-        await signOut(
-            auth
+        await signOut(auth);
+
+
+        console.log(
+            "Administrador saiu do sistema."
         );
 
-        window.location.href =
-            "admin-login.html";
+
+        window.location.replace(
+            "admin-login.html"
+        );
+
 
     } catch (error) {
 
         console.error(
-            "Erro ao sair da Administração:",
+            "Erro ao sair:",
             error
         );
+
 
         alert(
             "Não foi possível sair. Tente novamente."
@@ -176,12 +140,6 @@ async function sairAdmin() {
 
 }
 
-
-/*
-==================================================
-EXPOR FUNÇÃO
-==================================================
-*/
 
 window.sairAdmin =
     sairAdmin;

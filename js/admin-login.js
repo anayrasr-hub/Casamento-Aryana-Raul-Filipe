@@ -1,79 +1,38 @@
 /*
 ==================================================
 CASAMENTO ARYANA & RAUL FILIPE
-
 LOGIN ADMINISTRATIVO
-
-Arquivo: admin-login.js
 ==================================================
 */
-
 
 import {
-
     getAuth,
+    signInWithEmailAndPassword,
+    setPersistence,
+    browserLocalPersistence
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-    signInWithEmailAndPassword
-
-} from
-"https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-
-import { app }
-from "./firebase-config.js";
+import { app } from "./firebase-config.js";
 
 
-/*
-==================================================
-FIREBASE AUTH
-==================================================
-*/
+const auth = getAuth(app);
 
-const auth =
-    getAuth(app);
-
-
-/*
-==================================================
-ELEMENTOS
-==================================================
-*/
 
 const form =
-    document.getElementById(
-        "formLoginAdmin"
-    );
-
+    document.getElementById("formLoginAdmin");
 
 const campoEmail =
-    document.getElementById(
-        "email"
-    );
-
+    document.getElementById("email");
 
 const campoSenha =
-    document.getElementById(
-        "senha"
-    );
-
+    document.getElementById("senha");
 
 const botao =
-    document.getElementById(
-        "btnEntrarAdmin"
-    );
-
+    document.getElementById("btnEntrarAdmin");
 
 const mensagem =
-    document.getElementById(
-        "erroLogin"
-    );
+    document.getElementById("erroLogin");
 
-
-/*
-==================================================
-MOSTRAR MENSAGEM
-==================================================
-*/
 
 function mostrarMensagem(
     texto,
@@ -81,130 +40,119 @@ function mostrarMensagem(
 ) {
 
     if (!mensagem) {
-
         return;
-
     }
 
-
-    mensagem.textContent =
-        texto;
-
+    mensagem.textContent = texto;
 
     mensagem.className =
-        `erro-login-admin ${tipo}`;
-
+        "erro-login-admin " + tipo;
 }
 
-
-/*
-==================================================
-LOGIN
-==================================================
-*/
 
 if (form) {
 
     form.addEventListener(
         "submit",
-        async event => {
+        async function(event) {
 
             event.preventDefault();
 
-
             const email =
                 campoEmail
-                ?
-                campoEmail.value.trim()
-                :
-                "";
-
+                ? campoEmail.value.trim()
+                : "";
 
             const senha =
                 campoSenha
-                ?
-                campoSenha.value
-                :
-                "";
+                ? campoSenha.value
+                : "";
 
 
-            if (
-                email === "" ||
-                senha === ""
-            ) {
+            if (!email || !senha) {
 
                 mostrarMensagem(
                     "Informe o e-mail e a senha."
                 );
 
                 return;
-
             }
 
-
-            /*
-            --------------------------------------
-            DESABILITAR BOTÃO
-            --------------------------------------
-            */
 
             if (botao) {
 
-                botao.disabled =
-                    true;
+                botao.disabled = true;
 
                 botao.textContent =
                     "Entrando...";
-
             }
 
 
-            mostrarMensagem(
-                ""
-            );
+            mostrarMensagem("");
 
 
             try {
 
                 /*
-                ----------------------------------
-                AUTENTICAR FIREBASE
-                ----------------------------------
+                ==========================================
+                MANTER LOGIN NO NAVEGADOR
+                ==========================================
                 */
 
-                await signInWithEmailAndPassword(
+                await setPersistence(
                     auth,
-                    email,
-                    senha
+                    browserLocalPersistence
                 );
 
 
                 /*
-                ----------------------------------
-                LOGIN REALIZADO
-                ----------------------------------
+                ==========================================
+                FAZER LOGIN
+                ==========================================
                 */
 
+                const resultado =
+                    await signInWithEmailAndPassword(
+                        auth,
+                        email,
+                        senha
+                    );
+
+
+                console.log(
+                    "Login administrativo realizado:",
+                    resultado.user.email
+                );
+
+
                 mostrarMensagem(
-                    "Login realizado. Aguarde...",
+                    "Login realizado. Abrindo painel...",
                     "sucesso"
                 );
 
 
                 /*
-                ----------------------------------
-                IR PARA ADMIN
-                ----------------------------------
+                ==========================================
+                PEQUENO TEMPO PARA O FIREBASE CONFIRMAR
+                ==========================================
                 */
 
-                window.location.href =
-                    "admin.html";
+                setTimeout(
+                    () => {
+
+                        window.location.replace(
+                            "admin.html"
+                        );
+
+                    },
+                    300
+                );
 
 
             } catch (error) {
 
                 console.error(
-                    "Erro no login:",
+                    "ERRO COMPLETO NO LOGIN:",
                     error
                 );
 
@@ -213,41 +161,81 @@ if (form) {
                     "Não foi possível entrar.";
 
 
-                /*
-                ----------------------------------
-                MENSAGENS MAIS AMIGÁVEIS
-                ----------------------------------
-                */
+                switch (error.code) {
 
-                if (
-                    error.code ===
-                    "auth/invalid-credential"
-                ) {
+                    case "auth/invalid-credential":
 
-                    texto =
-                        "E-mail ou senha incorretos.";
+                        texto =
+                            "E-mail ou senha incorretos.";
 
-                }
+                        break;
 
 
-                else if (
-                    error.code ===
-                    "auth/invalid-email"
-                ) {
+                    case "auth/wrong-password":
 
-                    texto =
-                        "Informe um e-mail válido.";
+                        texto =
+                            "Senha incorreta.";
 
-                }
+                        break;
 
 
-                else if (
-                    error.code ===
-                    "auth/user-disabled"
-                ) {
+                    case "auth/user-not-found":
 
-                    texto =
-                        "Este usuário está desativado.";
+                        texto =
+                            "Usuário administrador não encontrado.";
+
+                        break;
+
+
+                    case "auth/invalid-email":
+
+                        texto =
+                            "Informe um e-mail válido.";
+
+                        break;
+
+
+                    case "auth/user-disabled":
+
+                        texto =
+                            "Este usuário está desativado no Firebase.";
+
+                        break;
+
+
+                    case "auth/too-many-requests":
+
+                        texto =
+                            "Muitas tentativas. Aguarde alguns minutos e tente novamente.";
+
+                        break;
+
+
+                    case "auth/network-request-failed":
+
+                        texto =
+                            "Falha de conexão com o Firebase.";
+
+                        break;
+
+
+                    case "auth/operation-not-allowed":
+
+                        texto =
+                            "O login por e-mail e senha não está habilitado no Firebase.";
+
+                        break;
+
+
+                    default:
+
+                        texto =
+                            "Erro no login: " +
+                            (
+                                error.code ||
+                                error.message ||
+                                "erro desconhecido"
+                            );
 
                 }
 
@@ -261,8 +249,7 @@ if (form) {
 
                 if (botao) {
 
-                    botao.disabled =
-                        false;
+                    botao.disabled = false;
 
                     botao.textContent =
                         "Entrar";
