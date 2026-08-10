@@ -77,176 +77,416 @@ LOGIN
 */
 
 .pagina-login-admin {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
+
+    min-height:
+        100vh;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        20px;
+
     background:
-        radial-gradient(circle at 15% 15%, rgba(255,255,255,.55), transparent 30%),
-        radial-gradient(circle at 85% 80%, rgba(255,255,255,.35), transparent 28%),
-        linear-gradient(135deg, #A95036 0%, #C86B4A 42%, #E8B49F 72%, #F6EEE9 100%);
+        linear-gradient(
+            135deg,
+            #C86B4A,
+            #D9957D,
+            #F6EEE9
+        );
+
 }
+
+
+/*
+==================================================
+CONTAINER LOGIN
+==================================================
+*/
 
 .login-admin-container {
-    width: 100%;
-    max-width: 430px;
+
+    width:
+        100%;
+
+    max-width:
+        430px;
+
 }
+
+
+/*
+==================================================
+CARD LOGIN
+==================================================
+*/
 
 .login-admin-card {
-    position: relative;
-    overflow: hidden;
-    background: rgba(255, 249, 244, .97);
-    border: 1px solid rgba(255,255,255,.85);
-    border-radius: 30px;
-    padding: 34px 30px 28px;
-    box-shadow: 0 24px 60px rgba(74,55,47,.24);
-    text-align: center;
+
+    background:
+        rgba(
+            255,
+            249,
+            244,
+            .97
+        );
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .8
+        );
+
+    border-radius:
+        28px;
+
+    padding:
+        36px 32px;
+
+    box-shadow:
+        0 20px 50px
+        rgba(
+            74,
+            55,
+            47,
+            .20
+        );
+
+    text-align:
+        center;
+
 }
 
-.login-admin-card::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    height: 7px;
-    background: linear-gradient(90deg, #9E4F34, #C86B4A, #E8B49F);
-}
+
+/*
+==================================================
+CORAÇÃO
+==================================================
+*/
 
 .login-admin-coracao {
-    width: 58px;
-    height: 58px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 2px auto 12px;
-    border-radius: 50%;
-    background: #F3DDD3;
-    font-size: 1.55rem;
-    box-shadow: 0 7px 18px rgba(158,79,52,.12);
+
+    font-size:
+        2rem;
+
+    margin-bottom:
+        8px;
+
 }
+
+
+/*
+==================================================
+TÍTULO
+==================================================
+*/
 
 .login-admin-card h1 {
-    margin: 0;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(1.7rem, 6vw, 2.05rem);
-    color: var(--terracota-dark);
-    line-height: 1.15;
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:
+        2rem;
+
+    color:
+        var(--terracota-dark);
+
 }
+
 
 .login-admin-card h2 {
-    margin: 10px 0 0;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 1.35rem;
-    color: var(--texto);
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:
+        1.45rem;
+
+    color:
+        var(--terracota-dark);
+
+    margin-top:
+        12px;
+
 }
+
+
+/*
+==================================================
+LINHA
+==================================================
+*/
 
 .login-admin-linha {
-    width: 72px;
-    height: 3px;
-    margin: 14px auto;
-    border-radius: 20px;
-    background: var(--terracota);
+
+    width:
+        70px;
+
+    height:
+        3px;
+
+    margin:
+        15px auto;
+
+    border-radius:
+        10px;
+
+    background:
+        var(--terracota);
+
 }
+
+
+/*
+==================================================
+SUBTÍTULO
+==================================================
+*/
 
 .login-admin-subtitulo {
-    margin: 0 auto 24px;
-    max-width: 320px;
-    color: #806458;
-    font-size: .88rem;
-    line-height: 1.5;
+
+    font-size:
+        .92rem;
+
+    line-height:
+        1.5;
+
+    color:
+        #806458;
+
+    margin:
+        8px 0 25px;
+
 }
+
+
+/*
+==================================================
+CAMPOS
+==================================================
+*/
 
 .campo-login {
-    text-align: left;
-    margin-bottom: 15px;
+
+    text-align:
+        left;
+
+    margin-bottom:
+        16px;
+
 }
+
 
 .campo-login label {
-    display: block;
-    margin-bottom: 6px;
-    color: var(--terracota-dark);
-    font-size: .84rem;
-    font-weight: 800;
+
+    display:
+        block;
+
+    font-size:
+        .88rem;
+
+    font-weight:
+        700;
+
+    margin-bottom:
+        6px;
+
+    color:
+        var(--terracota-dark);
+
 }
+
 
 .campo-login input {
-    width: 100%;
-    padding: 12px 13px;
-    border: 1px solid #D8BEB1;
-    border-radius: 12px;
-    background: #fff;
-    color: var(--texto);
-    font-size: .92rem;
-    outline: none;
-    transition: .2s ease;
+
+    width:
+        100%;
+
+    padding:
+        13px 14px;
+
+    border:
+        1px solid
+        #D8BEB1;
+
+    border-radius:
+        12px;
+
+    background:
+        white;
+
+    color:
+        var(--texto);
+
+    font-size:
+        .95rem;
+
+    outline:
+        none;
+
+    transition:
+        .2s;
+
 }
+
 
 .campo-login input:focus {
-    border-color: var(--terracota);
-    box-shadow: 0 0 0 4px rgba(200,107,74,.13);
+
+    border-color:
+        var(--terracota);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(
+            200,
+            107,
+            74,
+            .15
+        );
+
 }
+
+
+/*
+==================================================
+BOTÃO ENTRAR
+==================================================
+*/
 
 .btn-login-admin {
-    width: 100%;
-    border: 0;
-    border-radius: 12px;
-    padding: 13px;
-    margin-top: 5px;
-    background: linear-gradient(135deg, #B85C38, #9E4F34);
-    color: #fff;
-    font-size: .95rem;
-    font-weight: 800;
-    cursor: pointer;
-    box-shadow: 0 8px 18px rgba(158,79,52,.20);
-    transition: .2s ease;
+
+    width:
+        100%;
+
+    border:
+        none;
+
+    border-radius:
+        12px;
+
+    padding:
+        14px;
+
+    margin-top:
+        8px;
+
+    background:
+        var(--terracota);
+
+    color:
+        white;
+
+    font-size:
+        1rem;
+
+    font-weight:
+        800;
+
+    cursor:
+        pointer;
+
+    transition:
+        .2s;
+
 }
+
 
 .btn-login-admin:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 10px 22px rgba(158,79,52,.25);
+
+    background:
+        var(--terracota-dark);
+
+    transform:
+        translateY(-1px);
+
 }
+
 
 .btn-login-admin:disabled {
-    opacity: .65;
-    cursor: wait;
-    transform: none;
+
+    opacity:
+        .65;
+
+    cursor:
+        wait;
+
 }
+
+
+/*
+==================================================
+ERRO
+==================================================
+*/
 
 .erro-login-admin {
-    min-height: 22px;
-    margin-top: 11px;
-    color: #B42318;
-    font-size: .82rem;
-    font-weight: 700;
+
+    min-height:
+        22px;
+
+    margin-top:
+        12px;
+
+    color:
+        #B42318;
+
+    font-size:
+        .88rem;
+
+    font-weight:
+        700;
+
 }
+
+
+/*
+==================================================
+VOLTAR
+==================================================
+*/
 
 .voltar-site-admin {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 16px;
-    color: var(--terracota-dark);
-    text-decoration: none;
-    font-size: .84rem;
-    font-weight: 700;
+
+    display:
+        inline-block;
+
+    margin-top:
+        20px;
+
+    color:
+        var(--terracota-dark);
+
+    text-decoration:
+        none;
+
+    font-size:
+        .9rem;
+
+    font-weight:
+        700;
+
 }
+
 
 .voltar-site-admin:hover {
-    text-decoration: underline;
+
+    text-decoration:
+        underline;
+
 }
 
-@media (max-width: 520px) {
-    .pagina-login-admin {
-        padding: 12px;
-    }
-
-    .login-admin-card {
-        padding: 30px 20px 24px;
-        border-radius: 24px;
-    }
-}
 
 /*
 ==================================================
@@ -729,4 +969,414 @@ RESPONSIVO
 
     }
 
+}
+/* ==================================================
+   PAINEL ADMINISTRATIVO — VISUAL FINAL
+   ================================================== */
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(180deg, #f8eee8 0%, #f5e7df 100%);
+}
+
+.admin-header {
+    max-width: 1200px;
+    margin: 18px auto 0;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    background: rgba(255,249,244,.98);
+    border: 1px solid #ead5ca;
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(74,55,47,.08);
+}
+
+.admin-header h1 {
+    font-size: 1.55rem;
+    line-height: 1.15;
+}
+
+.admin-header p {
+    font-size: .86rem;
+}
+
+.btn-sair {
+    border: 1px solid #c86b4a;
+    background: transparent;
+    color: #9e4f34;
+    border-radius: 10px;
+    padding: 9px 18px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.btn-sair:hover {
+    background: #c86b4a;
+    color: #fff;
+}
+
+.admin-container {
+    max-width: 1200px;
+    padding-top: 18px;
+}
+
+.dashboard {
+    gap: 14px;
+}
+
+.card-resumo {
+    min-height: 82px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 17px;
+    background: rgba(255,249,244,.98);
+    border: 1px solid #ead5ca;
+    border-radius: 15px;
+    box-shadow: 0 5px 16px rgba(74,55,47,.06);
+}
+
+.card-resumo .icone {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: #f3dfd5;
+    font-size: 1.25rem;
+}
+
+.card-resumo .titulo-resumo {
+    display: block;
+    color: #806458;
+    font-size: .76rem;
+    font-weight: 700;
+}
+
+.card-resumo strong {
+    display: block;
+    margin-top: 2px;
+    color: #9e4f34;
+    font-size: 1.35rem;
+}
+
+.admin-tabs {
+    display: flex;
+    gap: 7px;
+    padding: 6px;
+    margin-bottom: 14px;
+    background: rgba(255,249,244,.95);
+    border: 1px solid #ead5ca;
+    border-radius: 13px;
+    box-shadow: 0 4px 14px rgba(74,55,47,.05);
+}
+
+.admin-tabs .tab {
+    flex: 1;
+    border: 0;
+    border-radius: 9px;
+    background: transparent;
+    color: #806458;
+    padding: 10px 13px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: .18s ease;
+}
+
+.admin-tabs .tab:hover {
+    background: #f3e2da;
+    color: #9e4f34;
+}
+
+.admin-tabs .tab.ativo {
+    background: #c86b4a;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(158,79,52,.20);
+}
+
+.aba {
+    display: none;
+    background: rgba(255,249,244,.70);
+    border: 1px solid #ead5ca;
+    border-radius: 18px;
+    padding: 18px;
+}
+
+.aba.ativa {
+    display: block;
+}
+
+.secao-topo {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 16px;
+}
+
+.secao-topo h2 {
+    color: #4a372f;
+    font-family: Georgia, serif;
+    font-size: 1.35rem;
+}
+
+.secao-topo p {
+    margin-top: 4px;
+    color: #806458;
+    font-size: .86rem;
+}
+
+.secao-topo input {
+    width: 260px;
+    padding: 10px 13px;
+    border: 1px solid #d8b8aa;
+    border-radius: 10px;
+    background: #fff;
+    outline: none;
+}
+
+.secao-topo input:focus {
+    border-color: #c86b4a;
+    box-shadow: 0 0 0 3px rgba(200,107,74,.12);
+}
+
+.lista-admin {
+    min-width: 0;
+}
+
+.card-admin-presente {
+    grid-template-columns: 76px minmax(0,1fr) auto;
+    min-height: 98px;
+    margin-bottom: 10px;
+    padding: 12px;
+    border-radius: 14px;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.card-admin-presente:hover {
+    transform: translateY(-1px);
+    border-color: #d9ae9d;
+    box-shadow: 0 7px 18px rgba(74,55,47,.08);
+}
+
+.imagem-admin-presente {
+    width: 76px;
+    height: 76px;
+    border: 1px solid #ead5ca;
+}
+
+.card-admin-info h3 {
+    color: #3f302a;
+    font-size: 1rem;
+}
+
+.btn-detalhes {
+    min-width: 118px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: #b65e41;
+    font-size: .82rem;
+    box-shadow: 0 3px 8px rgba(158,79,52,.14);
+}
+
+.btn-detalhes:hover {
+    background: #93482f;
+}
+
+/* ==================================================
+   MODAL DE DETALHES
+   ================================================== */
+
+.modal-admin {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(55,38,31,.58);
+    backdrop-filter: blur(3px);
+}
+
+.modal-conteudo {
+    position: relative;
+    width: min(760px, 100%);
+    max-height: min(720px, 90vh);
+    overflow-y: auto;
+    padding: 28px;
+    background: #fffaf7;
+    border: 1px solid #ead5ca;
+    border-radius: 22px;
+    box-shadow: 0 25px 70px rgba(45,29,23,.28);
+}
+
+.fechar-modal {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    width: 38px;
+    height: 38px;
+    border: 0;
+    border-radius: 50%;
+    background: #f2ded5;
+    color: #8f482f;
+    font-size: 1.55rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.fechar-modal:hover {
+    background: #c86b4a;
+    color: #fff;
+}
+
+#conteudoModalAdmin h2 {
+    padding-right: 45px;
+    color: #8f482f;
+    font-family: Georgia, serif;
+    font-size: 1.45rem;
+}
+
+#conteudoModalAdmin h3 {
+    margin: 18px 0 10px;
+    color: #4a372f;
+    font-size: 1rem;
+}
+
+#conteudoModalAdmin p {
+    margin-top: 7px;
+    color: #6f574d;
+    font-size: .9rem;
+}
+
+#conteudoModalAdmin hr {
+    margin: 18px 0 0;
+    border: 0;
+    border-top: 1px solid #ead5ca;
+}
+
+#conteudoModalAdmin .tabela-admin {
+    overflow: hidden;
+    border: 1px solid #ead5ca;
+    border-radius: 12px;
+}
+
+#conteudoModalAdmin .tabela-admin th {
+    background: #f0ddd5;
+}
+
+.btn-admin-editar,
+.btn-admin-excluir {
+    border: 0;
+    border-radius: 8px;
+    padding: 7px 9px;
+    margin: 2px;
+    font-size: .76rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.btn-admin-editar {
+    background: #ead9ce;
+    color: #754d3e;
+}
+
+.btn-admin-editar:hover {
+    background: #dec4b5;
+}
+
+.btn-admin-excluir {
+    background: #f6d7d2;
+    color: #a52b1f;
+}
+
+.btn-admin-excluir:hover {
+    background: #edc0b9;
+}
+
+.carregando {
+    padding: 28px;
+    text-align: center;
+    color: #806458;
+}
+
+.admin-vazio {
+    box-shadow: 0 5px 18px rgba(74,55,47,.05);
+}
+
+#mensagemAdmin {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 10001;
+    max-width: 360px;
+}
+
+@media (max-width: 700px) {
+    .admin-header {
+        margin: 10px 10px 0;
+        padding: 16px;
+    }
+
+    .admin-header h1 {
+        font-size: 1.25rem;
+    }
+
+    .admin-container {
+        padding: 12px 10px 35px;
+    }
+
+    .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .admin-tabs .tab {
+        font-size: .76rem;
+        padding: 9px 5px;
+    }
+
+    .aba {
+        padding: 12px;
+    }
+
+    .secao-topo {
+        display: block;
+    }
+
+    .secao-topo input {
+        width: 100%;
+        margin-top: 12px;
+    }
+
+    .card-admin-presente {
+        grid-template-columns: 60px minmax(0,1fr);
+        gap: 11px;
+    }
+
+    .imagem-admin-presente {
+        width: 60px;
+        height: 60px;
+    }
+
+    .btn-detalhes {
+        grid-column: 1 / -1;
+        width: 100%;
+    }
+
+    .modal-admin {
+        padding: 10px;
+    }
+
+    .modal-conteudo {
+        padding: 22px 15px;
+        border-radius: 17px;
+    }
+
+    #conteudoModalAdmin .tabela-admin {
+        display: block;
+        overflow-x: auto;
+    }
 }
