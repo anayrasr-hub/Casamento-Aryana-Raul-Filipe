@@ -241,57 +241,138 @@ async function salvarConfirmacao(
 
 
 /*
-================================================
+==================================================
 BUSCAR CONVIDADOS
-================================================
+FONTE OFICIAL: GOOGLE SHEETS
+==================================================
 */
 
 async function buscarConvidados() {
 
+    const GOOGLE_SHEETS_URL =
+        "https://script.google.com/macros/s/AKfycbwxoY3KVrIxOjRvZ8nWJOhwA3dWoK_OVnR3Wj893rZLONMIhIpE_TrOFaRLsmm41q1Q/exec";
+
+
     try {
 
-        const snapshot =
-            await getDocs(
-                collection(
-                    db,
-                    "convidados"
-                )
+        console.log(
+            "Buscando confirmações no Google Sheets..."
+        );
+
+
+        const resposta =
+            await fetch(
+                GOOGLE_SHEETS_URL +
+                "?acao=listarConvidados"
             );
 
-        const lista = [];
 
-        snapshot.forEach(
-            doc => {
+        if (!resposta.ok) {
 
-                lista.push({
+            throw new Error(
+                "Erro HTTP " +
+                resposta.status
+            );
+
+        }
+
+
+        const resultado =
+            await resposta.json();
+
+
+        console.log(
+            "Resposta Google Sheets:",
+            resultado
+        );
+
+
+        if (
+            !resultado ||
+            resultado.sucesso !== true
+        ) {
+
+            throw new Error(
+                resultado &&
+                resultado.erro
+                    ? resultado.erro
+                    : "Erro ao consultar Google Sheets."
+            );
+
+        }
+
+
+        const convidados =
+            Array.isArray(
+                resultado.convidados
+            )
+                ? resultado.convidados
+                : [];
+
+
+        /*
+        ------------------------------------------
+        NORMALIZA OS DADOS PARA O PAINEL
+        ------------------------------------------
+        */
+
+        return convidados.map(
+            function(convidado) {
+
+                return {
 
                     id:
-                        doc.id,
+                        convidado.id,
 
-                    ...doc.data()
+                    codigo:
+                        convidado.codigo || "",
 
-                });
+                    nome:
+                        convidado.nome || "",
+
+                    tipo:
+                        convidado.tipo || "",
+
+                    idade:
+                        convidado.idade || "",
+
+                    sexo:
+                        convidado.sexo || "",
+
+                    calcado:
+                        convidado.calcado || "",
+
+                    whatsapp:
+                        convidado.whatsapp || "",
+
+                    checkin:
+                        convidado.checkin || "",
+
+                    dataCheckin:
+                        convidado.dataCheckin || "",
+
+                    data:
+                        convidado.data || ""
+
+                };
 
             }
         );
 
-        return lista;
 
     } catch (error) {
 
         console.error(
-            "Erro ao buscar convidados:",
+            "Erro ao buscar confirmações no Google Sheets:",
             error
         );
+
 
         return [];
 
     }
 
-}
-
-/*
-==================================================
+}==================================================
 BUSCAR REGISTROS DE PIX
 ==================================================
 */
@@ -489,3 +570,153 @@ window.editarRegistro =
 
 window.excluirRegistro =
     excluirRegistro;
+
+/*
+==================================================
+BUSCAR CONFIRMAÇÕES DO GOOGLE SHEETS
+==================================================
+*/
+
+const GOOGLE_SHEETS_URL =
+    "https://script.google.com/macros/s/AKfycbwxoY3KVrIxOjRvZ8nWJOhwA3dWoK_OVnR3Wj893rZLONMIhIpE_TrOFaRLsmm41q1Q/exec";
+
+
+async function buscarConfirmacoesGoogleSheets() {
+
+    try {
+
+        console.log(
+            "Buscando confirmações no Google Sheets..."
+        );
+
+        const resposta =
+            await fetch(
+                GOOGLE_SHEETS_URL,
+                {
+                    method: "GET",
+                    cache: "no-store"
+                }
+            );
+
+
+        if (!resposta.ok) {
+
+            throw new Error(
+                "Erro HTTP " +
+                resposta.status
+            );
+
+        }
+
+
+        const texto =
+            await resposta.text();
+
+
+        console.log(
+            "Resposta Google Sheets:",
+            texto
+        );
+
+
+        let resultado;
+
+
+        try {
+
+            resultado =
+                JSON.parse(texto);
+
+        } catch (erroJSON) {
+
+            console.error(
+                "Resposta do Google Sheets não é JSON:",
+                texto
+            );
+
+            return [];
+
+        }
+
+
+        /*
+        ==========================================
+        FORMATO ATUAL DO SEU APPS SCRIPT
+
+        {
+            sucesso: true,
+            convidados: [...]
+        }
+        ==========================================
+        */
+
+        if (
+            resultado &&
+            resultado.sucesso === true &&
+            Array.isArray(
+                resultado.convidados
+            )
+        ) {
+
+            return resultado.convidados;
+
+        }
+
+
+        /*
+        ==========================================
+        CASO O APPS SCRIPT RETORNE "resultados"
+        ==========================================
+        */
+
+        if (
+            resultado &&
+            Array.isArray(
+                resultado.resultados
+            )
+        ) {
+
+            return resultado.resultados;
+
+        }
+
+
+        /*
+        ==========================================
+        CASO RETORNE DIRETAMENTE UM ARRAY
+        ==========================================
+        */
+
+        if (
+            Array.isArray(resultado)
+        ) {
+
+            return resultado;
+
+        }
+
+
+        console.warn(
+            "Nenhuma confirmação encontrada no retorno:",
+            resultado
+        );
+
+        return [];
+
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao buscar confirmações do Google Sheets:",
+            erro
+        );
+
+        return [];
+
+    }
+
+}
+
+
+window.buscarConfirmacoesGoogleSheets =
+    buscarConfirmacoesGoogleSheets;

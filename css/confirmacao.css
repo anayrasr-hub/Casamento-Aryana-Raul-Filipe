@@ -1,162 +1,132 @@
 /*
 ==================================================
-TOPO DA CONFIRMAÇÃO
+CONFIRMAÇÃO DE PRESENÇA
+ARYANA & RAUL FILIPE
 ==================================================
 */
 
-.confirmacao-topo {
+:root {
 
-    width:
-        100%;
+    --terracota:
+        #b85c38;
 
-    max-width:
-        760px;
+    --terracota-dark:
+        #8f432d;
 
-    margin:
-        0 auto 25px;
+    --fundo:
+        #f7ede7;
 
-    text-align:
-        center;
+    --creme:
+        #fffaf6;
 
-}
-
-
-.foto-casal-confirmacao {
-
-    display:
-        block;
-
-    width:
-        min(
-            88%,
-            520px
-        );
-
-    height:
-        260px;
-
-    object-fit:
-        cover;
-
-    object-position:
-        center;
-
-    margin:
-        0 auto 22px;
-
-    border-radius:
-        22px;
-
-    border:
-        5px solid
-        rgba(
-            255,
-            255,
-            255,
-            .95
-        );
-
-    box-shadow:
-        0 10px 30px
-        rgba(
-            0,
-            0,
-            0,
-            .18
-        );
-
-}
-
-
-.confirmacao-topo h1 {
-
-    font-family:
-        Georgia,
-        serif;
-
-    font-size:
-        clamp(
-            1.65rem,
-            5vw,
-            2.7rem
-        );
-
-    line-height:
-        1.15;
-
-    margin-bottom:
-        12px;
-
-}
-
-
-.confirmacao-topo h2 {
-
-    font-family:
-        Georgia,
-        serif;
-
-    font-size:
-        clamp(
-            1.35rem,
-            4vw,
-            2rem
-        );
-
-    margin-bottom:
-        10px;
-
-}
-
-
-.data-confirmacao {
-
-    font-size:
-        clamp(
-            .95rem,
-            2.5vw,
-            1.2rem
-        );
-
-    font-weight:
-        700;
+    --borda:
+        #e7c7b8;
 
 }
 
 
 /*
 ==================================================
-FORMULÁRIO
+PÁGINA
 ==================================================
 */
 
-#formPresenca {
+body {
 
-    max-width:
-        620px;
+    margin: 0;
 
-    margin:
-        0 auto;
+    background:
+        var(--fundo);
 
-}
-
-
-#formPresenca label {
-
-    font-size:
-        .9rem;
+    color:
+        #5f3428;
 
 }
 
 
-#formPresenca input,
-#formPresenca select {
+/*
+==================================================
+CABEÇALHO
+==================================================
+*/
 
-    font-size:
-        .92rem;
+.topo-confirmacao {
+
+    background:
+        var(--terracota);
+
+    color:
+        white;
+
+    text-align:
+        center;
 
     padding:
-        11px 12px;
+        16px 15px 18px;
+
+}
+
+
+.topo-confirmacao h1 {
+
+    margin:
+        0 0 6px;
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:
+        1.25rem;
+
+    line-height:
+        1.2;
+
+}
+
+
+.topo-confirmacao h2 {
+
+    margin:
+        0 0 5px;
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:
+        1.05rem;
+
+}
+
+
+.topo-confirmacao p {
+
+    margin:
+        0;
+
+    font-size:
+        .82rem;
+
+    font-weight:
+        600;
+
+}
+
+
+/*
+==================================================
+CONTAINER
+==================================================
+*/
+
+.pagina-confirmacao {
+
+    width:
+        min(92%, 650px);
+
+    margin:
+        18px auto 40px;
 
 }
 
@@ -178,21 +148,18 @@ BOTÃO VOLTAR
     justify-content:
         center;
 
-    gap:
-        6px;
-
-    margin-top:
-        12px;
+    margin:
+        0 0 12px;
 
     padding:
-        11px 20px;
+        8px 15px;
 
     border:
-        2px solid
+        1.5px solid
         var(--terracota);
 
     border-radius:
-        12px;
+        20px;
 
     background:
         transparent;
@@ -200,11 +167,11 @@ BOTÃO VOLTAR
     color:
         var(--terracota-dark);
 
-    font-weight:
-        800;
+    font-size:
+        .82rem;
 
-    text-decoration:
-        none;
+    font-weight:
+        700;
 
     cursor:
         pointer;
@@ -228,6 +195,514 @@ BOTÃO VOLTAR
 
 /*
 ==================================================
+FOTO
+==================================================
+*/
+
+.foto-casal-confirmacao {
+
+    display:
+        block;
+
+    width:
+        min(100%, 480px);
+
+    height:
+        245px;
+
+    margin:
+        0 auto 18px;
+
+    object-fit:
+        cover;
+
+    object-position:
+        center;
+
+    border:
+        3px solid
+        var(--terracota);
+
+    border-radius:
+        14px;
+
+    box-shadow:
+        0 7px 18px
+        rgba(0,0,0,.15);
+
+}
+
+
+/*
+==================================================
+CARD
+==================================================
+*/
+
+.card-confirmacao {
+
+    background:
+        var(--creme);
+
+    border:
+        1px solid
+        var(--borda);
+
+    border-radius:
+        18px;
+
+    padding:
+        22px;
+
+    box-shadow:
+        0 8px 22px
+        rgba(0,0,0,.10);
+
+}
+
+
+/*
+==================================================
+TÍTULO DO FORMULÁRIO
+==================================================
+*/
+
+.titulo-formulario {
+
+    text-align:
+        center;
+
+    margin-bottom:
+        20px;
+
+}
+
+
+.titulo-formulario h2 {
+
+    margin:
+        0 0 5px;
+
+    color:
+        var(--terracota-dark);
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:
+        1.35rem;
+
+}
+
+
+.titulo-formulario p {
+
+    margin:
+        0;
+
+    font-size:
+        .78rem;
+
+}
+
+
+/*
+==================================================
+BLOCO DO CONVIDADO
+==================================================
+*/
+
+.convidado-bloco {
+
+    position:
+        relative;
+
+    padding:
+        17px;
+
+    margin-bottom:
+        15px;
+
+    background:
+        #fff;
+
+    border:
+        1px solid
+        var(--borda);
+
+    border-radius:
+        13px;
+
+}
+
+
+.numero-convidado {
+
+    margin-bottom:
+        14px;
+
+    color:
+        var(--terracota-dark);
+
+    font-weight:
+        800;
+
+    font-size:
+        .9rem;
+
+}
+
+
+/*
+==================================================
+CAMPOS
+==================================================
+*/
+
+.convidado-bloco label {
+
+    display:
+        block;
+
+    margin:
+        8px 0 5px;
+
+    font-size:
+        .78rem;
+
+    font-weight:
+        700;
+
+}
+
+
+.convidado-bloco input,
+.convidado-bloco select {
+
+    box-sizing:
+        border-box;
+
+    width:
+        100%;
+
+    padding:
+        9px 10px;
+
+    border:
+        1px solid
+        #d9b8a9;
+
+    border-radius:
+        7px;
+
+    background:
+        white;
+
+    color:
+        #543127;
+
+    font-size:
+        .82rem;
+
+    outline:
+        none;
+
+}
+
+
+.convidado-bloco input:focus,
+.convidado-bloco select:focus {
+
+    border-color:
+        var(--terracota);
+
+    box-shadow:
+        0 0 0 2px
+        rgba(184,92,56,.12);
+
+}
+
+
+.opcional {
+
+    font-weight:
+        400;
+
+    font-size:
+        .7rem;
+
+    color:
+        #8c756c;
+
+}
+
+
+/*
+==================================================
+REMOVER CONVIDADO
+==================================================
+*/
+
+.btn-remover-convidado {
+
+    position:
+        absolute;
+
+    top:
+        13px;
+
+    right:
+        13px;
+
+    border:
+        none;
+
+    background:
+        transparent;
+
+    color:
+        #a14d35;
+
+    font-size:
+        .7rem;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+}
+
+
+/*
+==================================================
+BOTÕES
+==================================================
+*/
+
+.btn-adicionar-convidado,
+.btn-confirmar-presenca {
+
+    width:
+        100%;
+
+    border:
+        none;
+
+    border-radius:
+        8px;
+
+    padding:
+        11px;
+
+    font-size:
+        .82rem;
+
+    font-weight:
+        800;
+
+    cursor:
+        pointer;
+
+}
+
+
+.btn-adicionar-convidado {
+
+    margin:
+        3px 0 9px;
+
+    background:
+        transparent;
+
+    border:
+        1px solid
+        var(--terracota);
+
+    color:
+        var(--terracota-dark);
+
+}
+
+
+.btn-confirmar-presenca {
+
+    background:
+        var(--terracota);
+
+    color:
+        white;
+
+}
+
+
+.btn-confirmar-presenca:hover {
+
+    background:
+        var(--terracota-dark);
+
+}
+
+
+.btn-confirmar-presenca:disabled {
+
+    opacity:
+        .6;
+
+    cursor:
+        wait;
+
+}
+
+
+/*
+==================================================
+MENSAGENS
+==================================================
+*/
+
+.mensagem-confirmacao {
+
+    margin-top:
+        12px;
+
+    padding:
+        10px;
+
+    border-radius:
+        8px;
+
+    text-align:
+        center;
+
+    font-size:
+        .78rem;
+
+}
+
+
+.mensagem-confirmacao.sucesso {
+
+    background:
+        #e8f5e9;
+
+    color:
+        #286337;
+
+}
+
+
+.mensagem-confirmacao.erro {
+
+    background:
+        #fdecea;
+
+    color:
+        #a33b2c;
+
+}
+
+
+/*
+==================================================
+RESULTADO
+==================================================
+*/
+
+.resultado-confirmacao {
+
+    margin-top:
+        18px;
+
+    padding:
+        17px;
+
+    border-radius:
+        12px;
+
+    background:
+        #f6e6dd;
+
+    text-align:
+        center;
+
+}
+
+
+.resultado-confirmacao h3 {
+
+    margin-top:
+        0;
+
+    color:
+        var(--terracota-dark);
+
+    font-family:
+        Georgia,
+        serif;
+
+}
+
+
+.codigos-confirmacao {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        8px;
+
+}
+
+
+.codigo-convidado {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    padding:
+        10px;
+
+    background:
+        white;
+
+    border:
+        1px solid
+        var(--borda);
+
+    border-radius:
+        8px;
+
+    font-size:
+        .78rem;
+
+}
+
+
+.codigo-convidado b {
+
+    color:
+        var(--terracota);
+
+    font-size:
+        1rem;
+
+    letter-spacing:
+        1px;
+
+}
+
+
+/*
+==================================================
 CELULAR
 ==================================================
 */
@@ -236,129 +711,76 @@ CELULAR
     max-width: 600px
 ) {
 
-    .confirmacao-topo {
+    .topo-confirmacao {
 
         padding:
-            0 8px;
+            13px 10px 15px;
+
+    }
+
+
+    .topo-confirmacao h1 {
+
+        font-size:
+            1.05rem;
+
+    }
+
+
+    .topo-confirmacao h2 {
+
+        font-size:
+            .95rem;
+
+    }
+
+
+    .topo-confirmacao p {
+
+        font-size:
+            .75rem;
+
+    }
+
+
+    .pagina-confirmacao {
+
+        width:
+            calc(100% - 20px);
+
+        margin-top:
+            12px;
 
     }
 
 
     .foto-casal-confirmacao {
 
-        width:
-            92%;
-
         height:
             205px;
 
         border-radius:
-            18px;
-
-        border-width:
-            4px;
-
-        margin-bottom:
-            16px;
+            12px;
 
     }
 
 
-    .confirmacao-topo h1 {
+    .card-confirmacao {
 
-        font-size:
-            1.55rem;
+        padding:
+            14px;
 
-    }
-
-
-    .confirmacao-topo h2 {
-
-        font-size:
-            1.3rem;
+        border-radius:
+            15px;
 
     }
 
 
-    .data-confirmacao {
+    .convidado-bloco {
 
-        font-size:
-            .9rem;
+        padding:
+            13px;
 
     }
-
-}
-
-<button
-    type="button"
-    id="btnVoltarConfirmacao"
-    class="btn-voltar-confirmacao"
->
-    ← Voltar
-</button>
-
-.formulario{
-
-max-width:500px;
-
-margin:auto;
-
-padding:30px;
-
-text-align:center;
-
-}
-
-
-.formulario input,
-.formulario select{
-
-
-width:100%;
-
-padding:12px;
-
-margin-bottom:15px;
-
-border-radius:8px;
-
-border:1px solid #ccc;
-
-}
-
-
-
-.formulario button{
-
-
-background:#b85c38;
-
-color:white;
-
-border:none;
-
-padding:15px 30px;
-
-border-radius:30px;
-
-font-size:16px;
-
-cursor:pointer;
-
-
-}
-
-
-
-#resultado{
-
-
-margin-top:30px;
-
-background:#f7ede5;
-
-padding:20px;
-
-border-radius:15px;
 
 }

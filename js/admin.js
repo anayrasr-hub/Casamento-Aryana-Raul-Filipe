@@ -158,66 +158,35 @@ async function carregarDadosAdmin() {
         }
 
 
-        /*
-        ------------------------------------------
-        CONVIDADOS
-        ------------------------------------------
-        */
+/*
+------------------------------------------
+CONFIRMAÇÕES DE PRESENÇA
+GOOGLE SHEETS
+------------------------------------------
+*/
 
-        if (
-            typeof window.buscarConvidados ===
-            "function"
-        ) {
+if (
+    typeof window.buscarConvidados ===
+    "function"
+) {
 
-            convidadosAdmin =
-                await window.buscarConvidados();
+    convidadosAdmin =
+        await window.buscarConvidados();
 
-        } else {
+    console.log(
+        "Confirmações carregadas no painel:",
+        convidadosAdmin
+    );
 
-            convidadosAdmin = [];
+} else {
 
-        }
+    console.error(
+        "buscarConvidados() não está disponível."
+    );
 
-
-        atualizarResumo();
-
-
-        carregarListaPresentesAdmin();
-
-        carregarListaPixAdmin();
-
-        carregarListaConvidadosAdmin();
-
-
-    } catch (error) {
-
-        console.error(
-            "Erro ao carregar dados administrativos:",
-            error
-        );
-
-
-        mostrarErro(
-            "listaAdminPresentes",
-            "Não foi possível carregar os presentes."
-        );
-
-
-        mostrarErro(
-            "listaAdminPix",
-            "Não foi possível carregar os registros de PIX."
-        );
-
-
-        mostrarErro(
-            "listaAdminConvidados",
-            "Não foi possível carregar as confirmações."
-        );
-
-    }
+    convidadosAdmin = [];
 
 }
-
 
 /*
 ==================================================
@@ -1654,9 +1623,7 @@ function carregarListaConvidadosAdmin(
 
 
     if (!container) {
-
         return;
-
     }
 
 
@@ -1675,6 +1642,12 @@ function carregarListaConvidadosAdmin(
         ];
 
 
+    /*
+    ==========================================
+    FILTRO
+    ==========================================
+    */
+
     if (texto !== "") {
 
         lista =
@@ -1687,8 +1660,32 @@ function carregarListaConvidadosAdmin(
                         );
 
 
+                    const codigo =
+                        String(
+                            convidado.codigo ||
+                            ""
+                        );
+
+
+                    const whatsapp =
+                        String(
+                            convidado.whatsapp ||
+                            ""
+                        );
+
+
+                    const textoBusca =
+                        (
+                            nome +
+                            " " +
+                            codigo +
+                            " " +
+                            whatsapp
+                        );
+
+
                     return normalizarTextoAdmin(
-                        nome
+                        textoBusca
                     ).includes(
                         texto
                     );
@@ -1699,24 +1696,32 @@ function carregarListaConvidadosAdmin(
     }
 
 
+    /*
+    ==========================================
+    NENHUM REGISTRO
+    ==========================================
+    */
+
     if (
         lista.length === 0
     ) {
 
         container.innerHTML = `
-
             <div class="carregando">
-
                 Nenhuma confirmação encontrada.
-
             </div>
-
         `;
 
         return;
 
     }
 
+
+    /*
+    ==========================================
+    TABELA
+    ==========================================
+    */
 
     const tabela =
         document.createElement(
@@ -1735,7 +1740,15 @@ function carregarListaConvidadosAdmin(
             <tr>
 
                 <th>
-                    Convidado
+                    Data
+                </th>
+
+                <th>
+                    Código
+                </th>
+
+                <th>
+                    Nome
                 </th>
 
                 <th>
@@ -1743,7 +1756,15 @@ function carregarListaConvidadosAdmin(
                 </th>
 
                 <th>
+                    Idade
+                </th>
+
+                <th>
                     Sexo
+                </th>
+
+                <th>
+                    Calçado
                 </th>
 
                 <th>
@@ -1751,17 +1772,16 @@ function carregarListaConvidadosAdmin(
                 </th>
 
                 <th>
-                    Data
+                    Check-in
                 </th>
 
                 <th>
-                    Ações
+                    Data Check-in
                 </th>
 
             </tr>
 
         </thead>
-
 
         <tbody></tbody>
 
@@ -1774,6 +1794,12 @@ function carregarListaConvidadosAdmin(
         );
 
 
+    /*
+    ==========================================
+    LINHAS
+    ==========================================
+    */
+
     lista.forEach(
         convidado => {
 
@@ -1783,89 +1809,134 @@ function carregarListaConvidadosAdmin(
                 );
 
 
+            /*
+            DATA
+            */
+
+            const data =
+                convidado.data
+                    ? formatarDataAdmin(
+                        convidado.data
+                    )
+                    : "—";
+
+
+            /*
+            DATA CHECK-IN
+            */
+
+            const dataCheckin =
+                convidado.dataCheckin
+                    ? formatarDataAdmin(
+                        convidado.dataCheckin
+                    )
+                    : "—";
+
+
+            /*
+            CHECK-IN
+            */
+
+            const checkin =
+                String(
+                    convidado.checkin ||
+                    ""
+                ).toUpperCase();
+
+
+            let textoCheckin =
+                "—";
+
+
+            if (
+                checkin === "SIM"
+            ) {
+
+                textoCheckin =
+                    "SIM";
+
+            }
+
+
             tr.innerHTML = `
 
                 <td>
+                    ${escaparHTMLAdmin(
+                        data
+                    )}
+                </td>
 
+
+                <td>
+                    <strong>
+                        ${escaparHTMLAdmin(
+                            convidado.codigo ||
+                            "—"
+                        )}
+                    </strong>
+                </td>
+
+
+                <td>
                     ${escaparHTMLAdmin(
                         obterNomeConvidado(
                             convidado
                         )
                     )}
-
                 </td>
 
 
                 <td>
-
                     ${escaparHTMLAdmin(
                         convidado.tipo ||
-                        convidado.tipoConvidado ||
                         "—"
                     )}
-
                 </td>
 
 
                 <td>
+                    ${escaparHTMLAdmin(
+                        convidado.idade ||
+                        "—"
+                    )}
+                </td>
 
+
+                <td>
                     ${escaparHTMLAdmin(
                         convidado.sexo ||
                         "—"
                     )}
-
                 </td>
 
 
                 <td>
-
                     ${escaparHTMLAdmin(
-                        convidado.whatsapp ||
-                        convidado.telefone ||
+                        convidado.calcado ||
                         "—"
                     )}
-
                 </td>
 
 
                 <td>
-
-                    ${formatarDataAdmin(
-                        convidado.data
+                    ${escaparHTMLAdmin(
+                        convidado.whatsapp ||
+                        "—"
                     )}
-
                 </td>
 
 
                 <td>
-
-                    <button
-                        type="button"
-                        class="btn-admin-editar"
-                        data-acao="editar-convidado"
-                        data-id="${escaparHTMLAdmin(
-                            convidado.id
-                        )}"
-                    >
-
-                        ✏️ Editar
-
-                    </button>
+                    ${escaparHTMLAdmin(
+                        textoCheckin
+                    )}
+                </td>
 
 
-                    <button
-                        type="button"
-                        class="btn-admin-excluir"
-                        data-acao="excluir-convidado"
-                        data-id="${escaparHTMLAdmin(
-                            convidado.id
-                        )}"
-                    >
-
-                        🗑️ Excluir
-
-                    </button>
-
+                <td>
+                    ${escaparHTMLAdmin(
+                        dataCheckin
+                    )}
                 </td>
 
             `;
@@ -1883,11 +1954,7 @@ function carregarListaConvidadosAdmin(
         tabela
     );
 
-
-    configurarAcoesConvidados();
-
 }
-
 
 /*
 ==================================================
@@ -2679,91 +2746,52 @@ FORMATAR DATA FIREBASE
 */
 
 function formatarDataAdmin(
-    data
+    valor
 ) {
 
-    if (!data) {
-
+    if (!valor) {
         return "—";
-
     }
 
 
     try {
 
-        let dataJS;
+        const data =
+            new Date(
+                valor
+            );
 
 
         if (
-            typeof data.toDate ===
-            "function"
-        ) {
-
-            dataJS =
-                data.toDate();
-
-        }
-
-
-        else if (
-            data instanceof Date
-        ) {
-
-            dataJS =
-                data;
-
-        }
-
-
-        else if (
-            typeof data ===
-            "object" &&
-            data.seconds
-        ) {
-
-            dataJS =
-                new Date(
-                    Number(
-                        data.seconds
-                    ) * 1000
-                );
-
-        }
-
-
-        else {
-
-            dataJS =
-                new Date(
-                    data
-                );
-
-        }
-
-
-        if (
-            Number.isNaN(
-                dataJS.getTime()
+            isNaN(
+                data.getTime()
             )
         ) {
 
-            return "—";
+            return String(
+                valor
+            );
 
         }
 
 
-        return dataJS.toLocaleString(
-            "pt-BR"
+        return data.toLocaleString(
+            "pt-BR",
+            {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+            }
         );
 
-    } catch (error) {
 
-        console.error(
-            "Erro ao formatar data:",
-            error
+    } catch (erro) {
+
+        return String(
+            valor
         );
-
-        return "—";
 
     }
 
