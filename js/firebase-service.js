@@ -25,6 +25,16 @@ import { db } from "./firebase-config.js";
 
 /*
 ================================================
+URL GOOGLE SHEETS
+================================================
+*/
+
+const GOOGLE_SHEETS_URL =
+    "https://script.google.com/macros/s/AKfycbwxoY3KVrIxOjRvZ8nWJOhwA3dWoK_OVnR3Wj893rZLONMIhIpE_TrOFaRLsmm41q1Q/exec";
+
+
+/*
+================================================
 SALVAR PRESENTE ESCOLHIDO
 ================================================
 */
@@ -35,6 +45,14 @@ async function salvarEscolhaPresente(
 ) {
 
     try {
+
+        if (!presente) {
+
+            throw new Error(
+                "Presente não informado."
+            );
+
+        }
 
         await addDoc(
             collection(
@@ -73,7 +91,9 @@ async function salvarEscolhaPresente(
         );
 
         return false;
+
     }
+
 }
 
 
@@ -87,42 +107,52 @@ async function buscarPresentesEscolhidos() {
 
     try {
 
-        const consulta = query(
-            collection(
-                db,
-                "presentes_escolhidos"
-            ),
-            orderBy(
-                "data",
-                "desc"
-            )
-        );
+        const consulta =
+            query(
+                collection(
+                    db,
+                    "presentes_escolhidos"
+                ),
+                orderBy(
+                    "data",
+                    "desc"
+                )
+            );
+
 
         const snapshot =
-            await getDocs(consulta);
+            await getDocs(
+                consulta
+            );
+
 
         const escolhidos = [];
 
+
         snapshot.forEach(
-            doc => {
+            registro => {
 
                 escolhidos.push({
 
-                    id: doc.id,
+                    id:
+                        registro.id,
 
-                    ...doc.data()
+                    ...registro.data()
 
                 });
 
             }
         );
 
+
         console.log(
             "Presentes escolhidos:",
             escolhidos
         );
 
+
         return escolhidos;
+
 
     } catch (error) {
 
@@ -130,6 +160,7 @@ async function buscarPresentesEscolhidos() {
             "Erro ao buscar presentes escolhidos:",
             error
         );
+
 
         return [];
 
@@ -150,6 +181,15 @@ async function salvarPix(
 ) {
 
     try {
+
+        if (!presente) {
+
+            throw new Error(
+                "Presente não informado."
+            );
+
+        }
+
 
         await addDoc(
             collection(
@@ -173,11 +213,14 @@ async function salvarPix(
             }
         );
 
+
         console.log(
             "PIX registrado com sucesso."
         );
 
+
         return true;
+
 
     } catch (error) {
 
@@ -186,7 +229,80 @@ async function salvarPix(
             error
         );
 
+
         return false;
+
+    }
+
+}
+
+
+/*
+================================================
+BUSCAR REGISTROS DE PIX
+================================================
+*/
+
+async function buscarPix() {
+
+    try {
+
+        const consulta =
+            query(
+                collection(
+                    db,
+                    "pix"
+                ),
+                orderBy(
+                    "data",
+                    "desc"
+                )
+            );
+
+
+        const snapshot =
+            await getDocs(
+                consulta
+            );
+
+
+        const lista = [];
+
+
+        snapshot.forEach(
+            registro => {
+
+                lista.push({
+
+                    id:
+                        registro.id,
+
+                    ...registro.data()
+
+                });
+
+            }
+        );
+
+
+        console.log(
+            "Registros de PIX:",
+            lista
+        );
+
+
+        return lista;
+
+
+    } catch (error) {
+
+        console.error(
+            "Erro ao buscar registros de PIX:",
+            error
+        );
+
+
+        return [];
 
     }
 
@@ -205,6 +321,15 @@ async function salvarConfirmacao(
 
     try {
 
+        if (!dados) {
+
+            throw new Error(
+                "Dados da confirmação não informados."
+            );
+
+        }
+
+
         await addDoc(
             collection(
                 db,
@@ -220,11 +345,14 @@ async function salvarConfirmacao(
             }
         );
 
+
         console.log(
             "Confirmação salva com sucesso."
         );
 
+
         return true;
+
 
     } catch (error) {
 
@@ -232,6 +360,7 @@ async function salvarConfirmacao(
             "Erro confirmação:",
             error
         );
+
 
         return false;
 
@@ -241,17 +370,13 @@ async function salvarConfirmacao(
 
 
 /*
-==================================================
-BUSCAR CONVIDADOS
+================================================
+BUSCAR CONFIRMAÇÕES
 FONTE OFICIAL: GOOGLE SHEETS
-==================================================
+================================================
 */
 
 async function buscarConvidados() {
-
-    const GOOGLE_SHEETS_URL =
-        "https://script.google.com/macros/s/AKfycbwxoY3KVrIxOjRvZ8nWJOhwA3dWoK_OVnR3Wj893rZLONMIhIpE_TrOFaRLsmm41q1Q/exec";
-
 
     try {
 
@@ -263,7 +388,14 @@ async function buscarConvidados() {
         const resposta =
             await fetch(
                 GOOGLE_SHEETS_URL +
-                "?acao=listarConvidados"
+                "?acao=listarConvidados",
+                {
+                    method:
+                        "GET",
+
+                    cache:
+                        "no-store"
+                }
             );
 
 
@@ -293,10 +425,9 @@ async function buscarConvidados() {
         ) {
 
             throw new Error(
-                resultado &&
-                resultado.erro
-                    ? resultado.erro
-                    : "Erro ao consultar Google Sheets."
+                resultado?.erro ||
+                resultado?.mensagem ||
+                "Erro ao consultar Google Sheets."
             );
 
         }
@@ -310,49 +441,56 @@ async function buscarConvidados() {
                 : [];
 
 
-        /*
-        ------------------------------------------
-        NORMALIZA OS DADOS PARA O PAINEL
-        ------------------------------------------
-        */
-
         return convidados.map(
-            function(convidado) {
+            convidado => {
 
                 return {
 
                     id:
-                        convidado.id,
+                        convidado.id ||
+                        convidado.codigo ||
+                        "",
 
                     codigo:
-                        convidado.codigo || "",
+                        convidado.codigo ||
+                        "",
 
                     nome:
-                        convidado.nome || "",
+                        convidado.nome ||
+                        convidado.nomeCompleto ||
+                        "",
 
                     tipo:
-                        convidado.tipo || "",
+                        convidado.tipo ||
+                        "",
 
                     idade:
-                        convidado.idade || "",
+                        convidado.idade ||
+                        "",
 
                     sexo:
-                        convidado.sexo || "",
+                        convidado.sexo ||
+                        "",
 
                     calcado:
-                        convidado.calcado || "",
+                        convidado.calcado ||
+                        "",
 
                     whatsapp:
-                        convidado.whatsapp || "",
+                        convidado.whatsapp ||
+                        "",
 
                     checkin:
-                        convidado.checkin || "",
+                        convidado.checkin ||
+                        "",
 
                     dataCheckin:
-                        convidado.dataCheckin || "",
+                        convidado.dataCheckin ||
+                        "",
 
                     data:
-                        convidado.data || ""
+                        convidado.data ||
+                        ""
 
                 };
 
@@ -372,229 +510,33 @@ async function buscarConvidados() {
 
     }
 
-}==================================================
-BUSCAR REGISTROS DE PIX
-==================================================
-*/
-
-async function buscarPix() {
-
-    try {
-
-        const consulta = query(
-            collection(
-                db,
-                "pix"
-            ),
-            orderBy(
-                "data",
-                "desc"
-            )
-        );
-
-        const snapshot =
-            await getDocs(
-                consulta
-            );
-
-        const lista = [];
-
-        snapshot.forEach(
-            doc => {
-
-                lista.push({
-
-                    id:
-                        doc.id,
-
-                    ...doc.data()
-
-                });
-
-            }
-        );
-
-        console.log(
-            "Registros de PIX:",
-            lista
-        );
-
-        return lista;
-
-    } catch (error) {
-
-        console.error(
-            "Erro ao buscar registros de PIX:",
-            error
-        );
-
-        return [];
-
-    }
-
-}
-
-/*
-==================================================
-ADMINISTRADOR
-EDITAR REGISTRO
-==================================================
-*/
-
-async function editarRegistro(
-    colecao,
-    id,
-    dados
-) {
-
-    try {
-
-        const referencia =
-            doc(
-                db,
-                colecao,
-                id
-            );
-
-        await updateDoc(
-            referencia,
-            dados
-        );
-
-        console.log(
-            "Registro atualizado:",
-            colecao,
-            id
-        );
-
-        return true;
-
-    } catch (error) {
-
-        console.error(
-            "Erro ao editar registro:",
-            error
-        );
-
-        return false;
-
-    }
-
-}
-
-
-/*
-==================================================
-ADMINISTRADOR
-EXCLUIR REGISTRO
-==================================================
-*/
-
-async function excluirRegistro(
-    colecao,
-    id
-) {
-
-    try {
-
-        const referencia =
-            doc(
-                db,
-                colecao,
-                id
-            );
-
-        await deleteDoc(
-            referencia
-        );
-
-        console.log(
-            "Registro excluído:",
-            colecao,
-            id
-        );
-
-        return true;
-
-} catch (error) {
-
-    console.error(
-        "Erro ao excluir registro:",
-        error
-    );
-
-    console.error(
-        "Código Firebase:",
-        error?.code || "sem código"
-    );
-
-    return false;
-
-    }
-
 }
 
 
 /*
 ================================================
-DISPONIBILIZAR FUNÇÕES
-PARA OS OUTROS ARQUIVOS
+BUSCAR CONFIRMAÇÕES GOOGLE SHEETS
 ================================================
 */
-
-window.salvarEscolhaPresente =
-    salvarEscolhaPresente;
-
-window.buscarPresentesEscolhidos =
-    buscarPresentesEscolhidos;
-
-window.salvarPix =
-    salvarPix;
-
-window.salvarConfirmacao =
-    salvarConfirmacao;
-
-window.buscarConvidados =
-buscarConvidados;
-
-window.buscarPix =
-buscarPix;
-
-window.editarRegistro =
-editarRegistro;
-
-window.excluirRegistro =
-excluirRegistro;
-window.editarRegistro =
-    editarRegistro;
-
-window.excluirRegistro =
-    excluirRegistro;
-
-/*
-==================================================
-BUSCAR CONFIRMAÇÕES DO GOOGLE SHEETS
-==================================================
-*/
-
-const GOOGLE_SHEETS_URL =
-    "https://script.google.com/macros/s/AKfycbwxoY3KVrIxOjRvZ8nWJOhwA3dWoK_OVnR3Wj893rZLONMIhIpE_TrOFaRLsmm41q1Q/exec";
-
 
 async function buscarConfirmacoesGoogleSheets() {
 
     try {
 
         console.log(
-            "Buscando confirmações no Google Sheets..."
+            "Buscando confirmações do Google Sheets..."
         );
+
 
         const resposta =
             await fetch(
                 GOOGLE_SHEETS_URL,
                 {
-                    method: "GET",
-                    cache: "no-store"
+                    method:
+                        "GET",
+
+                    cache:
+                        "no-store"
                 }
             );
 
@@ -619,13 +561,22 @@ async function buscarConfirmacoesGoogleSheets() {
         );
 
 
+        if (!texto) {
+
+            return [];
+
+        }
+
+
         let resultado;
 
 
         try {
 
             resultado =
-                JSON.parse(texto);
+                JSON.parse(
+                    texto
+                );
 
         } catch (erroJSON) {
 
@@ -638,17 +589,6 @@ async function buscarConfirmacoesGoogleSheets() {
 
         }
 
-
-        /*
-        ==========================================
-        FORMATO ATUAL DO SEU APPS SCRIPT
-
-        {
-            sucesso: true,
-            convidados: [...]
-        }
-        ==========================================
-        */
 
         if (
             resultado &&
@@ -663,12 +603,6 @@ async function buscarConfirmacoesGoogleSheets() {
         }
 
 
-        /*
-        ==========================================
-        CASO O APPS SCRIPT RETORNE "resultados"
-        ==========================================
-        */
-
         if (
             resultado &&
             Array.isArray(
@@ -681,14 +615,10 @@ async function buscarConfirmacoesGoogleSheets() {
         }
 
 
-        /*
-        ==========================================
-        CASO RETORNE DIRETAMENTE UM ARRAY
-        ==========================================
-        */
-
         if (
-            Array.isArray(resultado)
+            Array.isArray(
+                resultado
+            )
         ) {
 
             return resultado;
@@ -696,20 +626,16 @@ async function buscarConfirmacoesGoogleSheets() {
         }
 
 
-        console.warn(
-            "Nenhuma confirmação encontrada no retorno:",
-            resultado
-        );
-
         return [];
 
 
-    } catch (erro) {
+    } catch (error) {
 
         console.error(
-            "Erro ao buscar confirmações do Google Sheets:",
-            erro
+            "Erro ao buscar confirmações:",
+            error
         );
+
 
         return [];
 
@@ -718,5 +644,184 @@ async function buscarConfirmacoesGoogleSheets() {
 }
 
 
+/*
+================================================
+EDITAR REGISTRO
+================================================
+*/
+
+async function editarRegistro(
+    colecao,
+    id,
+    dados
+) {
+
+    try {
+
+        if (
+            !colecao ||
+            !id ||
+            !dados
+        ) {
+
+            throw new Error(
+                "Coleção, ID ou dados não informados."
+            );
+
+        }
+
+
+        const referencia =
+            doc(
+                db,
+                colecao,
+                id
+            );
+
+
+        await updateDoc(
+            referencia,
+            dados
+        );
+
+
+        console.log(
+            "Registro atualizado:",
+            colecao,
+            id
+        );
+
+
+        return true;
+
+
+    } catch (error) {
+
+        console.error(
+            "Erro ao editar registro:",
+            error
+        );
+
+
+        return false;
+
+    }
+
+}
+
+
+/*
+================================================
+EXCLUIR REGISTRO
+================================================
+*/
+
+async function excluirRegistro(
+    colecao,
+    id
+) {
+
+    try {
+
+        if (
+            !colecao ||
+            !id
+        ) {
+
+            throw new Error(
+                "Coleção ou ID não informado."
+            );
+
+        }
+
+
+        const referencia =
+            doc(
+                db,
+                colecao,
+                id
+            );
+
+
+        await deleteDoc(
+            referencia
+        );
+
+
+        console.log(
+            "Registro excluído:",
+            colecao,
+            id
+        );
+
+
+        return true;
+
+
+    } catch (error) {
+
+        console.error(
+            "Erro ao excluir registro:",
+            error
+        );
+
+
+        console.error(
+            "Código Firebase:",
+            error?.code ||
+            "sem código"
+        );
+
+
+        return false;
+
+    }
+
+}
+
+
+/*
+================================================
+DISPONIBILIZAR FUNÇÕES
+================================================
+*/
+
+window.salvarEscolhaPresente =
+    salvarEscolhaPresente;
+
+
+window.buscarPresentesEscolhidos =
+    buscarPresentesEscolhidos;
+
+
+window.salvarPix =
+    salvarPix;
+
+
+window.salvarConfirmacao =
+    salvarConfirmacao;
+
+
+window.buscarConvidados =
+    buscarConvidados;
+
+
+window.buscarPix =
+    buscarPix;
+
+
+window.editarRegistro =
+    editarRegistro;
+
+
+window.excluirRegistro =
+    excluirRegistro;
+
+
 window.buscarConfirmacoesGoogleSheets =
     buscarConfirmacoesGoogleSheets;
+
+
+console.log(
+    "Firebase Service carregado com sucesso."
+);

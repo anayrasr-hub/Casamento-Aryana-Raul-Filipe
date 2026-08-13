@@ -118,7 +118,7 @@ async function carregarDadosAdmin() {
 
         /*
         ------------------------------------------
-        ESCOLHAS
+        ESCOLHAS DE PRESENTES
         ------------------------------------------
         */
 
@@ -132,9 +132,154 @@ async function carregarDadosAdmin() {
 
         } else {
 
+            console.error(
+                "buscarPresentesEscolhidos() não está disponível."
+            );
+
             escolhasAdmin = [];
 
         }
+
+
+        /*
+        ------------------------------------------
+        PIX
+        ------------------------------------------
+        */
+
+        if (
+            typeof window.buscarPix ===
+            "function"
+        ) {
+
+            pixAdmin =
+                await window.buscarPix();
+
+        } else {
+
+            console.error(
+                "buscarPix() não está disponível."
+            );
+
+            pixAdmin = [];
+
+        }
+
+
+        /*
+        ------------------------------------------
+        CONFIRMAÇÕES
+        ------------------------------------------
+        */
+
+        if (
+            typeof window.buscarConvidados ===
+            "function"
+        ) {
+
+            convidadosAdmin =
+                await window.buscarConvidados();
+
+
+            console.log(
+                "Confirmações carregadas:",
+                convidadosAdmin
+            );
+
+        } else {
+
+            console.error(
+                "buscarConvidados() não está disponível."
+            );
+
+            convidadosAdmin = [];
+
+        }
+
+
+        /*
+        ------------------------------------------
+        ATUALIZAR RESUMO
+        ------------------------------------------
+        */
+
+        atualizarResumo();
+
+
+        /*
+        ------------------------------------------
+        ATUALIZAR LISTAS
+        ------------------------------------------
+        */
+
+        carregarListaPresentesAdmin();
+
+
+        carregarListaPixAdmin();
+
+
+        carregarListaConvidadosAdmin();
+
+
+    } catch (error) {
+
+        console.error(
+            "Erro ao carregar dados administrativos:",
+            error
+        );
+
+
+        mostrarErro(
+            "listaAdminPresentes",
+            "Não foi possível carregar os presentes."
+        );
+
+
+        mostrarErro(
+            "listaAdminPix",
+            "Não foi possível carregar os registros de PIX."
+        );
+
+
+        mostrarErro(
+            "listaAdminConvidados",
+            "Não foi possível carregar as confirmações."
+        );
+
+    }
+
+}
+
+
+/*
+==================================================
+OBTER PRESENTES DO DATA.JS
+==================================================
+*/
+
+function obterPresentesAdmin() {
+
+    if (
+        Array.isArray(
+            window.presentes
+        )
+    ) {
+
+        return [
+            ...window.presentes
+        ];
+
+    }
+
+
+    console.error(
+        "window.presentes não foi encontrado."
+    );
+
+
+    return [];
+
+}
 
 
         /*
