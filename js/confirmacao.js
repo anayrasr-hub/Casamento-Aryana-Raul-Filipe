@@ -29,41 +29,134 @@ const GOOGLE_SHEETS_URL =
     "https://script.google.com/macros/s/AKfycbwxoY3KVrIxOjRvZ8nWJOhwA3dWoK_OVnR3Wj893rZLONMIhIpE_TrOFaRLsmm41q1Q/exec";
 
 
-/*
-==================================================
-ELEMENTOS
-==================================================
-*/
-
 const formPresenca =
     document.getElementById("formPresenca");
 
+
+/*
+==================================================
+FUNÇÃO PARA LOCALIZAR CAMPOS
+==================================================
+*/
+
+function localizarCampo(ids, seletorAlternativo = "") {
+
+    for (const id of ids) {
+
+        const elemento =
+            document.getElementById(id);
+
+        if (elemento) {
+            return elemento;
+        }
+
+    }
+
+    if (seletorAlternativo) {
+
+        const elemento =
+            document.querySelector(
+                seletorAlternativo
+            );
+
+        if (elemento) {
+            return elemento;
+        }
+
+    }
+
+    return null;
+
+}
+
+
+/*
+==================================================
+CAMPOS DA CONFIRMAÇÃO
+==================================================
+*/
+
+const nome =
+    localizarCampo(
+        [
+            "nome",
+            "nomeCompleto",
+            "nomeConvidado"
+        ],
+        '#formPresenca input[name="nome"]'
+    );
+
+
 const tipo =
-    document.getElementById("tipo");
+    localizarCampo(
+        [
+            "tipo",
+            "tipoConvidado"
+        ],
+        '#formPresenca select[name="tipo"]'
+    );
+
 
 const sexo =
-    document.getElementById("sexo");
+    localizarCampo(
+        [
+            "sexo"
+        ],
+        '#formPresenca select[name="sexo"]'
+    );
+
 
 const campoIdade =
-    document.getElementById("campoIdade");
+    document.getElementById(
+        "campoIdade"
+    );
 
-const campoCalcado =
-    document.getElementById("campoCalcado");
 
 const idade =
-    document.getElementById("idade");
+    localizarCampo(
+        [
+            "idade"
+        ],
+        '#formPresenca input[name="idade"]'
+    );
+
+
+const campoCalcado =
+    document.getElementById(
+        "campoCalcado"
+    );
+
 
 const calcado =
-    document.getElementById("calcado");
+    localizarCampo(
+        [
+            "calcado",
+            "calçado"
+        ],
+        '#formPresenca input[name="calcado"]'
+    );
+
 
 const whatsapp =
-    document.getElementById("whatsapp");
+    localizarCampo(
+        [
+            "whatsapp",
+            "telefone"
+        ],
+        '#formPresenca input[name="whatsapp"]'
+    );
+
 
 const listaConvidados =
-    document.getElementById("listaConvidados");
+    document.getElementById(
+        "listaConvidados"
+    );
+
 
 const btnVoltar =
-    document.getElementById("btnVoltarConfirmacao");
+    document.getElementById(
+        "btnVoltarConfirmacao"
+    );
 
 
 /*
@@ -126,25 +219,92 @@ MOSTRAR / OCULTAR CAMPOS
 
 function atualizarCamposVisiveis() {
 
+    /*
+    ==============================================
+    NORMALIZAR TIPO
+    ==============================================
+    */
+
+    const tipoNormalizado =
+        String(
+            tipo?.value || ""
+        )
+        .normalize("NFD")
+        .replace(
+            /[\u0300-\u036f]/g,
+            ""
+        )
+        .toLowerCase()
+        .trim();
+
 
     /*
-    -----------------------------------------------
-    IDADE
-    -----------------------------------------------
+    ==============================================
+    NORMALIZAR SEXO
+    ==============================================
+    */
+
+    const sexoNormalizado =
+        String(
+            sexo?.value || ""
+        )
+        .normalize("NFD")
+        .replace(
+            /[\u0300-\u036f]/g,
+            ""
+        )
+        .toLowerCase()
+        .trim();
+
+
+    /*
+    ==============================================
+    VERIFICAR CRIANÇA
+    ==============================================
+    */
+
+    const ehCrianca =
+        tipoNormalizado === "crianca";
+
+
+    /*
+    ==============================================
+    VERIFICAR ADULTO
+    ==============================================
+    */
+
+    const ehAdulto =
+        tipoNormalizado === "adulto";
+
+
+    /*
+    ==============================================
+    VERIFICAR FEMININO
+    ==============================================
+    */
+
+    const ehFeminino =
+        sexoNormalizado === "feminino";
+
+
+    /*
+    ==============================================
+    CAMPO IDADE
+    ==============================================
     */
 
     if (campoIdade) {
 
-        if (
-            tipo &&
-            tipo.value === "Crianca"
-        ) {
+        if (ehCrianca) {
 
             campoIdade.style.display =
                 "block";
 
             if (idade) {
-                idade.required = true;
+
+                idade.required =
+                    true;
+
             }
 
         } else {
@@ -154,9 +314,11 @@ function atualizarCamposVisiveis() {
 
             if (idade) {
 
-                idade.required = false;
+                idade.required =
+                    false;
 
-                idade.value = "";
+                idade.value =
+                    "";
 
             }
 
@@ -166,18 +328,16 @@ function atualizarCamposVisiveis() {
 
 
     /*
-    -----------------------------------------------
-    CALÇADO
-    -----------------------------------------------
+    ==============================================
+    CAMPO CALÇADO
+    ==============================================
     */
 
     if (campoCalcado) {
 
         const mostrarCalcado =
-            tipo &&
-            tipo.value === "Adulto" &&
-            sexo &&
-            sexo.value === "Feminino";
+            ehAdulto &&
+            ehFeminino;
 
 
         if (mostrarCalcado) {
@@ -185,8 +345,15 @@ function atualizarCamposVisiveis() {
             campoCalcado.style.display =
                 "block";
 
+            /*
+            Calçado NÃO é obrigatório.
+            */
+
             if (calcado) {
-                calcado.required = false;
+
+                calcado.required =
+                    false;
+
             }
 
         } else {
@@ -195,8 +362,13 @@ function atualizarCamposVisiveis() {
                 "none";
 
             if (calcado) {
-                calcado.required = false;
-                calcado.value = "";
+
+                calcado.required =
+                    false;
+
+                calcado.value =
+                    "";
+
             }
 
         }
@@ -606,10 +778,8 @@ async function enviarConfirmacao(evento) {
         ==========================================
         */
 
-        const nome =
-            obterValor(
-                document.getElementById("nome")
-            );
+        const nomeValor =
+    obterValor(nome);
 
 
         const tipoValor =
@@ -640,6 +810,18 @@ async function enviarConfirmacao(evento) {
                 obterValor(whatsapp)
             );
 
+console.log(
+    "CAMPOS DA CONFIRMAÇÃO:",
+    {
+        nome: nome?.value,
+        tipo: tipo?.value,
+        sexo: sexo?.value,
+        idade: idade?.value,
+        calcado: calcado?.value,
+        whatsapp: whatsapp?.value
+    }
+);
+
 
         /*
         ==========================================
@@ -647,7 +829,7 @@ async function enviarConfirmacao(evento) {
         ==========================================
         */
 
-        if (!nome) {
+        if (!nomeValor) {
 
             alert(
                 "Informe o nome do convidado."
@@ -700,13 +882,13 @@ async function enviarConfirmacao(evento) {
         ==========================================
         */
 
-        const dados = {
+       const dados = {
 
-            nome:
-                nome,
+    nome:
+        nomeValor,
 
-            tipo:
-                tipoValor,
+    tipo:
+        tipoValor,
 
             idade:
                 idadeValor,
