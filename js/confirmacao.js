@@ -219,107 +219,40 @@ MOSTRAR / OCULTAR CAMPOS
 
 function atualizarCamposVisiveis() {
 
-    /*
-    ==============================================
-    NORMALIZAR TIPO
-    ==============================================
-    */
+    const tipoValor =
+        tipo
+            ? String(tipo.value || "").trim()
+            : "";
 
-    const tipoNormalizado =
-        String(
-            tipo?.value || ""
-        )
-        .normalize("NFD")
-        .replace(
-            /[\u0300-\u036f]/g,
-            ""
-        )
-        .toLowerCase()
-        .trim();
-
+    const sexoValor =
+        sexo
+            ? String(sexo.value || "").trim()
+            : "";
 
     /*
-    ==============================================
-    NORMALIZAR SEXO
-    ==============================================
-    */
-
-    const sexoNormalizado =
-        String(
-            sexo?.value || ""
-        )
-        .normalize("NFD")
-        .replace(
-            /[\u0300-\u036f]/g,
-            ""
-        )
-        .toLowerCase()
-        .trim();
-
-
-    /*
-    ==============================================
-    VERIFICAR CRIANÇA
-    ==============================================
+    ==========================================
+    CRIANÇA → MOSTRAR IDADE
+    ==========================================
     */
 
     const ehCrianca =
-        tipoNormalizado === "crianca";
-
-
-    /*
-    ==============================================
-    VERIFICAR ADULTO
-    ==============================================
-    */
-
-    const ehAdulto =
-        tipoNormalizado === "adulto";
-
-
-    /*
-    ==============================================
-    VERIFICAR FEMININO
-    ==============================================
-    */
-
-    const ehFeminino =
-        sexoNormalizado === "feminino";
-
-
-    /*
-    ==============================================
-    CAMPO IDADE
-    ==============================================
-    */
+        tipoValor === "Crianca" ||
+        tipoValor === "Criança";
 
     if (campoIdade) {
 
-        if (ehCrianca) {
+        campoIdade.style.display =
+            ehCrianca
+                ? "block"
+                : "none";
 
-            campoIdade.style.display =
-                "block";
+        if (idade) {
 
-            if (idade) {
+            idade.required =
+                ehCrianca;
 
-                idade.required =
-                    true;
-
-            }
-
-        } else {
-
-            campoIdade.style.display =
-                "none";
-
-            if (idade) {
-
-                idade.required =
-                    false;
-
-                idade.value =
-                    "";
-
+            if (!ehCrianca) {
+                idade.value = "";
             }
 
         }
@@ -328,46 +261,45 @@ function atualizarCamposVisiveis() {
 
 
     /*
-    ==============================================
-    CAMPO CALÇADO
-    ==============================================
+    ==========================================
+    ADULTO + FEMININO → MOSTRAR CALÇADO
+    ==========================================
     */
+
+    const ehAdulto =
+        tipoValor === "Adulto" ||
+        tipoValor === "adulto";
+
+    const ehFeminino =
+        sexoValor === "Feminino" ||
+        sexoValor === "feminino";
+
+    const mostrarCalcado =
+        ehAdulto &&
+        ehFeminino;
+
 
     if (campoCalcado) {
 
-        const mostrarCalcado =
-            ehAdulto &&
-            ehFeminino;
+        campoCalcado.style.display =
+            mostrarCalcado
+                ? "block"
+                : "none";
 
 
-        if (mostrarCalcado) {
-
-            campoCalcado.style.display =
-                "block";
+        if (calcado) {
 
             /*
             Calçado NÃO é obrigatório.
             */
 
-            if (calcado) {
+            calcado.required =
+                false;
 
-                calcado.required =
-                    false;
 
-            }
+            if (!mostrarCalcado) {
 
-        } else {
-
-            campoCalcado.style.display =
-                "none";
-
-            if (calcado) {
-
-                calcado.required =
-                    false;
-
-                calcado.value =
-                    "";
+                calcado.value = "";
 
             }
 
@@ -376,7 +308,6 @@ function atualizarCamposVisiveis() {
     }
 
 }
-
 
 /*
 ==================================================

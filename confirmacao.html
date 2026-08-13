@@ -115,89 +115,93 @@ Confirmar Presença - Aryana & Raul Filipe
                         Tipo de convidado
                     </label>
 
-                    <select
-                        name="tipo"
-                        class="campo-tipo"
-                        required
-                    >
+                    <label for="tipo">
+    Tipo de convidado
+</label>
 
-                        <option value="">
-                            Selecione
-                        </option>
+<select id="tipo" name="tipo">
+    <option value="">
+        Selecione
+    </option>
 
-                        <option value="Adulto">
-                            Adulto
-                        </option>
+    <option value="Adulto">
+        Adulto
+    </option>
 
-                        <option value="Crianca">
-                            Criança
-                        </option>
-
-                    </select>
+    <option value="Crianca">
+        Criança
+    </option>
+</select>
 
 
-                    <div
-                        class="campo-idade"
-                        style="display:none;"
-                    >
+<div
+    id="campoIdade"
+    style="display:none;"
+>
 
-                        <label>
-                            Idade
-                        </label>
+    <label for="idade">
+        Idade da criança
+    </label>
 
-                        <input
-                            type="number"
-                            name="idade"
-                            min="0"
-                            max="17"
-                            placeholder="Idade da criança"
+    <input
+        type="number"
+        id="idade"
+        name="idade"
+        min="0"
+        max="17"
+        placeholder="Informe a idade"
+    >
+
+</div>
                         >
 
                     </div>
 
 
-                    <label>
-                        Sexo
-                        <span class="opcional">
-                            (opcional)
-                        </span>
-                    </label>
+ <label for="sexo">
+    Sexo <span>(opcional)</span>
+</label>
 
-                    <select name="sexo">
+<select
+    id="sexo"
+    name="sexo"
+>
 
-                        <option value="">
-                            Não informar
-                        </option>
+    <option value="">
+        Não informar
+    </option>
 
-                        <option value="Feminino">
-                            Feminino
-                        </option>
+    <option value="Feminino">
+        Feminino
+    </option>
 
-                        <option value="Masculino">
-                            Masculino
-                        </option>
+    <option value="Masculino">
+        Masculino
+    </option>
 
-                    </select>
+</select>
 
 
-                    <div
-                        class="campo-calcado"
-                        style="display:none;"
-                    >
+<div
+    id="campoCalcado"
+    style="display:none;"
+>
 
-                        <label>
-                            Número do calçado
-                            <span class="opcional">
-                                (opcional)
-                            </span>
-                        </label>
+    <label for="calcado">
+        Número do calçado
+    </label>
 
-                        <input
-                            type="number"
-                            name="calcado"
-                            min="20"
-                            max="50"
-                            placeholder="Ex.: 37"
+    <input
+        type="number"
+        id="calcado"
+        name="calcado"
+        min="20"
+        max="50"
+        step="1"
+        placeholder="Ex.: 37"
+    >
+
+</div>
                         >
 
                     </div>
