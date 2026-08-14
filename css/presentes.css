@@ -1429,3 +1429,74 @@ body {
 
     opacity: 0.85;
 }
+
+/* =========================================
+   BOTÃO VOLTAR
+========================================= */
+
+.area-voltar {
+
+    width: min(92%, 1100px);
+
+    margin: 15px auto 0;
+
+}
+
+
+.btn-voltar-presentes {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 8px 16px;
+
+    border: 1px solid #b85c38;
+
+    border-radius: 20px;
+
+    background: transparent;
+
+    color: #8f432d;
+
+    font-size: 0.82rem;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+
+}
+
+
+.btn-voltar-presentes:hover {
+
+    background: #b85c38;
+
+    color: white;
+
+}
+
+
+@media (max-width: 600px) {
+
+    .area-voltar {
+
+        width: calc(100% - 20px);
+
+        margin-top: 12px;
+
+    }
+
+    .btn-voltar-presentes {
+
+        padding: 7px 14px;
+
+        font-size: 0.78rem;
+
+    }
+
+}
