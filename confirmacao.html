@@ -283,56 +283,6 @@
     src="js/confirmacao.js?v=20260814-02"
 ></script>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-
-    const botao =
-        document.getElementById("btnAdicionarConvidado");
-
-    console.log(
-        "TESTE BOTÃO ADICIONAR:",
-        botao
-    );
-
-    if (!botao) {
-
-        console.error(
-            "ERRO: botão #btnAdicionarConvidado não encontrado."
-        );
-
-        return;
-    }
-
-    botao.addEventListener("click", function () {
-
-        console.log(
-            "BOTÃO ADICIONAR FOI CLICADO!"
-        );
-
-        if (
-            typeof window.adicionarOutroConvidado ===
-            "function"
-        ) {
-
-            window.adicionarOutroConvidado();
-
-        } else {
-
-            console.error(
-                "ERRO: window.adicionarOutroConvidado não existe."
-            );
-
-            alert(
-                "A função de adicionar convidado não foi carregada. " +
-                "Vamos corrigir o JavaScript."
-            );
-
-        }
-
-    });
-
-});
-</script>
-
 </body>
+
 </html>
