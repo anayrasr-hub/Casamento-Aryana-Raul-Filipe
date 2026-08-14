@@ -1128,9 +1128,44 @@ function mostrarConfirmacoesSucesso(
 ) {
 
     if (!listaConvidados) {
+
+        console.error(
+            "ERRO: #listaConvidados não encontrado."
+        );
+
         return;
+
     }
 
+
+    /*
+    ======================================
+    LIMPA RESULTADO ANTERIOR
+    ======================================
+    */
+
+    listaConvidados.innerHTML = "";
+
+
+    /*
+    ======================================
+    ESCONDE O FORMULÁRIO
+    ======================================
+    */
+
+    if (formPresenca) {
+
+        formPresenca.style.display =
+            "none";
+
+    }
+
+
+    /*
+    ======================================
+    CRIA CARD DE SUCESSO
+    ======================================
+    */
 
     const card =
         document.createElement(
@@ -1155,7 +1190,15 @@ function mostrarConfirmacoesSucesso(
             </h3>
 
             <p>
-                Seus convidados foram registrados.
+                ${convidados.length === 1
+                    ? "O convidado foi registrado com sucesso."
+                    : "Todos os convidados foram registrados com sucesso."
+                }
+            </p>
+
+            <p class="mensagem-codigos">
+                Guarde os códigos abaixo. Eles identificam
+                individualmente cada convidado.
             </p>
 
             <div class="lista-codigos">
@@ -1163,30 +1206,44 @@ function mostrarConfirmacoesSucesso(
     `;
 
 
+    /*
+    ======================================
+    LISTA DOS CONVIDADOS
+    ======================================
+    */
+
     convidados.forEach(
-        convidado => {
+        function (
+            convidado,
+            indice
+        ) {
 
             html += `
 
-                <div class="codigo-convidado">
+                <div
+                    class="codigo-convidado"
+                    data-indice="${indice}"
+                >
 
-                    <strong>
+                    <div class="numero-convidado">
+                        Convidado ${indice + 1}
+                    </div>
+
+                    <strong class="nome-convidado">
                         ${escaparHTML(
                             convidado.nome
                         )}
                     </strong>
 
-                    <br>
+                    <div class="codigo-label">
+                        Código do convite
+                    </div>
 
-                    Seu código:
-
-                    <strong>
+                    <strong class="codigo-valor">
                         ${escaparHTML(
                             convidado.codigo
                         )}
                     </strong>
-
-                    <br><br>
 
                     <button
                         type="button"
@@ -1207,10 +1264,36 @@ function mostrarConfirmacoesSucesso(
 
             </div>
 
+
+            <div class="mensagem-final-confirmacao">
+
+                ❤️ Obrigado por confirmar sua presença!
+
+                <br><br>
+
+                Estamos muito felizes em celebrar
+                esse momento com você.
+
+            </div>
+
+
+            <button
+                type="button"
+                class="btn-nova-confirmacao"
+            >
+                Fazer nova confirmação
+            </button>
+
         </div>
 
     `;
 
+
+    /*
+    ======================================
+    INSERE RESULTADO
+    ======================================
+    */
 
     card.innerHTML =
         html;
@@ -1227,13 +1310,13 @@ function mostrarConfirmacoesSucesso(
     ======================================
     */
 
-    const botoes =
+    const botoesWhatsApp =
         card.querySelectorAll(
             ".btn-whatsapp-convite"
         );
 
 
-    botoes.forEach(
+    botoesWhatsApp.forEach(
         function (
             botao,
             indice
@@ -1254,62 +1337,142 @@ function mostrarConfirmacoesSucesso(
     );
 
 
-    card.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    });
+    /*
+    ======================================
+    NOVA CONFIRMAÇÃO
+    ======================================
+    */
+
+    const btnNovaConfirmacao =
+        card.querySelector(
+            ".btn-nova-confirmacao"
+        );
+
+
+    if (btnNovaConfirmacao) {
+
+        btnNovaConfirmacao.addEventListener(
+            "click",
+            function () {
+
+                /*
+                ------------------------------
+                LIMPA RESULTADO
+                ------------------------------
+                */
+
+                listaConvidados.innerHTML =
+                    "";
+
+
+                /*
+                ------------------------------
+                MOSTRA FORMULÁRIO NOVAMENTE
+                ------------------------------
+                */
+
+                if (formPresenca) {
+
+                    formPresenca.style.display =
+                        "";
+
+                    formPresenca.reset();
+
+                }
+
+
+                /*
+                ------------------------------
+                REMOVE CONVIDADOS EXTRAS
+                ------------------------------
+                */
+
+                const blocos =
+                    listaConvidadosFormulario
+                        ?.querySelectorAll(
+                            ".bloco-convidado"
+                        );
+
+
+                if (blocos) {
+
+                    blocos.forEach(
+                        function (
+                            bloco,
+                            indice
+                        ) {
+
+                            if (indice > 0) {
+
+                                bloco.remove();
+
+                            }
+
+                        }
+                    );
+
+                }
+
+
+                /*
+                ------------------------------
+                REINICIA CONTADOR
+                ------------------------------
+                */
+
+                contadorConvidados =
+                    1;
+
+
+                /*
+                ------------------------------
+                CONFIGURA CONVIDADO 1
+                ------------------------------
+                */
+
+                const primeiro =
+                    listaConvidadosFormulario
+                        ?.querySelector(
+                            ".bloco-convidado"
+                        );
+
+
+                if (primeiro) {
+
+                    configurarBlocoConvidado(
+                        primeiro
+                    );
+
+                }
+
+
+                /*
+                ------------------------------
+                VOLTA PARA O FORMULÁRIO
+                ------------------------------
+                */
+
+                formPresenca?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+
+            }
+        );
+
+    }
 
 
     /*
     ======================================
-    LIMPAR FORMULÁRIO
+    ROLAGEM PARA O RESULTADO
     ======================================
     */
 
-    formPresenca.reset();
-
-
-    const blocos =
-        listaConvidadosFormulario
-            .querySelectorAll(
-                ".bloco-convidado"
-            );
-
-
-    blocos.forEach(
-        function (
-            bloco,
-            indice
-        ) {
-
-            if (indice > 0) {
-
-                bloco.remove();
-
-            }
-
-        }
-    );
-
-
-    contadorConvidados =
-        1;
-
-
-    const primeiro =
-        listaConvidadosFormulario
-            .querySelector(
-                ".bloco-convidado"
-            );
-
-
-    if (primeiro) {
-
-        configurarBlocoConvidado(
-            primeiro
-        );
-
-    }
+    card.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
 
 }
 
