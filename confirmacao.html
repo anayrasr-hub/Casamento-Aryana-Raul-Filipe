@@ -3,26 +3,26 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<title>
-Confirmar Presença - Aryana & Raul Filipe
-</title>
+    <title>
+        Confirmar Presença - Aryana & Raul Filipe
+    </title>
 
-<link
-    rel="stylesheet"
-    href="css/style.css"
->
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
 
-<link
-    rel="stylesheet"
-    href="css/confirmacao.css"
->
+    <link
+        rel="stylesheet"
+        href="css/confirmacao.css"
+    >
 
 </head>
 
@@ -56,7 +56,7 @@ Confirmar Presença - Aryana & Raul Filipe
     </button>
 
 
-    <!-- UMA ÚNICA FOTO -->
+    <!-- FOTO DO CASAL -->
 
     <img
         src="imagens/casal.jpg"
@@ -80,21 +80,30 @@ Confirmar Presença - Aryana & Raul Filipe
         </div>
 
 
+        <!-- =========================================
+             FORMULÁRIO
+        ========================================== -->
+
         <form id="formPresenca">
 
+            <div id="listaConvidadosFormulario">
 
-            <div id="listaConvidados">
 
-
-                <!-- CONVIDADO 1 -->
+                <!-- =================================
+                     CONVIDADO 1
+                ================================== -->
 
                 <div
-                    class="convidado-bloco"
+                    class="bloco-convidado"
                     data-convidado="1"
                 >
 
-                    <div class="numero-convidado">
-                        Convidado 1
+                    <div class="cabecalho-convidado">
+
+                        <h3>
+                            Convidado 1
+                        </h3>
+
                     </div>
 
 
@@ -104,9 +113,7 @@ Confirmar Presença - Aryana & Raul Filipe
 
                     <input
                         type="text"
-                        name="nome"
-                        required
-                        autocomplete="name"
+                        class="campo-nome"
                         placeholder="Digite o nome completo"
                     >
 
@@ -115,97 +122,93 @@ Confirmar Presença - Aryana & Raul Filipe
                         Tipo de convidado
                     </label>
 
-                    <label for="tipo">
-    Tipo de convidado
-</label>
+                    <select
+                        class="campo-tipo"
+                    >
 
-<select id="tipo" name="tipo">
-    <option value="">
-        Selecione
-    </option>
+                        <option value="">
+                            Selecione
+                        </option>
 
-    <option value="Adulto">
-        Adulto
-    </option>
+                        <option value="Adulto">
+                            Adulto
+                        </option>
 
-    <option value="Crianca">
-        Criança
-    </option>
-</select>
+                        <option value="Crianca">
+                            Criança
+                        </option>
+
+                    </select>
 
 
-<div
-    id="campoIdade"
-    style="display:none;"
->
+                    <!-- IDADE -->
 
-    <label for="idade">
-        Idade da criança
-    </label>
+                    <div
+                        class="campo-idade-container"
+                        style="display:none;"
+                    >
 
-    <input
-        type="number"
-        id="idade"
-        name="idade"
-        min="0"
-        max="17"
-        placeholder="Informe a idade"
-    >
+                        <label>
+                            Idade da criança
+                        </label>
 
-</div>
+                        <input
+                            type="number"
+                            class="campo-idade"
+                            min="0"
+                            max="17"
                         >
 
                     </div>
 
 
- <label for="sexo">
-    Sexo <span>(opcional)</span>
-</label>
+                    <!-- SEXO -->
 
-<select
-    id="sexo"
-    name="sexo"
->
+                    <label>
+                        Sexo <span>(opcional)</span>
+                    </label>
 
-    <option value="">
-        Não informar
-    </option>
+                    <select
+                        class="campo-sexo"
+                    >
 
-    <option value="Feminino">
-        Feminino
-    </option>
+                        <option value="">
+                            Não informar
+                        </option>
 
-    <option value="Masculino">
-        Masculino
-    </option>
+                        <option value="Feminino">
+                            Feminino
+                        </option>
 
-</select>
+                        <option value="Masculino">
+                            Masculino
+                        </option>
+
+                    </select>
 
 
-<div
-    id="campoCalcado"
-    style="display:none;"
->
+                    <!-- CALÇADO -->
 
-    <label for="calcado">
-        Número do calçado
-    </label>
+                    <div
+                        class="campo-calcado-container"
+                        style="display:none;"
+                    >
 
-    <input
-        type="number"
-        id="calcado"
-        name="calcado"
-        min="20"
-        max="50"
-        step="1"
-        placeholder="Ex.: 37"
-    >
+                        <label>
+                            Número do calçado
+                        </label>
 
-</div>
+                        <input
+                            type="number"
+                            class="campo-calcado"
+                            min="20"
+                            max="50"
                         >
 
                     </div>
 
+
+                    <!-- WHATSAPP -->
 
                     <label>
                         WhatsApp
@@ -213,9 +216,7 @@ Confirmar Presença - Aryana & Raul Filipe
 
                     <input
                         type="tel"
-                        name="whatsapp"
-                        required
-                        autocomplete="tel"
+                        class="campo-whatsapp"
                         placeholder="(21) 99999-9999"
                     >
 
@@ -223,6 +224,10 @@ Confirmar Presença - Aryana & Raul Filipe
 
             </div>
 
+
+            <!-- =========================================
+                 BOTÃO ADICIONAR
+            ========================================== -->
 
             <button
                 type="button"
@@ -233,28 +238,25 @@ Confirmar Presença - Aryana & Raul Filipe
             </button>
 
 
+            <!-- =========================================
+                 CONFIRMAR
+            ========================================== -->
+
             <button
                 type="submit"
-                id="btnConfirmarPresenca"
                 class="btn-confirmar-presenca"
             >
                 Confirmar presença
             </button>
 
-
-            <div
-                id="mensagemConfirmacao"
-                class="mensagem-confirmacao"
-            ></div>
-
-
         </form>
 
 
+        <!-- RESULTADO -->
+
         <div
-            id="resultadoConfirmacao"
+            id="listaConvidados"
             class="resultado-confirmacao"
-            style="display:none;"
         ></div>
 
     </section>
@@ -262,7 +264,9 @@ Confirmar Presença - Aryana & Raul Filipe
 </main>
 
 
-<!-- FIREBASE -->
+<!-- =========================================
+     FIREBASE
+========================================== -->
 
 <script
     type="module"
@@ -270,13 +274,65 @@ Confirmar Presença - Aryana & Raul Filipe
 ></script>
 
 
-<!-- CONFIRMAÇÃO -->
+<!-- =========================================
+     CONFIRMAÇÃO
+========================================== -->
 
 <script
     type="module"
-    src="js/confirmacao.js"
+    src="js/confirmacao.js?v=20260814-02"
 ></script>
 
-</body>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
+    const botao =
+        document.getElementById("btnAdicionarConvidado");
+
+    console.log(
+        "TESTE BOTÃO ADICIONAR:",
+        botao
+    );
+
+    if (!botao) {
+
+        console.error(
+            "ERRO: botão #btnAdicionarConvidado não encontrado."
+        );
+
+        return;
+    }
+
+    botao.addEventListener("click", function () {
+
+        console.log(
+            "BOTÃO ADICIONAR FOI CLICADO!"
+        );
+
+        if (
+            typeof window.adicionarOutroConvidado ===
+            "function"
+        ) {
+
+            window.adicionarOutroConvidado();
+
+        } else {
+
+            console.error(
+                "ERRO: window.adicionarOutroConvidado não existe."
+            );
+
+            alert(
+                "A função de adicionar convidado não foi carregada. " +
+                "Vamos corrigir o JavaScript."
+            );
+
+        }
+
+    });
+
+});
+</script>
+
+</body>
 </html>

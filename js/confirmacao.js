@@ -3,19 +3,6 @@
 CASAMENTO ARYANA & RAUL FILIPE
 CONFIRMAÇÃO DE PRESENÇA
 ==================================================
-
-Integrações:
-- Google Sheets
-- Firebase
-- Geração de código
-- Adulto / Criança
-- Idade
-- Sexo opcional
-- Calçado para mulher adulta
-- WhatsApp
-- Convite
-- Botão voltar
-==================================================
 */
 
 
@@ -29,134 +16,37 @@ const GOOGLE_SHEETS_URL =
     "https://script.google.com/macros/s/AKfycbwxoY3KVrIxOjRvZ8nWJOhwA3dWoK_OVnR3Wj893rZLONMIhIpE_TrOFaRLsmm41q1Q/exec";
 
 
+/*
+==================================================
+ELEMENTOS
+==================================================
+*/
+
 const formPresenca =
     document.getElementById("formPresenca");
 
-
-/*
-==================================================
-FUNÇÃO PARA LOCALIZAR CAMPOS
-==================================================
-*/
-
-function localizarCampo(ids, seletorAlternativo = "") {
-
-    for (const id of ids) {
-
-        const elemento =
-            document.getElementById(id);
-
-        if (elemento) {
-            return elemento;
-        }
-
-    }
-
-    if (seletorAlternativo) {
-
-        const elemento =
-            document.querySelector(
-                seletorAlternativo
-            );
-
-        if (elemento) {
-            return elemento;
-        }
-
-    }
-
-    return null;
-
-}
-
-
-/*
-==================================================
-CAMPOS DA CONFIRMAÇÃO
-==================================================
-*/
-
-const nome =
-    localizarCampo(
-        [
-            "nome",
-            "nomeCompleto",
-            "nomeConvidado"
-        ],
-        '#formPresenca input[name="nome"]'
-    );
-
-
-const tipo =
-    localizarCampo(
-        [
-            "tipo",
-            "tipoConvidado"
-        ],
-        '#formPresenca select[name="tipo"]'
-    );
-
-
-const sexo =
-    localizarCampo(
-        [
-            "sexo"
-        ],
-        '#formPresenca select[name="sexo"]'
-    );
-
-
-const campoIdade =
+const listaConvidadosFormulario =
     document.getElementById(
-        "campoIdade"
+        "listaConvidadosFormulario"
     );
 
-
-const idade =
-    localizarCampo(
-        [
-            "idade"
-        ],
-        '#formPresenca input[name="idade"]'
-    );
-
-
-const campoCalcado =
+const btnAdicionarConvidado =
     document.getElementById(
-        "campoCalcado"
+        "btnAdicionarConvidado"
     );
-
-
-const calcado =
-    localizarCampo(
-        [
-            "calcado",
-            "calçado"
-        ],
-        '#formPresenca input[name="calcado"]'
-    );
-
-
-const whatsapp =
-    localizarCampo(
-        [
-            "whatsapp",
-            "telefone"
-        ],
-        '#formPresenca input[name="whatsapp"]'
-    );
-
 
 const listaConvidados =
     document.getElementById(
         "listaConvidados"
     );
 
-
 const btnVoltar =
     document.getElementById(
         "btnVoltarConfirmacao"
     );
+
+
+let contadorConvidados = 1;
 
 
 /*
@@ -165,45 +55,109 @@ INICIALIZAÇÃO
 ==================================================
 */
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
+function iniciarConfirmacao() {
 
-        configurarCampos();
-
-        configurarFormulario();
-
-        configurarBotaoVoltar();
-
-        atualizarCamposVisiveis();
-
-    }
-);
+    console.log(
+        "Sistema de confirmação iniciado."
+    );
 
 
-/*
-==================================================
-CONFIGURAR CAMPOS
-==================================================
-*/
+    /*
+    ------------------------------------------
+    BOTÃO ADICIONAR
+    ------------------------------------------
+    */
 
-function configurarCampos() {
+    if (btnAdicionarConvidado) {
 
-    if (tipo) {
+        btnAdicionarConvidado.addEventListener(
+            "click",
+            function (evento) {
 
-        tipo.addEventListener(
-            "change",
-            atualizarCamposVisiveis
+                evento.preventDefault();
+
+                console.log(
+                    "Botão adicionar convidado clicado."
+                );
+
+                adicionarOutroConvidado();
+
+            }
+        );
+
+    } else {
+
+        console.error(
+            "ERRO: botão #btnAdicionarConvidado não encontrado."
         );
 
     }
 
 
-    if (sexo) {
+    /*
+    ------------------------------------------
+    FORMULÁRIO
+    ------------------------------------------
+    */
 
-        sexo.addEventListener(
-            "change",
-            atualizarCamposVisiveis
+    if (formPresenca) {
+
+        formPresenca.addEventListener(
+            "submit",
+            enviarConfirmacao
+        );
+
+    }
+
+
+    /*
+    ------------------------------------------
+    CONFIGURA CONVIDADO 1
+    ------------------------------------------
+    */
+
+    const primeiroBloco =
+        listaConvidadosFormulario
+            ?.querySelector(
+                ".bloco-convidado"
+            );
+
+
+    if (primeiroBloco) {
+
+        configurarBlocoConvidado(
+            primeiroBloco
+        );
+
+    }
+
+
+    /*
+    ------------------------------------------
+    BOTÃO VOLTAR
+    ------------------------------------------
+    */
+
+    if (btnVoltar) {
+
+        btnVoltar.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    window.history.length > 1
+                ) {
+
+                    window.history.back();
+
+                } else {
+
+                    window.location.href =
+                        "index.html";
+
+                }
+
+            }
         );
 
     }
@@ -213,88 +167,323 @@ function configurarCampos() {
 
 /*
 ==================================================
-MOSTRAR / OCULTAR CAMPOS
+ADICIONAR OUTRO CONVIDADO
 ==================================================
 */
 
-function atualizarCamposVisiveis() {
+function adicionarOutroConvidado() {
 
-    const tipoValor =
-        tipo
-            ? String(tipo.value || "").trim()
-            : "";
+    if (!listaConvidadosFormulario) {
 
-    const sexoValor =
-        sexo
-            ? String(sexo.value || "").trim()
-            : "";
+        console.error(
+            "ERRO: #listaConvidadosFormulario não encontrado."
+        );
+
+        return;
+
+    }
+
+
+    contadorConvidados++;
+
+
+    const numero =
+        contadorConvidados;
+
+
+    console.log(
+        "Criando convidado:",
+        numero
+    );
+
+
+    const bloco =
+        document.createElement("div");
+
+
+    bloco.className =
+        "bloco-convidado";
+
+
+    bloco.dataset.convidado =
+        numero;
+
+
+    bloco.innerHTML = `
+
+        <div class="cabecalho-convidado">
+
+            <h3>
+                Convidado ${numero}
+            </h3>
+
+            <button
+                type="button"
+                class="btn-remover-convidado"
+            >
+                ✕ Remover
+            </button>
+
+        </div>
+
+
+        <label>
+            Nome completo
+        </label>
+
+        <input
+            type="text"
+            class="campo-nome"
+            placeholder="Digite o nome completo"
+        >
+
+
+        <label>
+            Tipo de convidado
+        </label>
+
+        <select
+            class="campo-tipo"
+        >
+
+            <option value="">
+                Selecione
+            </option>
+
+            <option value="Adulto">
+                Adulto
+            </option>
+
+            <option value="Crianca">
+                Criança
+            </option>
+
+        </select>
+
+
+        <div
+            class="campo-idade-container"
+            style="display:none;"
+        >
+
+            <label>
+                Idade da criança
+            </label>
+
+            <input
+                type="number"
+                class="campo-idade"
+                min="0"
+                max="17"
+            >
+
+        </div>
+
+
+        <label>
+            Sexo <span>(opcional)</span>
+        </label>
+
+        <select
+            class="campo-sexo"
+        >
+
+            <option value="">
+                Não informar
+            </option>
+
+            <option value="Feminino">
+                Feminino
+            </option>
+
+            <option value="Masculino">
+                Masculino
+            </option>
+
+        </select>
+
+
+        <div
+            class="campo-calcado-container"
+            style="display:none;"
+        >
+
+            <label>
+                Número do calçado
+            </label>
+
+            <input
+                type="number"
+                class="campo-calcado"
+                min="20"
+                max="50"
+            >
+
+        </div>
+
+
+        <label>
+            WhatsApp
+        </label>
+
+        <input
+            type="tel"
+            class="campo-whatsapp"
+            placeholder="(21) 99999-9999"
+        >
+
+    `;
+
+
+    listaConvidadosFormulario.appendChild(
+        bloco
+    );
+
 
     /*
-    ==========================================
-    CRIANÇA → MOSTRAR IDADE
-    ==========================================
+    ------------------------------------------
+    CONFIGURA O NOVO BLOCO
+    ------------------------------------------
     */
 
-    const ehCrianca =
-        tipoValor === "Crianca" ||
-        tipoValor === "Criança";
+    configurarBlocoConvidado(
+        bloco
+    );
 
-    if (campoIdade) {
 
-        campoIdade.style.display =
-            ehCrianca
-                ? "block"
-                : "none";
+    /*
+    ------------------------------------------
+    SCROLL
+    ------------------------------------------
+    */
+
+    bloco.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+}
+
+
+/*
+==================================================
+CONFIGURAR BLOCO
+==================================================
+*/
+
+function configurarBlocoConvidado(
+    bloco
+) {
+
+    if (!bloco) {
+        return;
+    }
+
+
+    const tipo =
+        bloco.querySelector(
+            ".campo-tipo"
+        );
+
+    const sexo =
+        bloco.querySelector(
+            ".campo-sexo"
+        );
+
+    const idadeContainer =
+        bloco.querySelector(
+            ".campo-idade-container"
+        );
+
+    const idade =
+        bloco.querySelector(
+            ".campo-idade"
+        );
+
+    const calcadoContainer =
+        bloco.querySelector(
+            ".campo-calcado-container"
+        );
+
+    const calcado =
+        bloco.querySelector(
+            ".campo-calcado"
+        );
+
+
+    function atualizarCampos() {
+
+        const tipoValor =
+            tipo
+                ? tipo.value
+                : "";
+
+
+        const sexoValor =
+            sexo
+                ? sexo.value
+                : "";
+
+
+        /*
+        ======================================
+        CRIANÇA
+        ======================================
+        */
+
+        const ehCrianca =
+            tipoValor === "Crianca";
+
+
+        if (idadeContainer) {
+
+            idadeContainer.style.display =
+                ehCrianca
+                    ? "block"
+                    : "none";
+
+        }
+
 
         if (idade) {
 
             idade.required =
                 ehCrianca;
 
+
             if (!ehCrianca) {
+
                 idade.value = "";
+
             }
 
         }
 
-    }
+
+        /*
+        ======================================
+        MULHER ADULTA
+        ======================================
+        */
+
+        const mostrarCalcado =
+            tipoValor === "Adulto" &&
+            sexoValor === "Feminino";
 
 
-    /*
-    ==========================================
-    ADULTO + FEMININO → MOSTRAR CALÇADO
-    ==========================================
-    */
+        if (calcadoContainer) {
 
-    const ehAdulto =
-        tipoValor === "Adulto" ||
-        tipoValor === "adulto";
+            calcadoContainer.style.display =
+                mostrarCalcado
+                    ? "block"
+                    : "none";
 
-    const ehFeminino =
-        sexoValor === "Feminino" ||
-        sexoValor === "feminino";
-
-    const mostrarCalcado =
-        ehAdulto &&
-        ehFeminino;
-
-
-    if (campoCalcado) {
-
-        campoCalcado.style.display =
-            mostrarCalcado
-                ? "block"
-                : "none";
+        }
 
 
         if (calcado) {
 
-            /*
-            Calçado NÃO é obrigatório.
-            */
-
-            calcado.required =
-                false;
+            calcado.required = false;
 
 
             if (!mostrarCalcado) {
@@ -307,57 +496,116 @@ function atualizarCamposVisiveis() {
 
     }
 
-}
 
-/*
-==================================================
-CONFIGURAR FORMULÁRIO
-==================================================
-*/
+    if (tipo) {
 
-function configurarFormulario() {
-
-    if (!formPresenca) {
-
-        console.warn(
-            "Formulário #formPresenca não encontrado."
+        tipo.addEventListener(
+            "change",
+            atualizarCampos
         );
-
-        return;
 
     }
 
 
-    formPresenca.addEventListener(
-        "submit",
-        enviarConfirmacao
-    );
+    if (sexo) {
+
+        sexo.addEventListener(
+            "change",
+            atualizarCampos
+        );
+
+    }
+
+
+    /*
+    ======================================
+    REMOVER CONVIDADO
+    ======================================
+    */
+
+    const btnRemover =
+        bloco.querySelector(
+            ".btn-remover-convidado"
+        );
+
+
+    if (btnRemover) {
+
+        btnRemover.addEventListener(
+            "click",
+            function () {
+
+                bloco.remove();
+
+                renumerarConvidados();
+
+            }
+        );
+
+    }
+
+
+    atualizarCampos();
 
 }
 
 
 /*
 ==================================================
-GERAR CÓDIGO DE RESERVA
-==================================================
-
-Usado somente como segurança.
-
-O código oficial deve ser o código
-retornado pelo Google Sheets.
-
+RENUMERAR
 ==================================================
 */
 
-function gerarCodigoReserva() {
+function renumerarConvidados() {
 
-    const numero =
-        Math.floor(
-            100000 +
-            Math.random() * 900000
-        );
+    const blocos =
+        listaConvidadosFormulario
+            ? listaConvidadosFormulario.querySelectorAll(
+                ".bloco-convidado"
+            )
+            : [];
 
-    return "CONV-" + numero;
+
+    blocos.forEach(
+        function (
+            bloco,
+            indice
+        ) {
+
+            const numero =
+                indice + 1;
+
+
+            bloco.dataset.convidado =
+                numero;
+
+
+            const titulo =
+                bloco.querySelector(
+                    "h3"
+                );
+
+
+            if (titulo) {
+
+                titulo.textContent =
+                    "Convidado " +
+                    numero;
+
+            }
+
+        }
+    );
+
+
+    contadorConvidados =
+        blocos.length;
+
+
+    console.log(
+        "Total de convidados:",
+        contadorConvidados
+    );
 
 }
 
@@ -391,221 +639,141 @@ function normalizarWhatsApp(numero) {
 
     return String(
         numero || ""
-    )
-        .replace(
-            /\D/g,
-            ""
-        );
+    ).replace(
+        /\D/g,
+        ""
+    );
 
 }
 
 
 /*
 ==================================================
-SALVAR NO GOOGLE SHEETS
+SALVAR GOOGLE SHEETS
 ==================================================
 */
 
-async function salvarNoGoogleSheets(dados) {
+async function salvarNoGoogleSheets(
+    dados
+) {
 
-    try {
+    console.log(
+        "Enviando para Google Sheets:",
+        dados
+    );
 
-        console.log(
-            "Enviando confirmação para Google Sheets:",
-            dados
+
+    const resposta =
+        await fetch(
+            GOOGLE_SHEETS_URL,
+            {
+
+                method: "POST",
+
+                headers: {
+
+                    "Content-Type":
+                        "text/plain;charset=utf-8"
+
+                },
+
+                body:
+                    JSON.stringify({
+
+                        acao:
+                            "salvarPresencas",
+
+                        lista: [
+                            dados
+                        ]
+
+                    })
+
+            }
         );
 
 
-        const resposta =
-            await fetch(
-                GOOGLE_SHEETS_URL,
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type":
-                            "text/plain;charset=utf-8"
-                    },
-
-                    body:
-                        JSON.stringify({
-
-                            acao:
-                                "salvarPresencas",
-
-                            lista: [
-                                dados
-                            ]
-
-                        })
-
-                }
-            );
-
-
-        if (!resposta.ok) {
-
-            throw new Error(
-                "Erro HTTP " +
-                resposta.status
-            );
-
-        }
-
-
-        const texto =
-            await resposta.text();
-
-
-        console.log(
-            "Resposta do Google Sheets:",
-            texto
-        );
-
-
-        if (!texto) {
-
-            throw new Error(
-                "Google Sheets não retornou resposta."
-            );
-
-        }
-
-
-        let resultado;
-
-        try {
-
-            resultado =
-                JSON.parse(texto);
-
-        } catch (erroJSON) {
-
-            console.error(
-                "Resposta inválida do Google Apps Script:",
-                texto
-            );
-
-            throw new Error(
-                "O Google Sheets não retornou JSON válido."
-            );
-
-        }
-
-
-        /*
-        ------------------------------------------
-        FORMATO ESPERADO
-        ------------------------------------------
-
-        {
-            sucesso: true,
-            resultados: [
-                {
-                    codigo: "CONV-123456"
-                }
-            ]
-        }
-
-        ------------------------------------------
-        */
-
-
-        if (
-            resultado &&
-            resultado.sucesso === false
-        ) {
-
-            throw new Error(
-                resultado.mensagem ||
-                "Google Sheets recusou o salvamento."
-            );
-
-        }
-
-
-        if (
-            resultado &&
-            Array.isArray(
-                resultado.resultados
-            ) &&
-            resultado.resultados.length > 0
-        ) {
-
-            const registro =
-                resultado.resultados[0];
-
-
-            if (!registro.codigo) {
-
-                throw new Error(
-                    "Google Sheets não retornou o código do convite."
-                );
-
-            }
-
-
-            return registro;
-
-        }
-
-
-        /*
-        ------------------------------------------
-        Alguns Apps Scripts retornam diretamente
-        o array.
-        ------------------------------------------
-        */
-
-        if (
-            Array.isArray(resultado) &&
-            resultado.length > 0
-        ) {
-
-            const registro =
-                resultado[0];
-
-
-            if (!registro.codigo) {
-
-                throw new Error(
-                    "Código não retornado pelo Google Sheets."
-                );
-
-            }
-
-
-            return registro;
-
-        }
-
+    if (!resposta.ok) {
 
         throw new Error(
-            "Resposta do Google Sheets sem código."
+            "Erro HTTP " +
+            resposta.status
         );
-
-
-    } catch (erro) {
-
-        console.error(
-            "Erro ao salvar no Google Sheets:",
-            erro
-        );
-
-        throw erro;
 
     }
 
+
+    const texto =
+        await resposta.text();
+
+
+    console.log(
+        "Resposta Google Sheets:",
+        texto
+    );
+
+
+    if (!texto) {
+
+        throw new Error(
+            "Google Sheets não retornou resposta."
+        );
+
+    }
+
+
+    const resultado =
+        JSON.parse(texto);
+
+
+    if (
+        resultado.sucesso === false
+    ) {
+
+        throw new Error(
+            resultado.mensagem ||
+            "Google Sheets recusou o salvamento."
+        );
+
+    }
+
+
+    if (
+        resultado.resultados &&
+        resultado.resultados.length
+    ) {
+
+        return resultado.resultados[0];
+
+    }
+
+
+    if (
+        Array.isArray(resultado) &&
+        resultado.length
+    ) {
+
+        return resultado[0];
+
+    }
+
+
+    throw new Error(
+        "Google Sheets não retornou código."
+    );
+
 }
 
 
 /*
 ==================================================
-SALVAR NO FIREBASE
+FIREBASE
 ==================================================
 */
 
-async function salvarNoFirebase(dados) {
+async function salvarNoFirebase(
+    dados
+) {
 
     try {
 
@@ -615,7 +783,7 @@ async function salvarNoFirebase(dados) {
         ) {
 
             console.warn(
-                "window.salvarConfirmacao não está disponível."
+                "Firebase: função salvarConfirmacao não disponível."
             );
 
             return false;
@@ -623,19 +791,15 @@ async function salvarNoFirebase(dados) {
         }
 
 
-        const sucesso =
-            await window.salvarConfirmacao(
+        return await
+            window.salvarConfirmacao(
                 dados
             );
-
-
-        return sucesso === true;
-
 
     } catch (erro) {
 
         console.error(
-            "Erro ao salvar confirmação no Firebase:",
+            "Erro Firebase:",
             erro
         );
 
@@ -648,53 +812,35 @@ async function salvarNoFirebase(dados) {
 
 /*
 ==================================================
-ENVIAR CONFIRMAÇÃO
+CONFIRMAR PRESENÇA
 ==================================================
 */
 
-async function enviarConfirmacao(evento) {
+async function enviarConfirmacao(
+    evento
+) {
 
     evento.preventDefault();
 
 
-    /*
-    -----------------------------------------------
-    BOTÃO
-    -----------------------------------------------
-    */
-
-    const botaoEnviar =
+    const botao =
         formPresenca
-            ? formPresenca.querySelector(
+            ?.querySelector(
                 'button[type="submit"]'
-            )
-            : null;
+            );
 
 
-    let textoOriginal =
-        "Confirmar presença";
+    if (botao?.disabled) {
+        return;
+    }
 
 
-    if (botaoEnviar) {
+    if (botao) {
 
-        textoOriginal =
-            botaoEnviar.innerText ||
-            "Confirmar presença";
-
-
-        if (
-            botaoEnviar.disabled
-        ) {
-
-            return;
-
-        }
-
-
-        botaoEnviar.disabled =
+        botao.disabled =
             true;
 
-        botaoEnviar.innerText =
+        botao.innerText =
             "Salvando...";
 
     }
@@ -702,290 +848,267 @@ async function enviarConfirmacao(evento) {
 
     try {
 
-
-        /*
-        ==========================================
-        LER FORMULÁRIO
-        ==========================================
-        */
-
-        const nomeValor =
-    obterValor(nome);
-
-
-        const tipoValor =
-            obterValor(tipo);
-
-
-        const idadeValor =
-            tipoValor === "Crianca"
-                ? obterValor(idade)
-                : "";
-
-
-        const sexoValor =
-            obterValor(sexo);
-
-
-        const calcadoValor =
-            (
-                tipoValor === "Adulto" &&
-                sexoValor === "Feminino"
-            )
-                ? obterValor(calcado)
-                : "";
-
-
-        const whatsappValor =
-            normalizarWhatsApp(
-                obterValor(whatsapp)
-            );
-
-console.log(
-    "CAMPOS DA CONFIRMAÇÃO:",
-    {
-        nome: nome?.value,
-        tipo: tipo?.value,
-        sexo: sexo?.value,
-        idade: idade?.value,
-        calcado: calcado?.value,
-        whatsapp: whatsapp?.value
-    }
-);
-
-
-        /*
-        ==========================================
-        VALIDAÇÕES
-        ==========================================
-        */
-
-        if (!nomeValor) {
-
-            alert(
-                "Informe o nome do convidado."
-            );
-
-            return;
-
-        }
-
-
-        if (!tipoValor) {
-
-            alert(
-                "Selecione se o convidado é adulto ou criança."
-            );
-
-            return;
-
-        }
-
-
-        if (
-            tipoValor === "Crianca" &&
-            !idadeValor
-        ) {
-
-            alert(
-                "Informe a idade da criança."
-            );
-
-            return;
-
-        }
-
-
-        if (!whatsappValor) {
-
-            alert(
-                "Informe o número de WhatsApp."
-            );
-
-            return;
-
-        }
-
-
-        /*
-        ==========================================
-        DADOS
-        ==========================================
-        */
-
-       const dados = {
-
-    nome:
-        nomeValor,
-
-    tipo:
-        tipoValor,
-
-            idade:
-                idadeValor,
-
-            sexo:
-                sexoValor,
-
-            calcado:
-                calcadoValor,
-
-            whatsapp:
-                whatsappValor
-
-        };
-
-
-        console.log(
-            "Dados preparados:",
-            dados
-        );
-
-
-        /*
-        ==========================================
-        1. GOOGLE SHEETS
-        ==========================================
-
-        O código oficial nasce aqui.
-
-        Se o Sheets falhar, NÃO gravamos no
-        Firebase para evitar códigos diferentes.
-        ==========================================
-        */
-
-        let resultadoGoogle;
-
-
-        try {
-
-            resultadoGoogle =
-                await salvarNoGoogleSheets(
-                    dados
+        const blocos =
+            listaConvidadosFormulario
+                .querySelectorAll(
+                    ".bloco-convidado"
                 );
 
-        } catch (erroGoogle) {
 
-            console.error(
-                "Falha no Google Sheets:",
-                erroGoogle
-            );
-
-
-            alert(
-                "Não foi possível registrar sua confirmação no momento.\n\n" +
-                "Verifique sua conexão e tente novamente."
-            );
-
-
-            return;
-
-        }
-
-
-        /*
-        ==========================================
-        CÓDIGO OFICIAL
-        ==========================================
-        */
-
-        const codigo =
-            resultadoGoogle &&
-            resultadoGoogle.codigo
-                ? resultadoGoogle.codigo
-                : null;
-
-
-        if (!codigo) {
+        if (!blocos.length) {
 
             throw new Error(
-                "O Google Sheets não forneceu o código da confirmação."
+                "Nenhum convidado encontrado."
             );
 
         }
 
 
-        dados.codigo =
-            codigo;
-
-
-        console.log(
-            "Código gerado pelo Google Sheets:",
-            codigo
-        );
+        const convidados = [];
 
 
         /*
-        ==========================================
-        2. FIREBASE
-        ==========================================
+        ======================================
+        LER CONVIDADOS
+        ======================================
         */
 
-        const firebaseSalvo =
+        for (
+            const bloco
+            of blocos
+        ) {
+
+            const nome =
+                obterValor(
+                    bloco.querySelector(
+                        ".campo-nome"
+                    )
+                );
+
+
+            const tipo =
+                obterValor(
+                    bloco.querySelector(
+                        ".campo-tipo"
+                    )
+                );
+
+
+            const idade =
+                tipo === "Crianca"
+                    ? obterValor(
+                        bloco.querySelector(
+                            ".campo-idade"
+                        )
+                    )
+                    : "";
+
+
+            const sexo =
+                obterValor(
+                    bloco.querySelector(
+                        ".campo-sexo"
+                    )
+                );
+
+
+            const calcado =
+                (
+                    tipo === "Adulto" &&
+                    sexo === "Feminino"
+                )
+                    ? obterValor(
+                        bloco.querySelector(
+                            ".campo-calcado"
+                        )
+                    )
+                    : "";
+
+
+            const whatsapp =
+                normalizarWhatsApp(
+                    obterValor(
+                        bloco.querySelector(
+                            ".campo-whatsapp"
+                        )
+                    )
+                );
+
+
+            /*
+            ==================================
+            VALIDAÇÕES
+            ==================================
+            */
+
+            if (!nome) {
+
+                alert(
+                    "Informe o nome de todos os convidados."
+                );
+
+                return;
+
+            }
+
+
+            if (!tipo) {
+
+                alert(
+                    "Selecione o tipo de todos os convidados."
+                );
+
+                return;
+
+            }
+
+
+            if (
+                tipo === "Crianca" &&
+                !idade
+            ) {
+
+                alert(
+                    "Informe a idade da criança."
+                );
+
+                return;
+
+            }
+
+
+            if (!whatsapp) {
+
+                alert(
+                    "Informe o WhatsApp de todos os convidados."
+                );
+
+                return;
+
+            }
+
+
+            convidados.push({
+
+                nome:
+                    nome,
+
+                tipo:
+                    tipo,
+
+                idade:
+                    idade,
+
+                sexo:
+                    sexo,
+
+                calcado:
+                    calcado,
+
+                whatsapp:
+                    whatsapp
+
+            });
+
+        }
+
+
+        /*
+        ======================================
+        SALVAR TODOS
+        ======================================
+        */
+
+        const confirmados = [];
+
+
+        for (
+            const convidado
+            of convidados
+        ) {
+
+            console.log(
+                "Salvando convidado:",
+                convidado
+            );
+
+
+            /*
+            GOOGLE
+            */
+
+            const resultado =
+                await salvarNoGoogleSheets(
+                    convidado
+                );
+
+
+            if (
+                !resultado ||
+                !resultado.codigo
+            ) {
+
+                throw new Error(
+                    "Google Sheets não retornou o código."
+                );
+
+            }
+
+
+            convidado.codigo =
+                resultado.codigo;
+
+
+            /*
+            FIREBASE
+            */
+
             await salvarNoFirebase(
-                dados
+                convidado
             );
 
 
-        /*
-        ==========================================
-        IMPORTANTE
-        ==========================================
-
-        O Google Sheets é a base principal da
-        confirmação.
-
-        Mesmo que o Firebase apresente algum
-        problema, a confirmação já foi registrada
-        no Sheets.
-
-        ==========================================
-        */
-
-
-        if (!firebaseSalvo) {
-
-            console.warn(
-                "Confirmação salva no Google Sheets, mas não no Firebase."
+            confirmados.push(
+                convidado
             );
 
         }
 
 
         /*
-        ==========================================
-        3. MOSTRAR RESULTADO
-        ==========================================
+        ======================================
+        SUCESSO
+        ======================================
         */
 
-        mostrarConfirmacaoSucesso(
-            dados
+        mostrarConfirmacoesSucesso(
+            confirmados
         );
 
 
     } catch (erro) {
 
         console.error(
-            "Erro ao confirmar presença:",
+            "Erro ao confirmar:",
             erro
         );
 
 
         alert(
-            "Não foi possível concluir a confirmação de presença.\n\n" +
-            "Tente novamente."
+            "Não foi possível concluir a confirmação.\n\n" +
+            erro.message
         );
 
 
     } finally {
 
-        if (botaoEnviar) {
+        if (botao) {
 
-            botaoEnviar.disabled =
+            botao.disabled =
                 false;
 
-            botaoEnviar.innerText =
-                textoOriginal;
+            botao.innerText =
+                "Confirmar presença";
 
         }
 
@@ -1000,42 +1123,14 @@ MOSTRAR SUCESSO
 ==================================================
 */
 
-function mostrarConfirmacaoSucesso(dados) {
+function mostrarConfirmacoesSucesso(
+    convidados
+) {
 
     if (!listaConvidados) {
-
-        alert(
-            "Presença confirmada!\n\n" +
-            "Código: " +
-            dados.codigo
-        );
-
         return;
-
     }
 
-
-    /*
-    -----------------------------------------------
-    LIMPA FORMULÁRIO
-    -----------------------------------------------
-    */
-
-    if (formPresenca) {
-
-        formPresenca.reset();
-
-    }
-
-
-    atualizarCamposVisiveis();
-
-
-    /*
-    -----------------------------------------------
-    CARTÃO
-    -----------------------------------------------
-    */
 
     const card =
         document.createElement(
@@ -1044,10 +1139,10 @@ function mostrarConfirmacaoSucesso(dados) {
 
 
     card.className =
-        "convidado-confirmado";
+        "convidados-confirmados";
 
 
-    card.innerHTML = `
+    let html = `
 
         <div class="sucesso-confirmacao">
 
@@ -1060,30 +1155,55 @@ function mostrarConfirmacaoSucesso(dados) {
             </h3>
 
             <p>
-                ${escaparHTML(dados.nome)}
+                Seus convidados foram registrados.
             </p>
 
-            <div class="codigo-convite">
+            <div class="lista-codigos">
 
-                <span>
+    `;
+
+
+    convidados.forEach(
+        convidado => {
+
+            html += `
+
+                <div class="codigo-convidado">
+
+                    <strong>
+                        ${escaparHTML(
+                            convidado.nome
+                        )}
+                    </strong>
+
+                    <br>
+
                     Seu código:
-                </span>
 
-                <strong>
-                    ${escaparHTML(dados.codigo)}
-                </strong>
+                    <strong>
+                        ${escaparHTML(
+                            convidado.codigo
+                        )}
+                    </strong>
 
-            </div>
+                    <br><br>
 
-            <div class="acoes-convite">
+                    <button
+                        type="button"
+                        class="btn-whatsapp-convite"
+                    >
+                        💬 Enviar convite pelo WhatsApp
+                    </button>
 
-                <button
-                    type="button"
-                    class="btn-whatsapp-convite"
-                    id="btnWhatsAppConvite"
-                >
-                    💬 Enviar pelo WhatsApp
-                </button>
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    html += `
 
             </div>
 
@@ -1092,49 +1212,104 @@ function mostrarConfirmacaoSucesso(dados) {
     `;
 
 
+    card.innerHTML =
+        html;
+
+
     listaConvidados.appendChild(
         card
     );
 
 
     /*
-    -----------------------------------------------
-    WHATSAPP
-    -----------------------------------------------
+    ======================================
+    BOTÕES WHATSAPP
+    ======================================
     */
 
-    const btnWhatsApp =
-        card.querySelector(
-            "#btnWhatsAppConvite"
+    const botoes =
+        card.querySelectorAll(
+            ".btn-whatsapp-convite"
         );
 
 
-    if (btnWhatsApp) {
+    botoes.forEach(
+        function (
+            botao,
+            indice
+        ) {
 
-        btnWhatsApp.addEventListener(
-            "click",
-            function () {
+            botao.addEventListener(
+                "click",
+                function () {
 
-                enviarConviteWhatsApp(
-                    dados
-                );
+                    enviarConviteWhatsApp(
+                        convidados[indice]
+                    );
 
-            }
-        );
+                }
+            );
 
-    }
+        }
+    );
 
-
-    /*
-    -----------------------------------------------
-    ROLAR PARA RESULTADO
-    -----------------------------------------------
-    */
 
     card.scrollIntoView({
         behavior: "smooth",
         block: "center"
     });
+
+
+    /*
+    ======================================
+    LIMPAR FORMULÁRIO
+    ======================================
+    */
+
+    formPresenca.reset();
+
+
+    const blocos =
+        listaConvidadosFormulario
+            .querySelectorAll(
+                ".bloco-convidado"
+            );
+
+
+    blocos.forEach(
+        function (
+            bloco,
+            indice
+        ) {
+
+            if (indice > 0) {
+
+                bloco.remove();
+
+            }
+
+        }
+    );
+
+
+    contadorConvidados =
+        1;
+
+
+    const primeiro =
+        listaConvidadosFormulario
+            .querySelector(
+                ".bloco-convidado"
+            );
+
+
+    if (primeiro) {
+
+        configurarBlocoConvidado(
+            primeiro
+        );
+
+    }
 
 }
 
@@ -1145,19 +1320,15 @@ WHATSAPP
 ==================================================
 */
 
-function enviarConviteWhatsApp(dados) {
+function enviarConviteWhatsApp(
+    dados
+) {
 
     const numero =
         normalizarWhatsApp(
             dados.whatsapp
         );
 
-
-    /*
-    -----------------------------------------------
-    LINK DO CONVITE
-    -----------------------------------------------
-    */
 
     const urlSite =
         window.location.origin +
@@ -1166,12 +1337,6 @@ function enviarConviteWhatsApp(dados) {
             dados.codigo
         );
 
-
-    /*
-    -----------------------------------------------
-    MENSAGEM
-    -----------------------------------------------
-    */
 
     const mensagem =
         "Olá! Sua presença no casamento de Aryana & Raul Filipe foi confirmada! ❤️\n\n" +
@@ -1183,12 +1348,6 @@ function enviarConviteWhatsApp(dados) {
         "Acesse seu convite:\n" +
         urlSite;
 
-
-    /*
-    -----------------------------------------------
-    WHATSAPP
-    -----------------------------------------------
-    */
 
     const urlWhatsApp =
         numero
@@ -1215,68 +1374,38 @@ function enviarConviteWhatsApp(dados) {
 
 /*
 ==================================================
-BOTÃO VOLTAR
-==================================================
-*/
-
-function configurarBotaoVoltar() {
-
-    if (!btnVoltar) {
-        return;
-    }
-
-
-    btnVoltar.addEventListener(
-        "click",
-        function () {
-
-            if (
-                window.history.length > 1
-            ) {
-
-                window.history.back();
-
-                return;
-
-            }
-
-
-            window.location.href =
-                "index.html";
-
-        }
-    );
-
-}
-
-
-/*
-==================================================
 ESCAPAR HTML
 ==================================================
 */
 
-function escaparHTML(texto) {
+function escaparHTML(
+    texto
+) {
 
     return String(
         texto ?? ""
     )
+
         .replace(
             /&/g,
             "&amp;"
         )
+
         .replace(
             /</g,
             "&lt;"
         )
+
         .replace(
             />/g,
             "&gt;"
         )
+
         .replace(
             /"/g,
             "&quot;"
         )
+
         .replace(
             /'/g,
             "&#039;"
@@ -1287,17 +1416,37 @@ function escaparHTML(texto) {
 
 /*
 ==================================================
-FUNÇÕES GLOBAIS
+ FUNÇÃO GLOBAL
 ==================================================
 */
+
+window.adicionarOutroConvidado =
+    adicionarOutroConvidado;
 
 window.enviarConfirmacao =
     enviarConfirmacao;
 
-
-window.gerarCodigoReserva =
-    gerarCodigoReserva;
-
-
 window.enviarConviteWhatsApp =
     enviarConviteWhatsApp;
+
+
+/*
+==================================================
+INICIAR
+==================================================
+*/
+
+if (
+    document.readyState === "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        iniciarConfirmacao
+    );
+
+} else {
+
+    iniciarConfirmacao();
+
+}
