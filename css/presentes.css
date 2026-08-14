@@ -1431,14 +1431,16 @@ body {
 }
 
 /* =========================================
-   BOTÃO VOLTAR
+   BOTÃO VOLTAR AO INÍCIO
 ========================================= */
 
 .area-voltar {
 
     width: min(92%, 1100px);
 
-    margin: 15px auto 0;
+    margin: 14px auto 8px;
+
+    text-align: center;
 
 }
 
@@ -1451,7 +1453,7 @@ body {
 
     justify-content: center;
 
-    padding: 8px 16px;
+    padding: 8px 18px;
 
     border: 1px solid #b85c38;
 
@@ -1487,13 +1489,13 @@ body {
 
         width: calc(100% - 20px);
 
-        margin-top: 12px;
+        margin: 12px auto 8px;
 
     }
 
     .btn-voltar-presentes {
 
-        padding: 7px 14px;
+        padding: 7px 16px;
 
         font-size: 0.78rem;
 
