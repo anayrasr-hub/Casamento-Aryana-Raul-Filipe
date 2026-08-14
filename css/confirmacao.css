@@ -784,3 +784,473 @@ CELULAR
     }
 
 }
+
+/*
+==================================================
+RESULTADO FINAL DA CONFIRMAÇÃO
+==================================================
+*/
+
+#listaConvidados {
+
+    display: block;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+}
+
+
+/*
+==================================================
+CARD DE SUCESSO
+==================================================
+*/
+
+.convidados-confirmados {
+
+    display: block;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    margin-top: 18px;
+
+}
+
+
+.sucesso-confirmacao {
+
+    display: block;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 20px;
+
+    background: #fffaf6;
+
+    border: 1px solid var(--borda);
+
+    border-radius: 16px;
+
+    text-align: center;
+
+    box-shadow:
+        0 6px 18px
+        rgba(0,0,0,.08);
+
+}
+
+
+.icone-sucesso {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 52px;
+
+    height: 52px;
+
+    margin: 0 auto 12px;
+
+    border-radius: 50%;
+
+    background: var(--terracota);
+
+    color: white;
+
+    font-size: 28px;
+
+    font-weight: 800;
+
+}
+
+
+.sucesso-confirmacao h3 {
+
+    margin: 0 0 8px;
+
+    color: var(--terracota-dark);
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size: 1.35rem;
+
+}
+
+
+.sucesso-confirmacao p {
+
+    margin: 6px 0;
+
+    color: #5f3428;
+
+    font-size: .85rem;
+
+}
+
+
+.mensagem-codigos {
+
+    margin: 12px auto 18px !important;
+
+    max-width: 500px;
+
+    font-size: .78rem !important;
+
+    color: #765247 !important;
+
+}
+
+
+/*
+==================================================
+LISTA DOS CÓDIGOS
+==================================================
+*/
+
+.lista-codigos {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+}
+
+
+.codigo-convidado {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    box-sizing: border-box;
+
+    width: 100%;
+
+    padding: 15px;
+
+    background: white;
+
+    border: 1px solid var(--borda);
+
+    border-radius: 12px;
+
+}
+
+
+.numero-convidado {
+
+    margin-bottom: 5px;
+
+    color: var(--terracota-dark);
+
+    font-size: .78rem;
+
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+}
+
+
+.nome-convidado {
+
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #5f3428;
+
+    font-size: .95rem;
+
+}
+
+
+.codigo-label {
+
+    margin-bottom: 4px;
+
+    color: #80645a;
+
+    font-size: .72rem;
+
+}
+
+
+.codigo-valor {
+
+    display: inline-block;
+
+    margin-bottom: 13px;
+
+    padding: 7px 14px;
+
+    background: #f6e6dd;
+
+    border: 1px dashed var(--terracota);
+
+    border-radius: 7px;
+
+    color: var(--terracota-dark);
+
+    font-size: 1rem;
+
+    letter-spacing: 1px;
+
+}
+
+
+/*
+==================================================
+WHATSAPP
+==================================================
+*/
+
+.btn-whatsapp-convite {
+
+    width: 100%;
+
+    max-width: 320px;
+
+    padding: 10px 14px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: var(--terracota);
+
+    color: white;
+
+    font-size: .78rem;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+}
+
+
+.btn-whatsapp-convite:hover {
+
+    background: var(--terracota-dark);
+
+}
+
+
+/*
+==================================================
+MENSAGEM FINAL
+==================================================
+*/
+
+.mensagem-final-confirmacao {
+
+    margin: 18px 0;
+
+    padding: 14px;
+
+    background: #f7ede7;
+
+    border-radius: 10px;
+
+    color: #6b4034;
+
+    font-size: .8rem;
+
+    line-height: 1.5;
+
+}
+
+
+/*
+==================================================
+NOVA CONFIRMAÇÃO
+==================================================
+*/
+
+.btn-nova-confirmacao {
+
+    width: 100%;
+
+    max-width: 320px;
+
+    padding: 10px 14px;
+
+    border: 1px solid var(--terracota);
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: var(--terracota-dark);
+
+    font-size: .8rem;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+}
+
+
+.btn-nova-confirmacao:hover {
+
+    background: var(--terracota);
+
+    color: white;
+
+}
+
+
+/*
+==================================================
+CORREÇÃO DOS BLOCOS DOS CONVIDADOS
+==================================================
+*/
+
+.bloco-convidado {
+
+    position: relative;
+
+    padding: 17px;
+
+    margin-bottom: 15px;
+
+    background: #fff;
+
+    border: 1px solid var(--borda);
+
+    border-radius: 13px;
+
+}
+
+
+.bloco-convidado label {
+
+    display: block;
+
+    margin: 8px 0 5px;
+
+    font-size: .78rem;
+
+    font-weight: 700;
+
+}
+
+
+.bloco-convidado input,
+.bloco-convidado select {
+
+    box-sizing: border-box;
+
+    width: 100%;
+
+    padding: 9px 10px;
+
+    border: 1px solid #d9b8a9;
+
+    border-radius: 7px;
+
+    background: white;
+
+    color: #543127;
+
+    font-size: .82rem;
+
+    outline: none;
+
+}
+
+
+.bloco-convidado input:focus,
+.bloco-convidado select:focus {
+
+    border-color: var(--terracota);
+
+    box-shadow:
+        0 0 0 2px
+        rgba(184,92,56,.12);
+
+}
+
+
+/*
+==================================================
+CELULAR
+==================================================
+*/
+
+@media (max-width: 600px) {
+
+    .sucesso-confirmacao {
+
+        padding: 15px;
+
+        border-radius: 13px;
+
+    }
+
+
+    .icone-sucesso {
+
+        width: 46px;
+
+        height: 46px;
+
+        font-size: 24px;
+
+    }
+
+
+    .sucesso-confirmacao h3 {
+
+        font-size: 1.15rem;
+
+    }
+
+
+    .codigo-convidado {
+
+        padding: 13px 10px;
+
+    }
+
+
+    .codigo-valor {
+
+        font-size: .95rem;
+
+    }
+
+
+    .btn-whatsapp-convite,
+    .btn-nova-confirmacao {
+
+        max-width: 100%;
+
+    }
+
+}
