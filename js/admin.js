@@ -251,37 +251,6 @@ async function carregarDadosAdmin() {
 }
 
 
-/*
-==================================================
-OBTER PRESENTES DO DATA.JS
-==================================================
-*/
-
-function obterPresentesAdmin() {
-
-    if (
-        Array.isArray(
-            window.presentes
-        )
-    ) {
-
-        return [
-            ...window.presentes
-        ];
-
-    }
-
-
-    console.error(
-        "window.presentes não foi encontrado."
-    );
-
-
-    return [];
-
-}
-
-
         /*
         ------------------------------------------
         PIX
