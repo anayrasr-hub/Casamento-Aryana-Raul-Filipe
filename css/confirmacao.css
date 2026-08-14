@@ -1254,3 +1254,49 @@ CELULAR
     }
 
 }
+
+/* =========================================
+   AVISO - CRIANÇA
+========================================= */
+
+.aviso-crianca {
+
+    margin: 0 0 12px;
+
+    padding: 10px 13px;
+
+    background: #fff4ed;
+
+    border: 1px solid #e7c7b8;
+
+    border-left: 4px solid var(--terracota);
+
+    border-radius: 8px;
+
+    color: #6b3b2d;
+
+    font-size: .78rem;
+
+    line-height: 1.4;
+
+    text-align: left;
+
+}
+
+.aviso-crianca strong {
+
+    color: var(--terracota-dark);
+
+}
+
+@media (max-width: 600px) {
+
+    .aviso-crianca {
+
+        font-size: .74rem;
+
+        padding: 9px 11px;
+
+    }
+
+}
