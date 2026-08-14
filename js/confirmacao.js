@@ -1127,6 +1127,11 @@ function mostrarConfirmacoesSucesso(
     convidados
 ) {
 
+    console.log(
+        "MOSTRAR SUCESSO EXECUTADO:",
+        convidados
+    );
+
     if (!listaConvidados) {
 
         console.error(
