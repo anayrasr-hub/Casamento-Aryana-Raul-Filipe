@@ -1438,17 +1438,13 @@ function carregarListaPixAdmin() {
 
                 </td>
 
-
                 <td>
-
                     ${escaparHTMLAdmin(
-                        obterNomeConvidadoEscolha(
-                            registro
-                        )
+                        registro.convidado ||
+                        "Convidado"
                     )}
 
                 </td>
-
 
                 <td>
 
