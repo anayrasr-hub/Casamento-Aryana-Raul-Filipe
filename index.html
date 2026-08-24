@@ -3,73 +3,271 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<title>Aryana & Raul Filipe</title>
+    <title>
+        Aryana & Raul Filipe | Nosso Casamento
+    </title>
 
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/home.css">
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="css/home.css"
+    >
 
 </head>
 
 <body>
 
-<header class="hero">
+<!-- ==================================================
+     MENU
+================================================== -->
 
-<img
-src="imagens/casal.jpg"
-class="foto-casal"
-alt="Aryana e Raul Filipe">
+<details class="menu-principal">
 
-<h1>
+    <summary
+        class="botao-menu"
+        aria-label="Abrir menu"
+    >
+        <span></span>
+        <span></span>
+        <span></span>
+    </summary>
 
-Aryana <span>&</span> Raul Filipe
+    <nav class="menu-dropdown">
 
-</h1>
+        <a href="index.html">
+            Início
+        </a>
 
-<p class="subtitulo">
+        <a href="confirmacao.html">
+            Confirmar Presença
+        </a>
 
-11 de Outubro de 2026
+        <a href="presentes.html">
+            Lista de Presentes
+        </a>
 
-</p>
+    </nav>
+
+</details>
+
+
+<!-- ==================================================
+     CAPA
+================================================== -->
+
+<header class="capa-casamento">
+
+    <img
+        src="imagens/casal.jpg"
+        class="foto-capa"
+        alt="Aryana e Raul Filipe"
+    >
+
+    <div class="capa-sombra"></div>
+
+    <div class="capa-conteudo">
+
+        <h1>
+            ARYANA
+            <span>&amp;</span>
+            RAUL FILIPE
+        </h1>
+
+        <p>
+            11 DE OUTUBRO DE 2026
+        </p>
+
+    </div>
 
 </header>
 
-<section class="contador">
 
-<h2>
+<!-- ==================================================
+     INTRODUÇÃO
+================================================== -->
 
-Faltam
+<main>
 
-</h2>
+    <section class="historia-casamento">
 
-<div id="countdown"></div>
+        <div class="ramo ramo-esquerdo">
+            ❧
+        </div>
 
-</section>
+        <div class="fotos-redondas">
 
-<section class="menu">
+            <div class="foto-redonda">
 
-<a href="confirmacao.html">
+                <img
+                    src="imagens/casal.jpg"
+                    alt="Aryana e Raul Filipe"
+                >
 
-Confirmar Presença
+            </div>
 
-</a>
+            <div class="foto-redonda">
 
-<a href="presentes.html">
+                <img
+                    src="imagens/casal.jpg"
+                    alt="Aryana e Raul Filipe"
+                >
 
-Lista de Presentes
+            </div>
 
-</a>
+        </div>
 
-</section>
 
-<footer>
+        <p class="pequeno-titulo">
+            ♥
+        </p>
 
-Feito com ❤️ para celebrar nosso grande dia.
+
+        <h2>
+            Vamos nos casar!
+        </h2>
+
+
+        <p class="texto-romantico">
+            Estamos nas nuvens e queremos
+            compartilhar todo nosso amor
+            com vocês.
+        </p>
+
+
+        <p class="texto-apresentacao">
+
+            Por isso, criamos este site com um
+            montão de coisas legais!
+
+            <br><br>
+
+            Uma coisa importante é a confirmação
+            de presença. Você poderá confirmar
+            se vai ou não ao casamento.
+
+            <br><br>
+
+            Confirme o mais rápido possível,
+            por favor, que assim organizar tudo
+            será muito mais fácil.
+
+        </p>
+
+
+        <!-- ==================================================
+             CONTADOR
+        ================================================== -->
+
+        <div
+            id="countdown"
+            class="contador-casamento"
+        >
+
+            <div class="contador-item">
+
+                <span id="dias">
+                    0
+                </span>
+
+                <small>
+                    dias
+                </small>
+
+            </div>
+
+
+            <div class="contador-item">
+
+                <span id="horas">
+                    0
+                </span>
+
+                <small>
+                    horas
+                </small>
+
+            </div>
+
+
+            <div class="contador-item">
+
+                <span id="minutos">
+                    0
+                </span>
+
+                <small>
+                    minutos
+                </small>
+
+            </div>
+
+
+            <div class="contador-item contador-segundos">
+
+                <span id="segundos">
+                    0
+                </span>
+
+                <small>
+                    segundos
+                </small>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         BOTÕES
+    ================================================== -->
+
+    <section class="acoes-casamento">
+
+        <a
+            href="confirmacao.html"
+            class="botao-casamento"
+        >
+            Confirmar Presença
+        </a>
+
+
+        <a
+            href="presentes.html"
+            class="botao-casamento botao-secundario"
+        >
+            Lista de Presentes
+        </a>
+
+    </section>
+
+</main>
+
+
+<footer class="rodape-casamento">
+
+    <p>
+        Aryana &amp; Raul Filipe
+    </p>
+
+    <span>
+        11 de Outubro de 2026 às 09:00
+    </span>
 
 </footer>
+
 
 <script src="js/app.js"></script>
 

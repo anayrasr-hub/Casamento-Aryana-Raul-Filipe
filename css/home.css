@@ -1,125 +1,698 @@
-.hero{
+/* ==================================================
+   PÁGINA PRINCIPAL
+   ARYANA & RAUL FILIPE
+================================================== */
 
-text-align:center;
+:root {
 
-padding:50px 20px;
-
-}
-
-
-.foto-casal{
-
-width:250px;
-
-height:250px;
-
-border-radius:50%;
-
-object-fit:cover;
-
-border:8px solid #D8A48F;
-
-box-shadow:0 10px 25px rgba(0,0,0,.2);
+    --terracota: #b98967;
+    --terracota-escuro: #9d7254;
+    --bege: #eee2d3;
+    --bege-claro: #f8f4ef;
+    --texto: #75604f;
+    --dourado: #c5a783;
+    --branco: #ffffff;
 
 }
 
 
-.hero h1{
+/* ==================================================
+   MENU
+================================================== */
 
-font-size:3rem;
+.menu-principal {
 
-margin-top:20px;
+    position: absolute;
 
-color:#8B5E3C;
+    top: 28px;
+    left: 24px;
 
-}
-
-
-.hero span{
-
-color:#C97C5D;
+    z-index: 1000;
 
 }
 
 
-.subtitulo{
+.botao-menu {
 
-font-size:22px;
+    width: 42px;
+    height: 42px;
 
-margin-top:10px;
+    display: flex;
 
-}
+    flex-direction: column;
 
+    justify-content: center;
 
-.contador{
+    align-items: center;
 
-margin:60px auto;
+    gap: 5px;
 
-text-align:center;
+    background: rgba(255,255,255,.92);
 
-}
+    border-radius: 50%;
 
+    cursor: pointer;
 
-#countdown{
+    list-style: none;
 
-font-size:34px;
-
-font-weight:bold;
-
-color:#8B5E3C;
-
-margin-top:20px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.15);
 
 }
 
 
-.menu{
+.botao-menu::-webkit-details-marker {
 
-display:flex;
-
-justify-content:center;
-
-gap:20px;
-
-flex-wrap:wrap;
-
-margin:60px 0;
+    display: none;
 
 }
 
 
-.menu a{
+.botao-menu span {
 
-background:#B76E4C;
+    width: 20px;
+    height: 2px;
 
-color:white;
+    background: #78634f;
 
-padding:18px 35px;
-
-border-radius:40px;
-
-text-decoration:none;
-
-font-size:18px;
-
-transition:.3s;
+    border-radius: 2px;
 
 }
 
 
-.menu a:hover{
+.menu-dropdown {
 
-background:#8B5E3C;
+    position: absolute;
+
+    top: 50px;
+    left: 0;
+
+    width: 220px;
+
+    padding: 12px;
+
+    background: rgba(255,255,255,.97);
+
+    border-radius: 12px;
+
+    box-shadow: 0 8px 30px rgba(0,0,0,.18);
 
 }
 
 
-footer{
+.menu-dropdown a {
 
-text-align:center;
+    display: block;
 
-padding:40px;
+    padding: 13px 15px;
 
-color:#777;
+    color: var(--texto);
+
+    text-decoration: none;
+
+    font-family: Georgia, serif;
+
+    border-radius: 8px;
+
+}
+
+
+.menu-dropdown a:hover {
+
+    background: var(--bege);
+
+}
+
+
+/* ==================================================
+   CAPA
+================================================== */
+
+.capa-casamento {
+
+    position: relative;
+
+    width: 100%;
+
+    height: min(70vh, 680px);
+
+    min-height: 500px;
+
+    overflow: hidden;
+
+}
+
+
+.foto-capa {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position: center;
+
+}
+
+
+.capa-sombra {
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.08),
+            rgba(0,0,0,.20) 45%,
+            rgba(0,0,0,.70)
+        );
+
+}
+
+
+.capa-conteudo {
+
+    position: absolute;
+
+    left: 6%;
+
+    bottom: 55px;
+
+    color: white;
+
+    text-align: left;
+
+}
+
+
+.capa-conteudo h1 {
+
+    margin: 0;
+
+    font-family: Georgia, serif;
+
+    font-size: clamp(2.2rem, 6vw, 4.8rem);
+
+    font-weight: normal;
+
+    letter-spacing: 8px;
+
+    line-height: 1.15;
+
+    text-shadow:
+        0 2px 10px rgba(0,0,0,.45);
+
+}
+
+
+.capa-conteudo h1 span {
+
+    font-size: .75em;
+
+    margin: 0 8px;
+
+}
+
+
+.capa-conteudo p {
+
+    margin-top: 20px;
+
+    font-size: clamp(.9rem, 2vw, 1.35rem);
+
+    letter-spacing: 5px;
+
+    text-shadow:
+        0 2px 8px rgba(0,0,0,.5);
+
+}
+
+
+/* ==================================================
+   HISTÓRIA
+================================================== */
+
+.historia-casamento {
+
+    position: relative;
+
+    overflow: hidden;
+
+    background: var(--branco);
+
+    text-align: center;
+
+    padding:
+        60px
+        25px
+        65px;
+
+}
+
+
+.fotos-redondas {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+
+}
+
+
+.foto-redonda {
+
+    width: 112px;
+    height: 112px;
+
+    overflow: hidden;
+
+    border-radius: 50%;
+
+    border: 4px solid white;
+
+    box-shadow:
+        0 2px 12px rgba(0,0,0,.12);
+
+    margin-left: -10px;
+
+}
+
+
+.foto-redonda:first-child {
+
+    margin-left: 0;
+
+}
+
+
+.foto-redonda img {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+}
+
+
+.pequeno-titulo {
+
+    margin: 0 0 5px;
+
+    color: #d5bd9d;
+
+    font-size: 20px;
+
+}
+
+
+.historia-casamento h2 {
+
+    margin: 0;
+
+    color: var(--dourado);
+
+    font-family: Georgia, serif;
+
+    font-size: clamp(2.2rem, 6vw, 3.5rem);
+
+    font-style: italic;
+
+    font-weight: normal;
+
+}
+
+
+.texto-romantico {
+
+    max-width: 520px;
+
+    margin: 20px auto 35px;
+
+    color: #b29a7c;
+
+    font-size: 1.2rem;
+
+    line-height: 1.6;
+
+}
+
+
+.texto-apresentacao {
+
+    max-width: 650px;
+
+    margin: 0 auto;
+
+    color: #887766;
+
+    font-size: .95rem;
+
+    line-height: 1.8;
+
+}
+
+
+/* ==================================================
+   RAMOS DECORATIVOS
+================================================== */
+
+.ramo {
+
+    position: absolute;
+
+    color: #d9c9b5;
+
+    font-size: 130px;
+
+    opacity: .55;
+
+    line-height: 1;
+
+}
+
+
+.ramo-esquerdo {
+
+    left: -35px;
+
+    top: 20px;
+
+    transform: rotate(-20deg);
+
+}
+
+
+/* ==================================================
+   CONTADOR
+================================================== */
+
+.contador-casamento {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 18px;
+
+    flex-wrap: wrap;
+
+    margin-top: 45px;
+
+}
+
+
+.contador-item {
+
+    min-width: 82px;
+
+    padding: 12px 15px;
+
+    background: #c4a57e;
+
+    border-radius: 5px;
+
+    color: white;
+
+    box-shadow:
+        0 3px 8px rgba(0,0,0,.08);
+
+}
+
+
+.contador-item span {
+
+    display: block;
+
+    font-family: Georgia, serif;
+
+    font-size: 1.8rem;
+
+    font-weight: bold;
+
+}
+
+
+.contador-item small {
+
+    display: block;
+
+    margin-top: 4px;
+
+    font-size: .78rem;
+
+    text-transform: lowercase;
+
+}
+
+
+.contador-segundos {
+
+    display: none;
+
+}
+
+
+/* ==================================================
+   BOTÕES
+================================================== */
+
+.acoes-casamento {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    flex-wrap: wrap;
+
+    padding: 35px 20px 55px;
+
+    background: var(--bege-claro);
+
+}
+
+
+.botao-casamento {
+
+    display: inline-block;
+
+    min-width: 210px;
+
+    padding: 15px 25px;
+
+    border-radius: 30px;
+
+    background: var(--terracota);
+
+    color: white;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    font-size: 1rem;
+
+    transition: .25s;
+
+}
+
+
+.botao-casamento:hover {
+
+    background: var(--terracota-escuro);
+
+    transform: translateY(-2px);
+
+}
+
+
+.botao-secundario {
+
+    background: #c4a57e;
+
+}
+
+
+.botao-secundario:hover {
+
+    background: #a98b67;
+
+}
+
+
+/* ==================================================
+   RODAPÉ
+================================================== */
+
+.rodape-casamento {
+
+    padding: 35px 20px;
+
+    background: var(--bege);
+
+    color: #806b58;
+
+    text-align: center;
+
+}
+
+
+.rodape-casamento p {
+
+    margin: 0 0 8px;
+
+    font-family: Georgia, serif;
+
+    font-size: 1.2rem;
+
+}
+
+
+.rodape-casamento span {
+
+    font-size: .9rem;
+
+}
+
+
+/* ==================================================
+   CELULAR
+================================================== */
+
+@media (max-width: 600px) {
+
+    .menu-principal {
+
+        top: 18px;
+        left: 18px;
+
+    }
+
+
+    .capa-casamento {
+
+        height: 68vh;
+
+        min-height: 460px;
+
+    }
+
+
+    .capa-conteudo {
+
+        left: 25px;
+
+        right: 20px;
+
+        bottom: 40px;
+
+    }
+
+
+    .capa-conteudo h1 {
+
+        font-size: 2.1rem;
+
+        letter-spacing: 4px;
+
+    }
+
+
+    .capa-conteudo p {
+
+        font-size: .78rem;
+
+        letter-spacing: 3px;
+
+    }
+
+
+    .historia-casamento {
+
+        padding:
+            45px
+            18px
+            50px;
+
+    }
+
+
+    .foto-redonda {
+
+        width: 90px;
+        height: 90px;
+
+    }
+
+
+    .historia-casamento h2 {
+
+        font-size: 2.2rem;
+
+    }
+
+
+    .texto-romantico {
+
+        font-size: 1.05rem;
+
+    }
+
+
+    .texto-apresentacao {
+
+        font-size: .88rem;
+
+    }
+
+
+    .contador-casamento {
+
+        gap: 8px;
+
+    }
+
+
+    .contador-item {
+
+        min-width: 72px;
+
+        padding: 10px 8px;
+
+    }
+
+
+    .contador-item span {
+
+        font-size: 1.35rem;
+
+    }
+
+
+    .contador-item small {
+
+        font-size: .7rem;
+
+    }
+
+
+    .botao-casamento {
+
+        width: 100%;
+
+        max-width: 320px;
+
+    }
 
 }
