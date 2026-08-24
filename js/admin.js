@@ -2848,7 +2848,6 @@ function normalizarTextoAdmin(
 
 }
 
-
 /*
 ==================================================
 FORMATAR DATA FIREBASE
@@ -2859,18 +2858,98 @@ function formatarDataAdmin(
     valor
 ) {
 
-    if (!valor) {
+    if (
+        valor === null ||
+        valor === undefined ||
+        valor === ""
+    ) {
+
         return "—";
+
     }
 
 
     try {
 
-        const data =
-            new Date(
-                valor
-            );
+        let data;
 
+
+        /*
+        ------------------------------------------
+        FIRESTORE TIMESTAMP
+        ------------------------------------------
+        */
+
+        if (
+            typeof valor === "object" &&
+            typeof valor.toDate === "function"
+        ) {
+
+            data =
+                valor.toDate();
+
+        }
+
+
+        /*
+        ------------------------------------------
+        TIMESTAMP SERIALIZADO
+        { seconds, nanoseconds }
+        ------------------------------------------
+        */
+
+        else if (
+            typeof valor === "object" &&
+            valor.seconds !== undefined
+        ) {
+
+            data =
+                new Date(
+                    Number(
+                        valor.seconds
+                    ) * 1000
+                );
+
+        }
+
+
+        /*
+        ------------------------------------------
+        DATE
+        ------------------------------------------
+        */
+
+        else if (
+            valor instanceof Date
+        ) {
+
+            data =
+                valor;
+
+        }
+
+
+        /*
+        ------------------------------------------
+        TEXTO / NÚMERO
+        ------------------------------------------
+        */
+
+        else {
+
+            data =
+                new Date(
+                    valor
+                );
+
+        }
+
+
+        /*
+        ------------------------------------------
+        DATA INVÁLIDA
+        ------------------------------------------
+        */
 
         if (
             isNaN(
@@ -2878,12 +2957,16 @@ function formatarDataAdmin(
             )
         ) {
 
-            return String(
-                valor
-            );
+            return "—";
 
         }
 
+
+        /*
+        ------------------------------------------
+        FORMATAÇÃO
+        ------------------------------------------
+        */
 
         return data.toLocaleString(
             "pt-BR",
@@ -2899,14 +2982,16 @@ function formatarDataAdmin(
 
     } catch (erro) {
 
-        return String(
-            valor
+        console.error(
+            "Erro ao formatar data:",
+            erro
         );
+
+        return "—";
 
     }
 
 }
-
 
 /*
 ==================================================
