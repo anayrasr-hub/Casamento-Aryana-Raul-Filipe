@@ -10,9 +10,15 @@
         content="width=device-width, initial-scale=1.0"
     >
 
+    <meta
+        name="description"
+        content="Site do casamento de Aryana & Raul Filipe"
+    >
+
     <title>
         Aryana & Raul Filipe | Nosso Casamento
     </title>
+
 
     <link
         rel="stylesheet"
@@ -26,7 +32,26 @@
 
 </head>
 
+
 <body>
+
+
+<!-- ==================================================
+     MÚSICA
+================================================== -->
+
+<audio
+    id="musicaCasamento"
+    autoplay
+    loop
+    preload="auto"
+>
+    <source
+        src="musica/Brian McKnight - Back At One.mpeg"
+        type="audio/mpeg"
+    >
+</audio>
+
 
 <!-- ==================================================
      MENU
@@ -38,28 +63,63 @@
         class="botao-menu"
         aria-label="Abrir menu"
     >
+
         <span></span>
         <span></span>
         <span></span>
+
     </summary>
 
-    <nav class="menu-dropdown">
+
+    <nav
+        class="menu-dropdown"
+        aria-label="Menu principal"
+    >
 
         <a href="index.html">
             Início
         </a>
 
-        <a href="confirmacao.html">
+
+        <a
+            href="confirmacao.html"
+            class="menu-destaque"
+        >
             Confirmar Presença
         </a>
 
-        <a href="presentes.html">
+
+        <a
+            href="presentes.html"
+            class="menu-destaque"
+        >
             Lista de Presentes
+        </a>
+
+
+        <a href="#localizacao">
+            📍 Localização
+        </a>
+
+
+        <a href="#dress-code">
+            👗 Dress Code
+        </a>
+
+
+        <a href="#roteiro">
+            🕐 Roteiro
+        </a>
+
+
+        <a href="#avisos">
+            💌 Avisos
         </a>
 
     </nav>
 
 </details>
+
 
 
 <!-- ==================================================
@@ -68,29 +128,67 @@
 
 <header class="capa-casamento">
 
+
     <img
         src="imagens/casal.jpg"
         class="foto-capa"
         alt="Aryana e Raul Filipe"
     >
 
+
     <div class="capa-sombra"></div>
+
 
     <div class="capa-conteudo">
 
+
         <h1>
-            ARYANA
-            <span>&amp;</span>
+
+            ARYANA &
+
+            <br>
+
             RAUL FILIPE
+
         </h1>
+
 
         <p>
             11 DE OUTUBRO DE 2026
         </p>
 
+
+        <!-- ==========================================
+             BOTÕES PRINCIPAIS
+        =========================================== -->
+
+        <div class="botoes-capa">
+
+
+            <a
+                href="confirmacao.html"
+                class="botao-capa"
+            >
+                Confirmar Presença
+            </a>
+
+
+            <a
+                href="presentes.html"
+                class="botao-capa botao-capa-secundario"
+            >
+                Lista de Presentes
+            </a>
+
+
+        </div>
+
+
     </div>
 
+
 </header>
+
 
 
 <!-- ==================================================
@@ -99,80 +197,24 @@
 
 <main>
 
-    <section class="historia-casamento">
 
-        <div class="ramo ramo-esquerdo">
-            ❧
-        </div>
-
-        <div class="fotos-redondas">
-
-            <div class="foto-redonda">
-
-                <img
-                    src="imagens/casal.jpg"
-                    alt="Aryana e Raul Filipe"
-                >
-
-            </div>
-
-            <div class="foto-redonda">
-
-                <img
-                    src="imagens/casal.jpg"
-                    alt="Aryana e Raul Filipe"
-                >
-
-            </div>
-
-        </div>
+    <section
+        class="historia-casamento"
+        id="inicio"
+    >
 
 
-        <p class="pequeno-titulo">
-            ♥
-        </p>
-
-
-        <h2>
-            Vamos nos casar!
-        </h2>
-
-
-        <p class="texto-romantico">
-            Estamos nas nuvens e queremos
-            compartilhar todo nosso amor
-            com vocês.
-        </p>
-
-
-        <p class="texto-apresentacao">
-
-            Por isso, criamos este site com um
-            montão de coisas legais!
-
-            <br><br>
-
-            Uma coisa importante é a confirmação
-            de presença. Você poderá confirmar
-            se vai ou não ao casamento.
-
-            <br><br>
-
-            Confirme o mais rápido possível,
-            por favor, que assim organizar tudo
-            será muito mais fácil.
-
-        </p>
-
-
-        <!-- ==================================================
-             CONTADOR
-        ================================================== -->
+        <!-- ==========================================
+             CONTAGEM REGRESSIVA
+             POSICIONADA NO ESPAÇO DAS FOTOS
+        =========================================== -->
 
         <div
             id="countdown"
             class="contador-casamento"
+            aria-label="Contagem regressiva para o casamento"
         >
+
 
             <div class="contador-item">
 
@@ -225,51 +267,366 @@
 
             </div>
 
+
         </div>
 
+
+
+        <!-- ==========================================
+             TEXTO PRINCIPAL
+        =========================================== -->
+
+        <p class="pequeno-titulo">
+            ♥
+        </p>
+
+
+        <h2>
+            Bem-vindos a celebração do amor!
+        </h2>
+
+
+        <p class="texto-romantico">
+
+            Estamos muito felizes, nas nuvens e queremos
+            compartilhar com você todo o nosso amor.
+
+            <br><br>
+
+            Estamos preparando uma festa de casamento
+            que será de muita diversão.
+
+        </p>
+
+
+        <p class="texto-apresentacao">
+
+            Enquanto não chega o grande dia, criamos esse
+            site para ajudar na organização.
+
+            <br><br>
+
+            Um ponto importante, é a sessão de
+            <strong>"Confirmação de presença"</strong>,
+            onde poderão confirmar se vão ou não ao casamento.
+
+            <br><br>
+
+            Confirme o mais rápido possível, por favor,
+            que assim organizar tudo será muito mais fácil.
+
+            <br><br>
+
+            Ahh e caso queira dar um mimo aos noivos,
+            é só acessar a seção de
+            <strong>"lista de presentes"</strong>.
+
+            <br><br>
+
+            Aproveite essa interação e a gente se encontra
+            em breve!
+
+        </p>
+
+
     </section>
+
 
 
     <!-- ==================================================
-         BOTÕES
+         LOCALIZAÇÃO
     ================================================== -->
 
-    <section class="acoes-casamento">
+    <section
+        id="localizacao"
+        class="secao-informacao"
+    >
 
-        <a
-            href="confirmacao.html"
-            class="botao-casamento"
-        >
-            Confirmar Presença
-        </a>
+        <div class="ornamento">
+            ✦
+        </div>
 
+        <p class="titulo-secao">
+            Onde será?
+        </p>
 
-        <a
-            href="presentes.html"
-            class="botao-casamento botao-secundario"
-        >
-            Lista de Presentes
-        </a>
+        <h2>
+            Localização
+        </h2>
+
+        <p>
+            Em breve disponibilizaremos todos os detalhes
+            do local da celebração.
+        </p>
+
+        <p class="observacao-secao">
+            Fique de olho neste espaço para receber as
+            informações completas.
+        </p>
 
     </section>
+
+
+
+    <!-- ==================================================
+         DRESS CODE
+    ================================================== -->
+
+    <section
+        id="dress-code"
+        class="secao-informacao secao-alternada"
+    >
+
+        <div class="ornamento">
+            ✦
+        </div>
+
+        <p class="titulo-secao">
+            Para o grande dia
+        </p>
+
+        <h2>
+            Dress Code
+        </h2>
+
+        <p>
+            As informações sobre o traje serão divulgadas
+            em breve.
+        </p>
+
+        <p class="observacao-secao">
+            Assim que estiver definido, deixaremos tudo
+            explicadinho por aqui.
+        </p>
+
+    </section>
+
+
+
+    <!-- ==================================================
+         ROTEIRO
+    ================================================== -->
+
+    <section
+        id="roteiro"
+        class="secao-informacao"
+    >
+
+        <div class="ornamento">
+            ✦
+        </div>
+
+        <p class="titulo-secao">
+            Programação
+        </p>
+
+        <h2>
+            Roteiro
+        </h2>
+
+        <div class="linha-roteiro">
+
+            <span>
+                09:00
+            </span>
+
+            <strong>
+                Celebração
+            </strong>
+
+        </div>
+
+
+        <p class="observacao-secao">
+            O roteiro completo da festa será disponibilizado
+            em breve.
+        </p>
+
+    </section>
+
+
+
+    <!-- ==================================================
+         AVISOS
+    ================================================== -->
+
+    <section
+        id="avisos"
+        class="secao-informacao secao-alternada"
+    >
+
+        <div class="ornamento">
+            ♥
+        </div>
+
+        <p class="titulo-secao">
+            Importante
+        </p>
+
+        <h2>
+            Avisos
+        </h2>
+
+
+        <div class="aviso-card">
+
+            <strong>
+                Confirmação de presença
+            </strong>
+
+            <p>
+                Não deixe para a última hora.
+                A confirmação ajuda muito na organização
+                do nosso grande dia.
+            </p>
+
+        </div>
+
+
+        <div class="aviso-card">
+
+            <strong>
+                Lista de presentes
+            </strong>
+
+            <p>
+                Caso queira nos presentear, nossa lista
+                está disponível no site.
+            </p>
+
+        </div>
+
+
+    </section>
+
 
 </main>
 
 
+
+<!-- ==================================================
+     RODAPÉ
+================================================== -->
+
 <footer class="rodape-casamento">
 
+
     <p>
-        Aryana &amp; Raul Filipe
+
+        Aryana &
+
+        <br>
+
+        Raul Filipe
+
     </p>
+
 
     <span>
         11 de Outubro de 2026 às 09:00
     </span>
 
+
 </footer>
 
 
+
+<!-- ==================================================
+     MÚSICA - TENTATIVA DE AUTOPLAY
+================================================== -->
+
+<script>
+
+(function () {
+
+    const musica =
+        document.getElementById(
+            "musicaCasamento"
+        );
+
+
+    if (!musica) {
+        return;
+    }
+
+
+    musica.volume = 0.65;
+
+
+    function iniciarMusica() {
+
+        musica.play()
+            .then(function () {
+
+                console.log(
+                    "Música do casamento iniciada."
+                );
+
+            })
+            .catch(function () {
+
+                console.log(
+                    "Autoplay bloqueado pelo navegador. "
+                    +
+                    "Aguardando interação do visitante."
+                );
+
+            });
+
+    }
+
+
+    iniciarMusica();
+
+
+    document.addEventListener(
+        "click",
+        function iniciarPorInteracao() {
+
+            iniciarMusica();
+
+            document.removeEventListener(
+                "click",
+                iniciarPorInteracao
+            );
+
+        },
+        {
+            once: true
+        }
+    );
+
+
+    document.addEventListener(
+        "touchstart",
+        function iniciarPorToque() {
+
+            iniciarMusica();
+
+            document.removeEventListener(
+                "touchstart",
+                iniciarPorToque
+            );
+
+        },
+        {
+            once: true
+        }
+    );
+
+
+})();
+
+</script>
+
+
+
+<!-- ==================================================
+     CONTADOR
+================================================== -->
+
 <script src="js/app.js"></script>
+
 
 </body>
 

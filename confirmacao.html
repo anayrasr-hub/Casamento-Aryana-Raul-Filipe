@@ -14,6 +14,7 @@
         Confirmar Presença - Aryana & Raul Filipe
     </title>
 
+
     <link
         rel="stylesheet"
         href="css/style.css"
@@ -24,28 +25,136 @@
         href="css/confirmacao.css"
     >
 
+
+    <!-- ==================================================
+         BLOQUEIO DA CONFIRMAÇÃO APÓS 11/09/2026
+    ================================================== -->
+
+    <style>
+
+        #avisoPrazoExpirado {
+
+            display:
+                none;
+
+            max-width:
+                650px;
+
+            margin:
+                40px auto;
+
+            padding:
+                35px 25px;
+
+            background:
+                #fff8f3;
+
+            border:
+                1px solid
+                #d7ad96;
+
+            border-radius:
+                14px;
+
+            text-align:
+                center;
+
+            color:
+                #765f50;
+
+            box-shadow:
+                0 5px 20px
+                rgba(0,0,0,.08);
+
+        }
+
+
+        #avisoPrazoExpirado h2 {
+
+            margin:
+                0 0 18px;
+
+            color:
+                #955b43;
+
+            font-family:
+                Georgia,
+                serif;
+
+            font-size:
+                1.8rem;
+
+        }
+
+
+        #avisoPrazoExpirado p {
+
+            margin:
+                10px 0;
+
+            line-height:
+                1.7;
+
+        }
+
+
+        #avisoPrazoExpirado .coracao {
+
+            display:
+                block;
+
+            margin-bottom:
+                15px;
+
+            color:
+                #b9795b;
+
+            font-size:
+                2rem;
+
+        }
+
+
+        #conteudoConfirmacao {
+
+            display:
+                block;
+
+        }
+
+    </style>
+
+
 </head>
+
 
 <body>
 
+
 <header class="topo-confirmacao">
+
 
     <h1>
         CONFIRME SUA PRESENÇA
     </h1>
 
+
     <h2>
         Aryana & Raul Filipe
     </h2>
+
 
     <p>
         11 de Outubro de 2026 às 09:00
     </p>
 
+
 </header>
 
 
+
 <main class="pagina-confirmacao">
+
 
     <button
         type="button"
@@ -56,227 +165,337 @@
     </button>
 
 
-    <!-- FOTO DO CASAL -->
 
-    <img
-        src="imagens/casal.jpg"
-        class="foto-casal-confirmacao"
-        alt="Aryana e Raul Filipe"
-    >
+    <!-- ==================================================
+         ÁREA DE CONFIRMAÇÃO
+    ================================================== -->
 
-
-    <section class="card-confirmacao">
-
-        <div class="titulo-formulario">
-
-            <h2>
-                Confirme sua presença
-            </h2>
-
-            <p>
-                Preencha os dados de cada convidado.
-            </p>
-
-        </div>
+    <div id="conteudoConfirmacao">
 
 
-        <!-- =========================================
-             FORMULÁRIO
-        ========================================== -->
-<div class="aviso-crianca">
+        <!-- FOTO DO CASAL -->
 
-    <strong>OBS:</strong>
-    Confirmar os dados de <strong>CRIANÇA</strong>
-    somente a partir de 07 (sete) anos de idade.
-
-
-        <!-- =========================================
-             FORMULÁRIO
-        ========================================== -->
-
-        <form id="formPresenca">
-
-            <div id="listaConvidadosFormulario">
+        <img
+            src="imagens/casal.jpg"
+            class="foto-casal-confirmacao"
+            alt="Aryana e Raul Filipe"
+        >
 
 
-                <!-- =================================
-                     CONVIDADO 1
-                ================================== -->
 
-                <div
-                    class="bloco-convidado"
-                    data-convidado="1"
-                >
-
-                    <div class="cabecalho-convidado">
-
-                        <h3>
-                            Convidado 1
-                        </h3>
-
-                    </div>
+        <section class="card-confirmacao">
 
 
-                    <label>
-                        Nome completo
-                    </label>
-
-                    <input
-                        type="text"
-                        class="campo-nome"
-                        placeholder="Digite o nome completo"
-                    >
+            <div class="titulo-formulario">
 
 
-                    <label>
-                        Tipo de convidado
-                    </label>
-
-                    <select
-                        class="campo-tipo"
-                    >
-
-                        <option value="">
-                            Selecione
-                        </option>
-
-                        <option value="Adulto">
-                            Adulto
-                        </option>
-
-                        <option value="Crianca">
-                            Criança
-                        </option>
-
-                    </select>
+                <h2>
+                    Confirme sua presença
+                </h2>
 
 
-                    <!-- IDADE -->
+                <p>
+                    Preencha os dados de cada convidado.
+                </p>
 
-                    <div
-                        class="campo-idade-container"
-                        style="display:none;"
-                    >
-
-                        <label>
-                            Idade da criança
-                        </label>
-
-                        <input
-                            type="number"
-                            class="campo-idade"
-                            min="0"
-                            max="17"
-                        >
-
-                    </div>
-
-
-                    <!-- SEXO -->
-
-                    <label>
-                        Sexo <span>(opcional)</span>
-                    </label>
-
-                    <select
-                        class="campo-sexo"
-                    >
-
-                        <option value="">
-                            Não informar
-                        </option>
-
-                        <option value="Feminino">
-                            Feminino
-                        </option>
-
-                        <option value="Masculino">
-                            Masculino
-                        </option>
-
-                    </select>
-
-
-                    <!-- CALÇADO -->
-
-                    <div
-                        class="campo-calcado-container"
-                        style="display:none;"
-                    >
-
-                        <label>
-                            Número do calçado
-                        </label>
-
-                        <input
-                            type="number"
-                            class="campo-calcado"
-                            min="20"
-                            max="50"
-                        >
-
-                    </div>
-
-
-                    <!-- WHATSAPP -->
-
-                    <label>
-                        WhatsApp
-                    </label>
-
-                    <input
-                        type="tel"
-                        class="campo-whatsapp"
-                        placeholder="(21) 99999-9999"
-                    >
-
-                </div>
 
             </div>
 
 
-            <!-- =========================================
-                 BOTÃO ADICIONAR
-            ========================================== -->
 
-            <button
-                type="button"
-                id="btnAdicionarConvidado"
-                class="btn-adicionar-convidado"
-            >
-                + Adicionar outro convidado
-            </button>
+            <!-- ==================================================
+                 AVISO CRIANÇA
+            ================================================== -->
+
+            <div class="aviso-crianca">
 
 
-            <!-- =========================================
-                 CONFIRMAR
-            ========================================== -->
-
-            <button
-                type="submit"
-                class="btn-confirmar-presenca"
-            >
-                Confirmar presença
-            </button>
-
-        </form>
+                <strong>
+                    OBS:
+                </strong>
 
 
-        <!-- RESULTADO -->
+                Confirmar os dados de
+                <strong>
+                    CRIANÇA
+                </strong>
+                somente a partir de 07 (sete) anos de idade.
 
-        <div
-            id="listaConvidados"
-            class="resultado-confirmacao"
-        ></div>
+
+            </div>
+
+
+
+            <!-- ==================================================
+                 FORMULÁRIO
+            ================================================== -->
+
+            <form id="formPresenca">
+
+
+                <div id="listaConvidadosFormulario">
+
+
+                    <!-- =================================
+                         CONVIDADO 1
+                    ================================== -->
+
+                    <div
+                        class="bloco-convidado"
+                        data-convidado="1"
+                    >
+
+
+                        <div class="cabecalho-convidado">
+
+
+                            <h3>
+                                Convidado 1
+                            </h3>
+
+
+                        </div>
+
+
+
+                        <label>
+                            Nome completo
+                        </label>
+
+
+                        <input
+                            type="text"
+                            class="campo-nome"
+                            placeholder="Digite o nome completo"
+                        >
+
+
+
+                        <label>
+                            Tipo de convidado
+                        </label>
+
+
+                        <select
+                            class="campo-tipo"
+                        >
+
+
+                            <option value="">
+                                Selecione
+                            </option>
+
+
+                            <option value="Adulto">
+                                Adulto
+                            </option>
+
+
+                            <option value="Crianca">
+                                Criança
+                            </option>
+
+
+                        </select>
+
+
+
+                        <!-- IDADE -->
+
+                        <div
+                            class="campo-idade-container"
+                            style="display:none;"
+                        >
+
+
+                            <label>
+                                Idade da criança
+                            </label>
+
+
+                            <input
+                                type="number"
+                                class="campo-idade"
+                                min="0"
+                                max="17"
+                            >
+
+
+                        </div>
+
+
+
+                        <!-- SEXO -->
+
+                        <label>
+
+                            Sexo
+                            <span>
+                                (opcional)
+                            </span>
+
+                        </label>
+
+
+                        <select
+                            class="campo-sexo"
+                        >
+
+
+                            <option value="">
+                                Não informar
+                            </option>
+
+
+                            <option value="Feminino">
+                                Feminino
+                            </option>
+
+
+                            <option value="Masculino">
+                                Masculino
+                            </option>
+
+
+                        </select>
+
+
+
+                        <!-- CALÇADO -->
+
+                        <div
+                            class="campo-calcado-container"
+                            style="display:none;"
+                        >
+
+
+                            <label>
+                                Número do calçado
+                            </label>
+
+
+                            <input
+                                type="number"
+                                class="campo-calcado"
+                                min="20"
+                                max="50"
+                            >
+
+
+                        </div>
+
+
+
+                        <!-- WHATSAPP -->
+
+                        <label>
+                            WhatsApp
+                        </label>
+
+
+                        <input
+                            type="tel"
+                            class="campo-whatsapp"
+                            placeholder="(21) 99999-9999"
+                        >
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- ==================================================
+                     BOTÃO ADICIONAR
+                ================================================== -->
+
+                <button
+                    type="button"
+                    id="btnAdicionarConvidado"
+                    class="btn-adicionar-convidado"
+                >
+                    + Adicionar outro convidado
+                </button>
+
+
+
+                <!-- ==================================================
+                     CONFIRMAR
+                ================================================== -->
+
+                <button
+                    type="submit"
+                    class="btn-confirmar-presenca"
+                >
+                    Confirmar presença
+                </button>
+
+
+            </form>
+
+
+
+            <!-- ==================================================
+                 RESULTADO
+            ================================================== -->
+
+            <div
+                id="listaConvidados"
+                class="resultado-confirmacao"
+            ></div>
+
+
+        </section>
+
+
+    </div>
+
+
+
+    <!-- ==================================================
+         MENSAGEM APÓS O PRAZO
+    ================================================== -->
+
+    <section
+        id="avisoPrazoExpirado"
+        aria-live="polite"
+    >
+
+
+        <span class="coracao">
+            ♥
+        </span>
+
+
+        <h2>
+            O prazo de confirmação expirou
+        </h2>
+
+
+        <p>
+            O período para confirmação de presença
+            já foi encerrado.
+        </p>
+
+
+        <p>
+            Para qualquer pedido excepcional,
+            entrar em contato com os noivos.
+        </p>
+
 
     </section>
+
 
 </main>
 
 
-<!-- =========================================
+
+<!-- ==================================================
      FIREBASE
-========================================== -->
+================================================== -->
 
 <script
     type="module"
@@ -284,14 +503,224 @@
 ></script>
 
 
-<!-- =========================================
+
+<!-- ==================================================
      CONFIRMAÇÃO
-========================================== -->
+================================================== -->
 
 <script
     type="module"
     src="js/confirmacao.js?v=20260814-02"
 ></script>
+
+
+
+<!-- ==================================================
+     CONTROLE DO PRAZO
+     
+     Antes de 11/09/2026:
+     formulário normal.
+
+     Depois de 11/09/2026:
+     visitante comum vê mensagem.
+
+     Administrador autenticado:
+     formulário continua disponível.
+================================================== -->
+
+<script type="module">
+
+    import {
+        getAuth,
+        onAuthStateChanged
+    }
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+    import {
+        app
+    }
+    from "./js/firebase-config.js";
+
+
+
+    const DATA_LIMITE =
+        new Date(
+            "2026-09-11T00:00:00-03:00"
+        );
+
+
+
+    const conteudo =
+        document.getElementById(
+            "conteudoConfirmacao"
+        );
+
+
+    const aviso =
+        document.getElementById(
+            "avisoPrazoExpirado"
+        );
+
+
+    const form =
+        document.getElementById(
+            "formPresenca"
+        );
+
+
+
+    function mostrarFormulario() {
+
+        if (conteudo) {
+
+            conteudo.style.display =
+                "block";
+
+        }
+
+
+        if (aviso) {
+
+            aviso.style.display =
+                "none";
+
+        }
+
+
+        if (form) {
+
+            form.style.pointerEvents =
+                "auto";
+
+            form.style.opacity =
+                "1";
+
+        }
+
+    }
+
+
+
+    function mostrarPrazoExpirado() {
+
+        if (conteudo) {
+
+            conteudo.style.display =
+                "none";
+
+        }
+
+
+        if (aviso) {
+
+            aviso.style.display =
+                "block";
+
+        }
+
+    }
+
+
+
+    function verificarPrazo() {
+
+        const agora =
+            new Date();
+
+
+        return agora >= DATA_LIMITE;
+
+    }
+
+
+
+    /*
+    --------------------------------------------------
+    ANTES DO PRAZO
+    --------------------------------------------------
+    */
+
+    if (!verificarPrazo()) {
+
+        mostrarFormulario();
+
+        console.log(
+            "Confirmação de presença disponível."
+        );
+
+    }
+
+
+    /*
+    --------------------------------------------------
+    APÓS O PRAZO
+    --------------------------------------------------
+    */
+
+    else {
+
+        /*
+        O Firebase verifica se existe uma sessão
+        autenticada. O administrador que já entrou
+        pelo painel continua autorizado.
+        */
+
+        try {
+
+            const auth =
+                getAuth(app);
+
+
+            onAuthStateChanged(
+                auth,
+                function (usuario) {
+
+                    if (usuario) {
+
+                        mostrarFormulario();
+
+
+                        console.log(
+                            "Administrador autenticado. "
+                            +
+                            "Formulário liberado após o prazo."
+                        );
+
+                    }
+
+                    else {
+
+                        mostrarPrazoExpirado();
+
+
+                        console.log(
+                            "Prazo de confirmação expirado."
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+        catch (erro) {
+
+            console.error(
+                "Erro ao verificar acesso administrativo:",
+                erro
+            );
+
+
+            mostrarPrazoExpirado();
+
+        }
+
+    }
+
+</script>
+
 
 </body>
 
