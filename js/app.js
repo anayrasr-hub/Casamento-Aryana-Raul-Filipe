@@ -30,27 +30,16 @@ const prazoConfirmacao =
 ================================================== */
 
 const dias =
-    document.getElementById(
-        "dias"
-    );
-
+    document.getElementById("dias");
 
 const horas =
-    document.getElementById(
-        "horas"
-    );
-
+    document.getElementById("horas");
 
 const minutos =
-    document.getElementById(
-        "minutos"
-    );
-
+    document.getElementById("minutos");
 
 const segundos =
-    document.getElementById(
-        "segundos"
-    );
+    document.getElementById("segundos");
 
 
 /* ==================================================
@@ -62,29 +51,26 @@ function atualizarContador() {
     const agora =
         Date.now();
 
-
     const diferenca =
         dataCasamento - agora;
 
 
-    if (
-        diferenca <= 0
-    ) {
+    if (diferenca <= 0) {
 
         if (dias) {
-            dias.textContent = "0";
+            dias.textContent = "00";
         }
 
         if (horas) {
-            horas.textContent = "0";
+            horas.textContent = "00";
         }
 
         if (minutos) {
-            minutos.textContent = "0";
+            minutos.textContent = "00";
         }
 
         if (segundos) {
-            segundos.textContent = "0";
+            segundos.textContent = "00";
         }
 
         return;
@@ -98,30 +84,22 @@ function atualizarContador() {
         );
 
 
-    const totalMinutos =
-        Math.floor(
-            totalSegundos / 60
-        );
-
-
-    const totalHoras =
-        Math.floor(
-            totalMinutos / 60
-        );
-
-
     const totalDias =
         Math.floor(
-            totalHoras / 24
+            totalSegundos / 86400
         );
 
 
     const horasRestantes =
-        totalHoras % 24;
+        Math.floor(
+            (totalSegundos % 86400) / 3600
+        );
 
 
     const minutosRestantes =
-        totalMinutos % 60;
+        Math.floor(
+            (totalSegundos % 3600) / 60
+        );
 
 
     const segundosRestantes =
@@ -131,7 +109,10 @@ function atualizarContador() {
     if (dias) {
 
         dias.textContent =
-            totalDias;
+            String(totalDias).padStart(
+                2,
+                "0"
+            );
 
     }
 
@@ -139,7 +120,10 @@ function atualizarContador() {
     if (horas) {
 
         horas.textContent =
-            horasRestantes;
+            String(horasRestantes).padStart(
+                2,
+                "0"
+            );
 
     }
 
@@ -147,7 +131,10 @@ function atualizarContador() {
     if (minutos) {
 
         minutos.textContent =
-            minutosRestantes;
+            String(minutosRestantes).padStart(
+                2,
+                "0"
+            );
 
     }
 
@@ -155,7 +142,10 @@ function atualizarContador() {
     if (segundos) {
 
         segundos.textContent =
-            segundosRestantes;
+            String(segundosRestantes).padStart(
+                2,
+                "0"
+            );
 
     }
 
@@ -486,7 +476,7 @@ iniciarMusica();
 
 
 /* ==================================================
-   LIBERAR MÚSICA NO PRIMEIRO CLIQUE
+   LIBERAR MÚSICA NO PRIMEIRO TOQUE
 ================================================== */
 
 document.addEventListener(
@@ -501,10 +491,6 @@ document.addEventListener(
     }
 );
 
-
-/* ==================================================
-   LIBERAR MÚSICA NO PRIMEIRO TOQUE
-================================================== */
 
 document.addEventListener(
     "touchstart",

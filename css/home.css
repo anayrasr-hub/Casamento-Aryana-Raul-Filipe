@@ -1916,3 +1916,405 @@
     }
 
 }
+
+/* ==================================================
+   CONTAGEM REGRESSIVA - CRONÔMETRO
+================================================== */
+
+.contador-casamento {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 18px;
+
+    width: 100%;
+
+    max-width: 760px;
+
+    margin: 45px auto 0;
+
+    padding: 24px 20px;
+
+    box-sizing: border-box;
+
+}
+
+
+.contador-item {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 125px;
+
+    padding: 18px 15px;
+
+    background: rgba(248, 244, 239, 0.92);
+
+    border: 1px solid rgba(196, 165, 126, 0.35);
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 5px 18px rgba(117, 96, 79, 0.10);
+
+}
+
+
+.contador-item span {
+
+    display: block;
+
+    color: var(--terracota-escuro);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(2rem, 5vw, 3.2rem);
+
+    font-weight: normal;
+
+    line-height: 1;
+
+    letter-spacing: 2px;
+
+}
+
+
+.contador-item small {
+
+    display: block;
+
+    margin-top: 9px;
+
+    color: var(--texto-claro);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: .75rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+
+}
+
+
+/* ==================================================
+   CONTADOR - CELULAR
+================================================== */
+
+@media (max-width: 600px) {
+
+    .contador-casamento {
+
+        gap: 7px;
+
+        margin-top: 35px;
+
+        padding: 15px 5px;
+
+    }
+
+
+    .contador-item {
+
+        min-width: 0;
+
+        flex: 1;
+
+        padding: 14px 5px;
+
+        border-radius: 10px;
+
+    }
+
+
+    .contador-item span {
+
+        font-size: clamp(
+            1.55rem,
+            8vw,
+            2.2rem
+        );
+
+        letter-spacing: 1px;
+
+    }
+
+
+    .contador-item small {
+
+        margin-top: 7px;
+
+        font-size: .58rem;
+
+        letter-spacing: 1px;
+
+    }
+
+}
+
+
+/* ==================================================
+   CONTADOR - CELULARES PEQUENOS
+================================================== */
+
+@media (max-width: 380px) {
+
+    .contador-casamento {
+
+        gap: 4px;
+
+        padding-left: 2px;
+
+        padding-right: 2px;
+
+    }
+
+
+    .contador-item {
+
+        padding:
+            12px 3px;
+
+    }
+
+
+    .contador-item span {
+
+        font-size: 1.45rem;
+
+    }
+
+
+    .contador-item small {
+
+        font-size: .52rem;
+
+        letter-spacing: .5px;
+
+    }
+
+}
+/* ==================================================
+   CONTAGEM REGRESSIVA - CRONÔMETRO
+================================================== */
+
+.contador-casamento {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: stretch;
+
+    gap: 10px;
+
+    width: 100%;
+
+    max-width: 720px;
+
+    margin: 42px auto 0;
+
+    padding: 0;
+
+}
+
+
+.contador-item {
+
+    flex: 1;
+
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 18px 10px;
+
+    background: rgba(248, 244, 239, .92);
+
+    border: 1px solid rgba(196, 165, 126, .35);
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 4px 15px rgba(117, 96, 79, .08);
+
+}
+
+
+.contador-item span {
+
+    display: block;
+
+    color: var(--terracota-escuro);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(
+        2rem,
+        5vw,
+        3rem
+    );
+
+    font-weight: normal;
+
+    line-height: 1;
+
+    letter-spacing: 2px;
+
+}
+
+
+.contador-item small {
+
+    display: block;
+
+    margin-top: 8px;
+
+    color: var(--texto-claro);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: .7rem;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+
+}
+
+
+/* ==================================================
+   CONTADOR - CELULAR
+================================================== */
+
+@media (max-width: 600px) {
+
+    .contador-casamento {
+
+        gap: 5px;
+
+        margin-top: 32px;
+
+    }
+
+
+    .contador-item {
+
+        padding:
+            14px 4px;
+
+        border-radius:
+            8px;
+
+    }
+
+
+    .contador-item span {
+
+        font-size:
+            clamp(
+                1.45rem,
+                7.5vw,
+                2rem
+            );
+
+        letter-spacing:
+            1px;
+
+    }
+
+
+    .contador-item small {
+
+        margin-top:
+            6px;
+
+        font-size:
+            .52rem;
+
+        letter-spacing:
+            .8px;
+
+    }
+
+}
+
+
+/* ==================================================
+   CONTADOR - CELULARES PEQUENOS
+================================================== */
+
+@media (max-width: 380px) {
+
+    .contador-casamento {
+
+        gap:
+            3px;
+
+    }
+
+
+    .contador-item {
+
+        padding:
+            12px 2px;
+
+    }
+
+
+    .contador-item span {
+
+        font-size:
+            1.35rem;
+
+    }
+
+
+    .contador-item small {
+
+        font-size:
+            .48rem;
+
+        letter-spacing:
+            .4px;
+
+    }
+
+}
