@@ -1,23 +1,23 @@
 /* ==================================================
    PÁGINA PRINCIPAL
    ARYANA & RAUL FILIPE
-   PALETA TERRACOTA
+   NOVO LAYOUT
 ================================================== */
+
 
 :root {
 
-    --terracota: #b9795b;
-    --terracota-escuro: #955b43;
+    --terracota: #b98967;
+    --terracota-escuro: #956b4e;
+    --terracota-claro: #d7b79b;
 
-    --terracota-claro: #d7ad96;
+    --bege: #eee2d3;
+    --bege-claro: #f8f4ef;
 
-    --bege: #f1e4d8;
-    --bege-claro: #faf7f3;
+    --texto: #75604f;
+    --texto-claro: #9a8572;
 
-    --texto: #765f50;
-    --texto-claro: #927969;
-
-    --dourado: #b9976e;
+    --dourado: #c4a57e;
 
     --branco: #ffffff;
 
@@ -35,7 +35,7 @@
     top: 28px;
     left: 24px;
 
-    z-index: 1000;
+    z-index: 3000;
 
 }
 
@@ -65,8 +65,7 @@
     list-style: none;
 
     box-shadow:
-        0 3px 12px
-        rgba(0,0,0,.16);
+        0 3px 15px rgba(0,0,0,.18);
 
 }
 
@@ -95,7 +94,7 @@
 
     position: absolute;
 
-    top: 52px;
+    top: 53px;
     left: 0;
 
     width: 250px;
@@ -105,11 +104,13 @@
     background:
         rgba(255,255,255,.98);
 
+    border:
+        1px solid rgba(185,137,103,.22);
+
     border-radius: 14px;
 
     box-shadow:
-        0 8px 30px
-        rgba(0,0,0,.18);
+        0 10px 35px rgba(0,0,0,.20);
 
 }
 
@@ -118,7 +119,7 @@
 
     display: block;
 
-    padding: 13px 15px;
+    padding: 12px 14px;
 
     color:
         var(--texto);
@@ -129,10 +130,10 @@
         Georgia,
         serif;
 
-    border-radius: 8px;
+    border-radius: 9px;
 
     transition:
-        .2s;
+        .2s ease;
 
 }
 
@@ -145,19 +146,304 @@
     color:
         var(--terracota-escuro);
 
+    transform:
+        translateX(3px);
+
 }
 
 
-.menu-dropdown .menu-destaque {
+```css
+/* ==================================================
+   BOTÕES DO CABEÇALHO
+   CONFIRMAÇÃO | PRESENTES | LOCALIZAÇÃO
+================================================== */
+
+.acoes-cabecalho {
+
+    position: absolute;
+
+    top: 24px;
+    right: 24px;
+
+    z-index: 2500;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+
+}
+
+
+/* ==================================================
+   BOTÕES
+================================================== */
+
+.botao-header {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 40px;
+
+    padding: 9px 15px;
+
+    border-radius: 30px;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:
+        .82rem;
+
+    line-height:
+        1;
 
     color:
-        var(--terracota-escuro);
+        #ffffff;
 
-    font-weight:
-        bold;
+    background:
+        rgba(145,99,70,.90);
+
+    border:
+        1px solid rgba(255,255,255,.55);
+
+    box-shadow:
+        0 3px 15px rgba(0,0,0,.18);
+
+    backdrop-filter:
+        blur(5px);
+
+    -webkit-backdrop-filter:
+        blur(5px);
+
+    transition:
+        background .2s ease,
+        transform .2s ease,
+        box-shadow .2s ease;
 
 }
 
+
+/* ==================================================
+   HOVER
+================================================== */
+
+.botao-header:hover {
+
+    background:
+        var(--terracota);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,.22);
+
+}
+
+
+/* ==================================================
+   CONFIRMAR PRESENÇA
+================================================== */
+
+.botao-confirmacao-header {
+
+    background:
+        rgba(145,99,70,.90);
+
+}
+
+
+/* ==================================================
+   LISTA DE PRESENTES
+================================================== */
+
+.botao-presentes-header {
+
+    background:
+        rgba(196,165,126,.92);
+
+}
+
+
+/* ==================================================
+   LOCALIZAÇÃO
+================================================== */
+
+.botao-localizacao-header {
+
+    background:
+        rgba(117,96,79,.92);
+
+}
+
+
+.botao-localizacao-header:hover {
+
+    background:
+        var(--terracota-escuro);
+
+}
+
+
+/* ==================================================
+   CONFIRMAÇÃO ENCERRADA
+================================================== */
+
+.botao-confirmacao-header.expirado {
+
+    background:
+        rgba(110,88,75,.92);
+
+    cursor:
+        default;
+
+    opacity:
+        .9;
+
+}
+
+
+/* ==================================================
+   TABLET
+================================================== */
+
+@media (max-width: 900px) {
+
+    .acoes-cabecalho {
+
+        top:
+            18px;
+
+        right:
+            15px;
+
+        left:
+            70px;
+
+        justify-content:
+            flex-end;
+
+        gap:
+            6px;
+
+    }
+
+
+    .botao-header {
+
+        min-height:
+            36px;
+
+        padding:
+            8px 11px;
+
+        font-size:
+            .72rem;
+
+    }
+
+}
+
+
+/* ==================================================
+   CELULAR
+================================================== */
+
+@media (max-width: 600px) {
+
+    .acoes-cabecalho {
+
+        top:
+            16px;
+
+        right:
+            10px;
+
+        left:
+            66px;
+
+        display:
+            flex;
+
+        flex-wrap:
+            nowrap;
+
+        gap:
+            4px;
+
+    }
+
+
+    .botao-header {
+
+        min-width:
+            0;
+
+        min-height:
+            34px;
+
+        padding:
+            7px 8px;
+
+        font-size:
+            .62rem;
+
+        letter-spacing:
+            -.1px;
+
+        border-radius:
+            22px;
+
+    }
+
+}
+
+
+/* ==================================================
+   CELULARES MUITO PEQUENOS
+================================================== */
+
+@media (max-width: 400px) {
+
+    .acoes-cabecalho {
+
+        left:
+            63px;
+
+        right:
+            7px;
+
+        gap:
+            3px;
+
+    }
+
+
+    .botao-header {
+
+        padding:
+            6px 6px;
+
+        font-size:
+            .56rem;
+
+    }
+
+}
+```
 
 /* ==================================================
    CAPA
@@ -165,31 +451,40 @@
 
 .capa-casamento {
 
-    position: relative;
+    position:
+        relative;
 
-    width: 100%;
+    width:
+        100%;
 
     height:
         min(72vh, 720px);
 
     min-height:
-        560px;
+        540px;
 
-    overflow: hidden;
+    overflow:
+        hidden;
 
 }
 
 
 .foto-capa {
 
-    position: absolute;
+    position:
+        absolute;
 
-    inset: 0;
+    inset:
+        0;
 
-    width: 100%;
-    height: 100%;
+    width:
+        100%;
 
-    object-fit: cover;
+    height:
+        100%;
+
+    object-fit:
+        cover;
 
     object-position:
         center center;
@@ -199,16 +494,18 @@
 
 .capa-sombra {
 
-    position: absolute;
+    position:
+        absolute;
 
-    inset: 0;
+    inset:
+        0;
 
     background:
         linear-gradient(
             to bottom,
-            rgba(0,0,0,.05),
-            rgba(0,0,0,.12) 40%,
-            rgba(0,0,0,.74)
+            rgba(0,0,0,.08),
+            rgba(0,0,0,.18) 45%,
+            rgba(0,0,0,.72) 100%
         );
 
 }
@@ -216,13 +513,14 @@
 
 .capa-conteudo {
 
-    position: absolute;
+    position:
+        absolute;
 
-    left: 6%;
+    left:
+        6%;
 
-    right: 6%;
-
-    bottom: 48px;
+    bottom:
+        60px;
 
     color:
         white;
@@ -235,7 +533,8 @@
 
 .capa-conteudo h1 {
 
-    margin: 0;
+    margin:
+        0;
 
     font-family:
         Georgia,
@@ -243,8 +542,8 @@
 
     font-size:
         clamp(
-            2.2rem,
-            7vw,
+            2.4rem,
+            6vw,
             5rem
         );
 
@@ -255,137 +554,70 @@
         7px;
 
     line-height:
-        1.12;
+        1.05;
 
     text-shadow:
-        0 2px 12px
-        rgba(0,0,0,.5);
+        0 2px 12px rgba(0,0,0,.55);
+
+}
+
+
+.nome-linha {
+
+    display:
+        block;
+
+}
+
+
+.nome-e {
+
+    display:
+        block;
+
+    margin:
+        4px 0;
+
+    font-size:
+        .70em;
+
+    letter-spacing:
+        4px;
 
 }
 
 
 .capa-conteudo p {
 
-    margin-top:
-        18px;
+    margin:
+        20px 0 0;
 
     font-size:
         clamp(
-            .85rem,
+            .9rem,
             2vw,
-            1.2rem
+            1.35rem
         );
 
     letter-spacing:
         5px;
 
     text-shadow:
-        0 2px 8px
-        rgba(0,0,0,.5);
+        0 2px 8px rgba(0,0,0,.55);
 
 }
 
 
-/* ==================================================
-   BOTÕES DO CABEÇALHO
-================================================== */
-
-.botoes-capa {
-
-    display:
-        flex;
-
-    flex-wrap:
-        wrap;
-
-    gap:
-        12px;
+.capa-conteudo .horario-capa {
 
     margin-top:
-        28px;
-
-}
-
-
-.botao-capa {
-
-    display:
-        inline-flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    min-width:
-        190px;
-
-    padding:
-        13px 22px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.75);
-
-    border-radius:
-        30px;
-
-    background:
-        var(--terracota);
-
-    color:
-        white;
-
-    text-decoration:
-        none;
-
-    font-family:
-        Georgia,
-        serif;
+        7px;
 
     font-size:
-        .95rem;
+        .9rem;
 
-    box-shadow:
-        0 4px 15px
-        rgba(0,0,0,.18);
-
-    transition:
-        .25s;
-
-}
-
-
-.botao-capa:hover {
-
-    background:
-        var(--terracota-escuro);
-
-    transform:
-        translateY(-2px);
-
-}
-
-
-.botao-capa-secundario {
-
-    background:
-        rgba(255,255,255,.92);
-
-    color:
-        var(--terracota-escuro);
-
-    border-color:
-        white;
-
-}
-
-
-.botao-capa-secundario:hover {
-
-    background:
-        white;
+    letter-spacing:
+        4px;
 
 }
 
@@ -409,140 +641,41 @@
         center;
 
     padding:
-        55px 25px 70px;
+        72px 25px 78px;
 
 }
 
-
-/* ==================================================
-   CONTAGEM REGRESSIVA
-================================================== */
-
-.contador-casamento {
-
-    display:
-        flex;
-
-    justify-content:
-        center;
-
-    align-items:
-        center;
-
-    gap:
-        14px;
-
-    flex-wrap:
-        wrap;
-
-    margin:
-        0 auto 38px;
-
-    max-width:
-        650px;
-
-}
-
-
-.contador-item {
-
-    min-width:
-        84px;
-
-    padding:
-        12px 14px;
-
-    background:
-        var(--terracota);
-
-    border-radius:
-        5px;
-
-    color:
-        white;
-
-    box-shadow:
-        0 4px 10px
-        rgba(0,0,0,.10);
-
-}
-
-
-.contador-item span {
-
-    display:
-        block;
-
-    font-family:
-        Georgia,
-        serif;
-
-    font-size:
-        1.75rem;
-
-    font-weight:
-        bold;
-
-}
-
-
-.contador-item small {
-
-    display:
-        block;
-
-    margin-top:
-        4px;
-
-    font-size:
-        .78rem;
-
-    text-transform:
-        lowercase;
-
-}
-
-
-/*
-   AGORA OS SEGUNDOS FICAM VISÍVEIS
-*/
-
-.contador-segundos {
-
-    display:
-        block;
-
-}
-
-
-/* ==================================================
-   TÍTULO
-================================================== */
 
 .pequeno-titulo {
 
     margin:
-        0 0 5px;
+        0 0 8px;
 
     color:
         var(--terracota-claro);
 
     font-size:
-        20px;
+        23px;
 
 }
 
 
 .historia-casamento h2 {
 
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    max-width:
+        950px;
+
     margin:
         0 auto;
 
-    max-width:
-        900px;
-
     color:
-        var(--terracota);
+        var(--dourado);
 
     font-family:
         Georgia,
@@ -562,47 +695,45 @@
         normal;
 
     line-height:
-        1.25;
-
-}
-
-
-.texto-romantico {
-
-    max-width:
-        650px;
-
-    margin:
-        24px auto 30px;
-
-    color:
-        var(--texto-claro);
-
-    font-size:
-        1.08rem;
-
-    line-height:
-        1.75;
+        1.2;
 
 }
 
 
 .texto-apresentacao {
 
+    position:
+        relative;
+
+    z-index:
+        2;
+
     max-width:
         720px;
 
     margin:
-        0 auto;
+        32px auto 0;
 
     color:
         var(--texto);
 
+    font-family:
+        Georgia,
+        serif;
+
     font-size:
-        .95rem;
+        1rem;
 
     line-height:
         1.85;
+
+}
+
+
+.texto-apresentacao p {
+
+    margin:
+        0 0 18px;
 
 }
 
@@ -612,11 +743,169 @@
     color:
         var(--terracota-escuro);
 
+    font-weight:
+        normal;
+
 }
 
 
 /* ==================================================
-   SEÇÕES INFORMATIVAS
+   RAMOS DECORATIVOS
+================================================== */
+
+.ramo {
+
+    position:
+        absolute;
+
+    color:
+        #d9c9b5;
+
+    font-size:
+        150px;
+
+    opacity:
+        .42;
+
+    line-height:
+        1;
+
+    pointer-events:
+        none;
+
+}
+
+
+.ramo-esquerdo {
+
+    left:
+        -45px;
+
+    top:
+        15px;
+
+    transform:
+        rotate(-20deg);
+
+}
+
+
+.ramo-direito {
+
+    right:
+        -45px;
+
+    bottom:
+        -10px;
+
+    transform:
+        rotate(155deg);
+
+}
+
+
+/* ==================================================
+   CONTADOR DE SEGUNDOS
+================================================== */
+
+.contador-segundos-area {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    margin:
+        48px auto 0;
+
+    padding:
+        24px 30px 28px;
+
+    max-width:
+        680px;
+
+    background:
+        rgba(248,244,239,.88);
+
+    border:
+        1px solid rgba(196,165,126,.28);
+
+    border-radius:
+        12px;
+
+    box-shadow:
+        0 4px 18px rgba(117,96,79,.08);
+
+}
+
+
+.contador-legenda {
+
+    color:
+        var(--terracota);
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:
+        .76rem;
+
+    letter-spacing:
+        4px;
+
+}
+
+
+.contador-segundos-numero {
+
+    display:
+        block;
+
+    margin:
+        7px 0;
+
+    color:
+        var(--terracota-escuro);
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(
+            3rem,
+            9vw,
+            6rem
+        );
+
+    font-weight:
+        normal;
+
+    line-height:
+        1;
+
+    letter-spacing:
+        3px;
+
+}
+
+
+/* ==================================================
+   SEÇÕES DE INFORMAÇÃO
 ================================================== */
 
 .secao-informacao {
@@ -628,21 +917,18 @@
         hidden;
 
     padding:
-        70px 25px;
-
-    background:
-        white;
+        75px 22px;
 
     text-align:
         center;
 
-    color:
-        var(--texto);
+    background:
+        #ffffff;
 
 }
 
 
-.secao-alternada {
+.secao-bege {
 
     background:
         var(--bege-claro);
@@ -650,36 +936,30 @@
 }
 
 
-.ornamento {
+.icone-secao {
+
+    display:
+        block;
 
     margin-bottom:
         10px;
+
+    font-size:
+        2rem;
+
+}
+
+
+.decoracao-titulo {
 
     color:
         var(--terracota-claro);
 
     font-size:
-        22px;
+        30px;
 
-}
-
-
-.titulo-secao {
-
-    margin:
-        0 0 7px;
-
-    color:
-        var(--terracota);
-
-    font-size:
-        .95rem;
-
-    letter-spacing:
-        3px;
-
-    text-transform:
-        uppercase;
+    margin-bottom:
+        5px;
 
 }
 
@@ -687,10 +967,10 @@
 .secao-informacao h2 {
 
     margin:
-        0 0 18px;
+        0;
 
     color:
-        var(--terracota-escuro);
+        var(--terracota);
 
     font-family:
         Georgia,
@@ -703,33 +983,22 @@
             3rem
         );
 
+    font-style:
+        italic;
+
     font-weight:
         normal;
 
 }
 
 
-.secao-informacao > p:not(.titulo-secao):not(.observacao-secao) {
+.subtitulo-secao {
 
     max-width:
         650px;
 
     margin:
-        0 auto;
-
-    line-height:
-        1.8;
-
-}
-
-
-.observacao-secao {
-
-    max-width:
-        650px;
-
-    margin:
-        20px auto 0;
+        13px auto 30px;
 
     color:
         var(--texto-claro);
@@ -740,115 +1009,44 @@
 }
 
 
-/* ==================================================
-   ROTEIRO
-================================================== */
-
-.linha-roteiro {
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-
-    gap:
-        20px;
-
-    max-width:
-        480px;
-
-    margin:
-        25px auto;
-
-    padding:
-        18px 20px;
-
-    background:
-        var(--bege);
-
-    border-left:
-        4px solid
-        var(--terracota);
-
-    border-radius:
-        8px;
-
-}
-
-
-.linha-roteiro span {
-
-    color:
-        var(--terracota);
-
-    font-weight:
-        bold;
-
-}
-
-
-.linha-roteiro strong {
-
-    color:
-        var(--texto);
-
-}
-
-
-/* ==================================================
-   AVISOS
-================================================== */
-
-.aviso-card {
+.card-informacao {
 
     max-width:
         650px;
 
     margin:
-        15px auto;
+        0 auto 28px;
 
     padding:
-        20px;
+        30px;
 
     background:
-        white;
+        #ffffff;
 
     border:
-        1px solid
-        #e6d2c4;
+        1px solid rgba(185,137,103,.20);
 
     border-radius:
-        10px;
-
-    text-align:
-        left;
+        14px;
 
     box-shadow:
-        0 3px 12px
-        rgba(0,0,0,.05);
+        0 5px 20px rgba(117,96,79,.08);
 
 }
 
 
-.secao-alternada .aviso-card {
+.secao-bege .card-informacao {
 
     background:
-        #fffaf6;
+        #ffffff;
 
 }
 
 
-.aviso-card strong {
+.card-informacao h3 {
 
-    display:
-        block;
-
-    margin-bottom:
-        8px;
+    margin:
+        0 0 15px;
 
     color:
         var(--terracota-escuro);
@@ -858,7 +1056,244 @@
         serif;
 
     font-size:
-        1.1rem;
+        1.45rem;
+
+    font-weight:
+        normal;
+
+}
+
+
+.card-informacao p {
+
+    color:
+        var(--texto);
+
+    line-height:
+        1.8;
+
+    margin:
+        0 0 15px;
+
+}
+
+
+.botao-informacao {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    margin:
+        7px 4px;
+
+    padding:
+        12px 18px;
+
+    border-radius:
+        25px;
+
+    background:
+        var(--terracota);
+
+    color:
+        #ffffff;
+
+    text-decoration:
+        none;
+
+    font-size:
+        .9rem;
+
+    transition:
+        .2s ease;
+
+}
+
+
+.botao-informacao:hover {
+
+    background:
+        var(--terracota-escuro);
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+.botao-instagram {
+
+    background:
+        var(--dourado);
+
+}
+
+
+.mapa-container {
+
+    max-width:
+        900px;
+
+    margin:
+        20px auto 0;
+
+    overflow:
+        hidden;
+
+    border:
+        5px solid #ffffff;
+
+    border-radius:
+        15px;
+
+    box-shadow:
+        0 6px 25px rgba(0,0,0,.12);
+
+}
+
+
+/* ==================================================
+   ROTEIRO
+================================================== */
+
+.roteiro-lista {
+
+    max-width:
+        650px;
+
+    margin:
+        35px auto 0;
+
+    text-align:
+        left;
+
+}
+
+
+.roteiro-item {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        22px;
+
+    padding:
+        18px 20px;
+
+    margin-bottom:
+        10px;
+
+    background:
+        #ffffff;
+
+    border-left:
+        4px solid var(--terracota);
+
+    border-radius:
+        8px;
+
+    box-shadow:
+        0 3px 12px rgba(117,96,79,.07);
+
+}
+
+
+.roteiro-item strong {
+
+    min-width:
+        60px;
+
+    color:
+        var(--terracota-escuro);
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:
+        1.15rem;
+
+}
+
+
+.roteiro-item span {
+
+    color:
+        var(--texto);
+
+    line-height:
+        1.4;
+
+}
+
+
+/* ==================================================
+   AVISOS
+================================================== */
+
+.avisos-lista {
+
+    max-width:
+        700px;
+
+    margin:
+        35px auto 0;
+
+}
+
+
+.aviso-card {
+
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    gap:
+        18px;
+
+    margin-bottom:
+        14px;
+
+    padding:
+        22px;
+
+    text-align:
+        left;
+
+    background:
+        #ffffff;
+
+    border:
+        1px solid rgba(185,137,103,.20);
+
+    border-radius:
+        12px;
+
+    box-shadow:
+        0 3px 12px rgba(117,96,79,.06);
+
+}
+
+
+.aviso-card > span {
+
+    flex:
+        0 0 auto;
+
+    font-size:
+        1.5rem;
 
 }
 
@@ -873,6 +1308,121 @@
 
     line-height:
         1.7;
+
+}
+
+
+.aviso-destaque {
+
+    background:
+        #fff7f1;
+
+    border-color:
+        #e5c5af;
+
+}
+
+
+.aviso-destaque strong {
+
+    color:
+        var(--terracota-escuro);
+
+}
+
+
+/* ==================================================
+   BOTÕES FINAIS
+================================================== */
+
+.acoes-finais {
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        15px;
+
+    padding:
+        50px 20px 65px;
+
+    background:
+        var(--bege-claro);
+
+}
+
+
+.botao-casamento {
+
+    display:
+        inline-flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    min-width:
+        220px;
+
+    padding:
+        15px 25px;
+
+    border-radius:
+        30px;
+
+    background:
+        var(--terracota);
+
+    color:
+        #ffffff;
+
+    text-decoration:
+        none;
+
+    font-family:
+        Georgia,
+        serif;
+
+    transition:
+        .2s ease;
+
+}
+
+
+.botao-casamento:hover {
+
+    background:
+        var(--terracota-escuro);
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+.botao-secundario {
+
+    background:
+        var(--dourado);
+
+}
+
+
+.botao-secundario:hover {
+
+    background:
+        #a98b67;
 
 }
 
@@ -910,13 +1460,18 @@
     font-size:
         1.25rem;
 
-    line-height:
-        1.35;
+}
+
+
+.rodape-casamento p span {
+
+    color:
+        var(--terracota);
 
 }
 
 
-.rodape-casamento span {
+.rodape-casamento > span {
 
     font-size:
         .9rem;
@@ -925,10 +1480,247 @@
 
 
 /* ==================================================
-   CELULAR
+   CONFIRMAÇÃO ENCERRADA
 ================================================== */
 
-@media (max-width: 600px) {
+.confirmacao-expirada {
+
+    opacity:
+        .88;
+
+    cursor:
+        default;
+
+}
+
+
+.mensagem-expirada {
+
+    display:
+        none;
+
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    z-index:
+        5000;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        25px;
+
+    background:
+        rgba(67,48,39,.72);
+
+    backdrop-filter:
+        blur(4px);
+
+}
+
+
+.mensagem-expirada.ativa {
+
+    display:
+        flex;
+
+}
+
+
+.mensagem-expirada-card {
+
+    width:
+        100%;
+
+    max-width:
+        500px;
+
+    padding:
+        35px 28px;
+
+    background:
+        #ffffff;
+
+    border-radius:
+        16px;
+
+    text-align:
+        center;
+
+    box-shadow:
+        0 15px 50px rgba(0,0,0,.25);
+
+}
+
+
+.mensagem-expirada-card h3 {
+
+    margin:
+        0 0 15px;
+
+    color:
+        var(--terracota-escuro);
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:
+        1.7rem;
+
+    font-weight:
+        normal;
+
+}
+
+
+.mensagem-expirada-card p {
+
+    margin:
+        0;
+
+    color:
+        var(--texto);
+
+    line-height:
+        1.7;
+
+}
+
+
+/* ==================================================
+   RESPONSIVO
+================================================== */
+
+@media (max-width: 800px) {
+
+
+    .acoes-cabecalho {
+
+        top:
+            18px;
+
+        right:
+            15px;
+
+        left:
+            72px;
+
+        justify-content:
+            flex-end;
+
+    }
+
+
+    .botao-header {
+
+        padding:
+            9px 12px;
+
+        font-size:
+            .74rem;
+
+    }
+
+
+    .capa-casamento {
+
+        height:
+            67vh;
+
+        min-height:
+            500px;
+
+    }
+
+
+    .capa-conteudo {
+
+        left:
+            25px;
+
+        right:
+            20px;
+
+        bottom:
+            40px;
+
+    }
+
+
+    .capa-conteudo h1 {
+
+        font-size:
+            2.5rem;
+
+        letter-spacing:
+            4px;
+
+    }
+
+
+    .capa-conteudo p {
+
+        font-size:
+            .78rem;
+
+        letter-spacing:
+            3px;
+
+    }
+
+
+    .historia-casamento {
+
+        padding:
+            55px 18px 60px;
+
+    }
+
+
+    .texto-apresentacao {
+
+        font-size:
+            .92rem;
+
+    }
+
+
+    .contador-segundos-area {
+
+        padding:
+            22px 15px;
+
+    }
+
+
+    .contador-segundos-numero {
+
+        font-size:
+            3.2rem;
+
+    }
+
+
+    .secao-informacao {
+
+        padding:
+            58px 16px;
+
+    }
+
+
+}
+
+
+@media (max-width: 560px) {
 
 
     .menu-principal {
@@ -942,21 +1734,40 @@
     }
 
 
-    .menu-dropdown {
+    .acoes-cabecalho {
 
-        width:
-            235px;
+        top:
+            18px;
+
+        right:
+            12px;
+
+        left:
+            68px;
+
+        gap:
+            6px;
 
     }
 
 
+    .botao-header {
+
+        min-width:
+            0;
+
+        padding:
+            8px 9px;
+
+        font-size:
+            .67rem;
+
+    }
+
     .capa-casamento {
 
-        height:
-            76vh;
-
         min-height:
-            560px;
+            460px;
 
     }
 
@@ -964,10 +1775,7 @@
     .capa-conteudo {
 
         left:
-            22px;
-
-        right:
-            18px;
+            20px;
 
         bottom:
             32px;
@@ -978,98 +1786,32 @@
     .capa-conteudo h1 {
 
         font-size:
-            2.25rem;
+            2rem;
 
         letter-spacing:
-            4px;
+            3px;
+
+    }
+
+
+    .nome-e {
+
+        letter-spacing:
+            2px;
 
     }
 
 
     .capa-conteudo p {
 
+        margin-top:
+            15px;
+
         font-size:
-            .72rem;
+            .7rem;
 
         letter-spacing:
-            2.5px;
-
-    }
-
-
-    .botoes-capa {
-
-        flex-direction:
-            column;
-
-        align-items:
-            stretch;
-
-        gap:
-            9px;
-
-        margin-top:
-            22px;
-
-    }
-
-
-    .botao-capa {
-
-        width:
-            100%;
-
-        min-width:
-            0;
-
-        padding:
-            12px 18px;
-
-    }
-
-
-    .historia-casamento {
-
-        padding:
-            42px 18px 55px;
-
-    }
-
-
-    .contador-casamento {
-
-        gap:
-            7px;
-
-        margin-bottom:
-            30px;
-
-    }
-
-
-    .contador-item {
-
-        min-width:
-            70px;
-
-        padding:
-            10px 7px;
-
-    }
-
-
-    .contador-item span {
-
-        font-size:
-            1.3rem;
-
-    }
-
-
-    .contador-item small {
-
-        font-size:
-            .68rem;
+            2px;
 
     }
 
@@ -1077,45 +1819,99 @@
     .historia-casamento h2 {
 
         font-size:
-            2.15rem;
+            2rem;
 
     }
 
 
-    .texto-romantico {
+    .contador-legenda {
 
         font-size:
-            1rem;
+            .63rem;
+
+        letter-spacing:
+            2px;
 
     }
 
 
-    .texto-apresentacao {
+    .contador-segundos-numero {
 
         font-size:
-            .88rem;
-
-        line-height:
-            1.75;
+            2.7rem;
 
     }
 
 
-    .secao-informacao {
+    .card-informacao {
 
         padding:
-            55px 18px;
+            24px 18px;
 
     }
 
 
-    .linha-roteiro {
+    .botao-informacao {
+
+        width:
+            100%;
+
+        margin:
+            5px 0;
+
+    }
+
+
+    .mapa-container iframe {
+
+        height:
+            300px;
+
+    }
+
+
+    .roteiro-item {
 
         gap:
-            12px;
+            14px;
+
+        padding:
+            15px;
+
+    }
+
+
+    .roteiro-item strong {
+
+        min-width:
+            48px;
+
+    }
+
+
+    .aviso-card {
+
+        padding:
+            18px;
+
+    }
+
+
+    .acoes-finais {
 
         flex-direction:
             column;
+
+    }
+
+
+    .botao-casamento {
+
+        width:
+            100%;
+
+        max-width:
+            330px;
 
     }
 
