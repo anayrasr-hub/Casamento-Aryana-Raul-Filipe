@@ -579,9 +579,7 @@
 
 <script src="js/app.js"></script>
 
-
 <script>
-
 (function controlarFotosDoCasamento() {
 
     const dataLiberacao =
@@ -596,28 +594,27 @@
     const botaoFotosCapa =
         document.getElementById("botaoFotosCapa");
 
-
     if (agora >= dataLiberacao) {
 
         if (menuFotos) {
-
-            menuFotos.style.display =
-                "block";
-
+            menuFotos.style.setProperty(
+                "display",
+                "block",
+                "important"
+            );
         }
 
-
         if (botaoFotosCapa) {
-
-            botaoFotosCapa.style.display =
-                "inline-flex";
-
+            botaoFotosCapa.style.setProperty(
+                "display",
+                "inline-flex",
+                "important"
+            );
         }
 
     }
 
 })();
-
 </script>
 
 </body>
