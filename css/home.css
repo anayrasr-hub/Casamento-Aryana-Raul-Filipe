@@ -2993,3 +2993,24 @@
         font-size: .67rem !important;
     }
 }
+
+/* ==================================================
+   FOTOS — OCULTAR ATÉ A DATA DO CASAMENTO
+================================================== */
+
+#menuFotos,
+#botaoFotosCapa {
+    display: none !important;
+}
+
+/* ==================================================
+   FOTOS — OCULTAÇÃO ABSOLUTA ANTES DO CASAMENTO
+================================================== */
+
+#menuFotos,
+#botaoFotosCapa {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
