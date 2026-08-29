@@ -518,6 +518,114 @@
         11 de outubro de 2026
     </div>
 
+<!-- ==================================================
+     GALERIA AUTOMÁTICA
+================================================== -->
+
+<section class="galeria-fotos" id="galeriaFotos">
+
+    <div class="galeria-titulo">
+        <span>✦</span>
+
+        <h2>Momentos do nosso dia</h2>
+
+        <p>
+            Compartilhe e reveja os momentos especiais
+            do nosso casamento. 🤎
+        </p>
+    </div>
+
+    <div
+        id="statusGaleria"
+        class="status-galeria"
+    >
+        Carregando fotos...
+    </div>
+
+    <div
+        id="gradeGaleria"
+        class="grade-galeria"
+    ></div>
+
+</section>
+
+<style>
+.galeria-fotos {
+    width: min(1100px, 92%);
+    margin: 50px auto 70px;
+    text-align: center;
+}
+
+.galeria-titulo span {
+    display: block;
+    margin-bottom: 8px;
+    color: #916346;
+    font-size: 1.3rem;
+}
+
+.galeria-titulo h2 {
+    margin: 0;
+    color: #916346;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1.7rem, 4vw, 2.5rem);
+    font-weight: normal;
+}
+
+.galeria-titulo p {
+    margin: 12px auto 30px;
+    max-width: 650px;
+    color: #6f5545;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: .95rem;
+    line-height: 1.6;
+}
+
+.status-galeria {
+    padding: 15px;
+    color: #916346;
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.grade-galeria {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.item-galeria {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #eee4dc;
+    box-shadow: 0 4px 14px rgba(0,0,0,.12);
+}
+
+.item-galeria img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform .3s ease;
+}
+
+.item-galeria:hover img {
+    transform: scale(1.05);
+}
+
+@media (max-width: 700px) {
+    .grade-galeria {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 9px;
+    }
+
+    .galeria-fotos {
+        width: 92%;
+        margin-top: 40px;
+    }
+}
+</style>
 </main>
 
 
@@ -555,160 +663,151 @@
 
 </script>
 <script>
-const CLOUD_NAME = "jityftn1";
-const UPLOAD_PRESET = "casamento_aryana_raulfilipe";
+const CLOUDINARY_CLOUD_NAME = "jityftn1";
+const CLOUDINARY_TAG = "casamento-aryana-raul-filipe";
 
-const inputFotos =
-    document.getElementById("fotoInput");
+async function carregarGaleria() {
 
-const btnSelecionar =
-    document.getElementById("btnSelecionarFotos");
+    const statusGaleria =
+        document.getElementById("statusGaleria");
 
-const btnEnviar =
-    document.getElementById("btnEnviarFotos");
+    const gradeGaleria =
+        document.getElementById("gradeGaleria");
 
-const preview =
-    document.getElementById("previewFotos");
-
-const status =
-    document.getElementById("statusUpload");
-
-let fotosSelecionadas = [];
-
-
-btnSelecionar.addEventListener("click", () => {
-    inputFotos.click();
-});
-
-
-inputFotos.addEventListener("change", () => {
-
-    fotosSelecionadas =
-        Array.from(inputFotos.files);
-
-    preview.innerHTML = "";
-
-    if (!fotosSelecionadas.length) {
-        btnEnviar.style.display = "none";
+    if (!statusGaleria || !gradeGaleria) {
+        console.error("Elementos da galeria não encontrados.");
         return;
     }
 
-    fotosSelecionadas.forEach((arquivo) => {
-
-        const imagem =
-            document.createElement("img");
-
-        imagem.src =
-            URL.createObjectURL(arquivo);
-
-        imagem.style.width = "90px";
-        imagem.style.height = "90px";
-        imagem.style.objectFit = "cover";
-        imagem.style.borderRadius = "12px";
-        imagem.style.margin = "5px";
-
-        preview.appendChild(imagem);
-    });
-
-    btnEnviar.style.display = "inline-flex";
-
-    status.textContent =
-        fotosSelecionadas.length +
-        " foto(s) selecionada(s).";
-});
-
-
-btnEnviar.addEventListener("click", async () => {
-
-    if (!fotosSelecionadas.length) {
-        status.textContent =
-            "Selecione pelo menos uma foto.";
-        return;
-    }
-
-    btnEnviar.disabled = true;
-
-    status.textContent =
-        "Enviando suas fotos...";
-
-    let enviadas = 0;
+    statusGaleria.textContent = "Carregando fotos...";
 
     try {
 
-        for (const arquivo of fotosSelecionadas) {
+        const urlLista =
+            `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/list/${CLOUDINARY_TAG}.json?${Date.now()}`;
 
-            if (!arquivo.type.startsWith("image/")) {
-                continue;
-            }
+        console.log("Consultando Cloudinary:", urlLista);
 
-            const formData =
-                new FormData();
+        const resposta = await fetch(urlLista);
 
-            formData.append(
-                "file",
-                arquivo
+        if (!resposta.ok) {
+            throw new Error(
+                `Cloudinary respondeu HTTP ${resposta.status}`
             );
+        }
 
-            formData.append(
-                "upload_preset",
-                UPLOAD_PRESET
-            );
+        const dados = await resposta.json();
 
-            formData.append(
-                "folder",
-                "casamento-aryana-raul-filipe"
-            );
+        console.log("Fotos recebidas:", dados);
 
-            const resposta =
-                await fetch(
-                    `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
-                    {
-                        method: "POST",
-                        body: formData
+        gradeGaleria.innerHTML = "";
+
+        if (
+            !dados.resources ||
+            dados.resources.length === 0
+        ) {
+
+            statusGaleria.textContent =
+                "Ainda não temos fotos compartilhadas. Seja o primeiro a enviar! 🤎";
+
+            return;
+        }
+
+        dados.resources
+            .slice()
+            .reverse()
+            .forEach((foto) => {
+
+                const item =
+                    document.createElement("div");
+
+                item.className =
+                    "item-galeria";
+
+                const imagem =
+                    document.createElement("img");
+
+                imagem.loading = "lazy";
+
+                imagem.alt =
+                    "Foto compartilhada no casamento de Aryana & Raul Filipe";
+
+                /*
+                 * Usa a versão fornecida pelo Cloudinary.
+                 * Isso evita problemas de cache.
+                 */
+                const urlImagem =
+                    `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/${foto.public_id}.${foto.format}`;
+
+                const urlOriginal =
+                    `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/${foto.public_id}.${foto.format}`;
+                    `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/${versao}${foto.public_id}`;
+
+                console.log(
+                    "Imagem:",
+                    urlImagem
+                );
+
+                imagem.src = urlImagem;
+
+                imagem.onerror = function () {
+
+                    console.error(
+                        "Erro ao carregar imagem:",
+                        urlImagem
+                    );
+
+                    item.innerHTML =
+                        `<div style="
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            width:100%;
+                            height:100%;
+                            padding:15px;
+                            text-align:center;
+                            color:#916346;
+                            font-family:Georgia,serif;
+                            font-size:.85rem;
+                        ">
+                            Não foi possível carregar esta foto.
+                        </div>`;
+                };
+
+                imagem.addEventListener(
+                    "click",
+                    () => {
+
+                        window.open(
+                            urlOriginal,
+                            "_blank"
+                        );
+
                     }
                 );
 
-            if (!resposta.ok) {
-                throw new Error(
-                    "Falha no upload."
-                );
-            }
+                item.appendChild(imagem);
 
-            await resposta.json();
+                gradeGaleria.appendChild(item);
 
-            enviadas++;
+            });
 
-            status.textContent =
-                `Enviando... ${enviadas}/${fotosSelecionadas.length}`;
-        }
-
-
-        status.innerHTML =
-            "✓ <strong>Fotos enviadas com sucesso!</strong><br>" +
-            "Obrigado por compartilhar esse momento conosco. 🤎";
-
-        preview.innerHTML = "";
-
-        inputFotos.value = "";
-
-        fotosSelecionadas = [];
-
-        btnEnviar.style.display = "none";
+        statusGaleria.textContent =
+            `${dados.resources.length} foto(s) compartilhada(s) 🤎`;
 
     } catch (erro) {
 
         console.error(
-            "Erro no upload:",
+            "Erro ao carregar galeria:",
             erro
         );
 
-        status.innerHTML =
-            "❌ Não foi possível enviar as fotos.<br>" +
-            "Tente novamente em alguns instantes.";
+        statusGaleria.textContent =
+            "Não foi possível carregar as fotos agora. Tente novamente em instantes.";
     }
+}
 
-    btnEnviar.disabled = false;
-});
+carregarGaleria();
 </script>
 </body>
 </html>
