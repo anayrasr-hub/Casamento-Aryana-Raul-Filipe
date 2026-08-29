@@ -22,8 +22,6 @@ const firebaseConfig = {
     authDomain:
         "casamento-aryana-raul-filipe.firebaseapp.com",
 
-    databaseURL:
-        "https://casamento-aryana-raul-filipe-default-rtdb.firebaseio.com",
 
     projectId:
         "casamento-aryana-raul-filipe",
