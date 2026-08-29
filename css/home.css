@@ -2915,3 +2915,81 @@
         width: min(100%, 260px);
     }
 }
+
+/* ==================================================
+   PADRONIZAÇÃO FINAL DOS BOTÕES DA CAPA
+   CONFIRMAR PRESENÇA | FOTOS | PRESENTES | LOCALIZAÇÃO
+================================================== */
+
+.botoes-capa > .botao-capa {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    min-width: 170px !important;
+    min-height: 44px !important;
+    padding: 10px 18px !important;
+
+    box-sizing: border-box !important;
+
+    color: #ffffff !important;
+    background: rgba(145, 99, 70, .94) !important;
+
+    border: 1px solid rgba(255,255,255,.75) !important;
+    border-radius: 25px !important;
+
+    text-decoration: none !important;
+
+    font-family: Georgia, "Times New Roman", serif !important;
+    font-size: .78rem !important;
+    letter-spacing: .5px !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+
+    box-shadow: 0 4px 15px rgba(0,0,0,.28) !important;
+
+    transition:
+        transform .2s ease,
+        background .2s ease,
+        box-shadow .2s ease !important;
+}
+
+.botoes-capa > .botao-capa:hover {
+    transform: translateY(-2px) !important;
+    background: rgba(120,78,54,.98) !important;
+    box-shadow: 0 7px 22px rgba(0,0,0,.35) !important;
+}
+
+/* Fotos também fica igual aos demais */
+.botoes-capa > .botao-capa-secundario {
+    color: #ffffff !important;
+    background: rgba(145, 99, 70, .94) !important;
+}
+
+.botoes-capa > .botao-capa-secundario:hover {
+    background: rgba(120,78,54,.98) !important;
+}
+
+
+/* CELULAR */
+@media (max-width: 600px) {
+
+    .botoes-capa > .botao-capa {
+        width: min(100%, 280px) !important;
+        min-width: 0 !important;
+        min-height: 41px !important;
+        padding: 9px 13px !important;
+        font-size: .72rem !important;
+    }
+}
+
+
+/* CELULARES MUITO PEQUENOS */
+@media (max-width: 400px) {
+
+    .botoes-capa > .botao-capa {
+        width: min(100%, 260px) !important;
+        min-height: 39px !important;
+        font-size: .67rem !important;
+    }
+}
