@@ -101,8 +101,27 @@
             🎁 Lista de Presentes
         </a>
 
+        <div
+    id="menuFotos"
+    class="menu-fotos"
+    style="display:none;"
+>
 
-        <a href="localizacao.html">
+    <span class="menu-fotos-titulo">
+        📸 Fotos
+    </span>
+
+    <a href="fotos.html">
+        📤 Compartilhe suas fotos
+    </a>
+
+    <a href="galeria.html">
+        🖼️ Galeria de fotos
+    </a>
+
+</div>
+
+            <a href="localizacao.html">
             📍 Localização
         </a>
 
@@ -192,6 +211,17 @@
             >
                 Confirmar Presença
             </a>
+
+
+            <a
+                href="galeria.html"
+                class="botao-capa botao-capa-secundario"
+                id="botaoFotosCapa"
+                style="display:none;"
+            >
+                📸 Fotos
+            </a>
+
 
 
             <a
@@ -549,6 +579,46 @@
 
 <script src="js/app.js"></script>
 
+
+<script>
+
+(function controlarFotosDoCasamento() {
+
+    const dataLiberacao =
+        new Date("2026-10-11T00:00:00-03:00");
+
+    const agora =
+        new Date();
+
+    const menuFotos =
+        document.getElementById("menuFotos");
+
+    const botaoFotosCapa =
+        document.getElementById("botaoFotosCapa");
+
+
+    if (agora >= dataLiberacao) {
+
+        if (menuFotos) {
+
+            menuFotos.style.display =
+                "block";
+
+        }
+
+
+        if (botaoFotosCapa) {
+
+            botaoFotosCapa.style.display =
+                "inline-flex";
+
+        }
+
+    }
+
+})();
+
+</script>
 
 </body>
 

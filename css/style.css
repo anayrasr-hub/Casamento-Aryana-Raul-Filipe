@@ -276,3 +276,49 @@ flex-wrap:wrap;
     font-size:25px;
 
 }
+
+/* ==================================================
+   MENU FOTOS
+================================================== */
+
+.menu-fotos {
+    display: none;
+    padding: 0;
+}
+
+.menu-fotos-titulo {
+    display: block;
+
+    padding:
+        10px 18px;
+
+    color:
+        var(--terracota-escuro);
+
+    font-weight:
+        600;
+
+    cursor:
+        default;
+}
+
+.menu-fotos a {
+    display: block;
+
+    padding:
+        9px 18px 9px 38px;
+
+    text-decoration:
+        none;
+
+    color:
+        inherit;
+
+    font-size:
+        .92rem;
+}
+
+.menu-fotos a:hover {
+    background:
+        rgba(145, 99, 70, .08);
+}

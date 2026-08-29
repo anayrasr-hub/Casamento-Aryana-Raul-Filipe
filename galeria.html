@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Galeria de fotos do casamento de Aryana & Raul Filipe"
+    >
+
+    <title>
+        Aryana & Raul Filipe | Galeria de Fotos
+    </title>
+
+    <link
+        rel="icon"
+        type="image/jpeg"
+        href="imagens/casal.jpg"
+    >
+
+    <style>
+
+        :root {
+            --terracota: #916346;
+            --terracota-escuro: #6f4a36;
+            --fundo: #f8f1eb;
+            --fundo-card: #fffaf6;
+            --texto: #6f5545;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #f8f1eb 0%,
+                    #fffaf6 100%
+                );
+
+            color: var(--texto);
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+        }
+
+        .pagina {
+            width: min(1100px, 94%);
+            margin: 0 auto;
+            padding: 35px 25px 50px;
+
+            text-align: center;
+
+            background: rgba(255,255,255,.78);
+
+            border-radius: 28px;
+
+            box-shadow:
+                0 8px 30px rgba(80,50,30,.08);
+        }
+
+        .flor {
+            color: var(--terracota);
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            margin: 0;
+
+            color: var(--terracota);
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size:
+                clamp(2rem, 5vw, 3rem);
+
+            font-weight: normal;
+        }
+
+        .subtitulo {
+            max-width: 680px;
+            margin: 15px auto 35px;
+
+            color: var(--texto);
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            line-height: 1.7;
+        }
+
+        .acoes {
+            display: flex;
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+            gap: 12px;
+
+            margin-bottom: 35px;
+        }
+
+        .botao {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-height: 46px;
+
+            padding: 12px 22px;
+
+            border: none;
+            border-radius: 25px;
+
+            background: var(--terracota);
+
+            color: white;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition:
+                transform .2s ease,
+                opacity .2s ease;
+        }
+
+        .botao:hover {
+            transform: translateY(-2px);
+            opacity: .9;
+        }
+
+        .botao-secundario {
+            background: #eee1d7;
+            color: var(--terracota-escuro);
+        }
+
+        .status {
+            margin: 20px 0;
+
+            color: var(--terracota);
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+        }
+
+        .grade {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 14px;
+        }
+
+        .item {
+            position: relative;
+
+            aspect-ratio: 1 / 1;
+
+            overflow: hidden;
+
+            border-radius: 14px;
+
+            background: #eee4dc;
+
+            box-shadow:
+                0 4px 14px rgba(0,0,0,.12);
+
+            cursor: pointer;
+        }
+
+        .item img {
+            display: block;
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            transition:
+                transform .3s ease;
+        }
+
+        .item:hover img {
+            transform: scale(1.05);
+        }
+
+        .rodape {
+            margin-top: 45px;
+
+            color: var(--terracota);
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: .9rem;
+
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 700px) {
+
+            body {
+                padding: 10px;
+            }
+
+            .pagina {
+                width: 96%;
+                padding: 30px 15px 40px;
+                border-radius: 22px;
+            }
+
+            .grade {
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+                gap: 9px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<main class="pagina">
+
+    <div class="flor">
+        ✦
+    </div>
+
+    <h1>
+        Momentos do nosso dia
+    </h1>
+
+    <p class="subtitulo">
+        Reviva e compartilhe os momentos especiais
+        do casamento de
+        <strong>Aryana & Raul Filipe</strong>. 🤎
+    </p>
+
+    <div class="acoes">
+
+        <a
+            href="fotos.html"
+            class="botao"
+        >
+            📸 Compartilhe suas fotos
+        </a>
+
+        <a
+            href="index.html"
+            class="botao botao-secundario"
+        >
+            ← Voltar ao início
+        </a>
+
+    </div>
+
+    <div
+        id="statusGaleria"
+        class="status"
+    >
+        Carregando fotos...
+    </div>
+
+    <div
+        id="gradeGaleria"
+        class="grade"
+    ></div>
+
+    <div class="rodape">
+        Aryana & Raul Filipe
+        <br>
+        11 de outubro de 2026
+    </div>
+
+</main>
+
+<script>
+
+const CLOUDINARY_CLOUD_NAME = "jityftn1";
+
+const CLOUDINARY_PASTA =
+    "casamento-aryana-raul-filipe";
+
+async function carregarGaleria() {
+
+    const status =
+        document.getElementById(
+            "statusGaleria"
+        );
+
+    const grade =
+        document.getElementById(
+            "gradeGaleria"
+        );
+
+    try {
+
+        const resposta =
+            await fetch(
+                `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/list/${CLOUDINARY_PASTA}.json?${Date.now()}`
+            );
+
+        if (!resposta.ok) {
+            throw new Error(
+                "Falha ao consultar o Cloudinary."
+            );
+        }
+
+        const dados =
+            await resposta.json();
+
+        grade.innerHTML = "";
+
+        if (
+            !dados.resources ||
+            !dados.resources.length
+        ) {
+
+            status.textContent =
+                "Ainda não temos fotos compartilhadas. 🤎";
+
+            return;
+        }
+
+        dados.resources
+            .slice()
+            .reverse()
+            .forEach((foto) => {
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+                item.className = "item";
+
+                const imagem =
+                    document.createElement(
+                        "img"
+                    );
+
+                const versao =
+                    foto.version
+                        ? `v${foto.version}/`
+                        : "";
+
+                const urlImagem =
+                    `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/${versao}${foto.public_id}`;
+
+                imagem.src =
+                    urlImagem;
+
+                imagem.loading =
+                    "lazy";
+
+                imagem.alt =
+                    "Foto do casamento de Aryana & Raul Filipe";
+
+                imagem.onerror =
+                    function () {
+
+                        item.style.display =
+                            "none";
+
+                    };
+
+                imagem.addEventListener(
+                    "click",
+                    () => {
+
+                        window.open(
+                            urlImagem,
+                            "_blank"
+                        );
+
+                    }
+                );
+
+                item.appendChild(
+                    imagem
+                );
+
+                grade.appendChild(
+                    item
+                );
+
+            });
+
+        status.textContent =
+            `${dados.resources.length} foto(s) compartilhada(s) 🤎`;
+
+    } catch (erro) {
+
+        console.error(
+            "Erro ao carregar galeria:",
+            erro
+        );
+
+        status.textContent =
+            "Não foi possível carregar as fotos agora.";
+
+    }
+
+}
+
+carregarGaleria();
+
+</script>
+
+</body>
+
+</html>
