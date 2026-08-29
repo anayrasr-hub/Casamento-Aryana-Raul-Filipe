@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Compartilhe suas fotos do casamento de Aryana & Raul Filipe."
+    >
+
+    <title>Compartilhe suas fotos | Aryana & Raul Filipe</title>
+
+    <style>
+        :root {
+            --terracota: #916346;
+            --terracota-escuro: #784e36;
+            --terracota-claro: #b88968;
+            --creme: #faf6f1;
+            --branco: #ffffff;
+            --texto: #5d4436;
+            --sombra: rgba(76, 49, 35, .18);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            color: var(--texto);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f7eee7 0%,
+                    #fffaf6 50%,
+                    #f1e2d7 100%
+                );
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 25px;
+        }
+
+        .pagina-fotos {
+            width: 100%;
+            max-width: 850px;
+
+            background: rgba(255,255,255,.94);
+
+            border-radius: 28px;
+
+            padding: 45px 35px;
+
+            text-align: center;
+
+            box-shadow:
+                0 15px 45px var(--sombra);
+
+            border:
+                1px solid rgba(145,99,70,.18);
+        }
+
+        .flor {
+            color: var(--terracota);
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .titulo {
+            color: var(--terracota-escuro);
+
+            font-size:
+                clamp(
+                    2rem,
+                    6vw,
+                    3.5rem
+                );
+
+            font-weight: normal;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 12px;
+        }
+
+        .subtitulo {
+            font-size:
+                clamp(
+                    .9rem,
+                    2vw,
+                    1.15rem
+                );
+
+            line-height: 1.7;
+
+            max-width: 650px;
+
+            margin:
+                0 auto 30px;
+        }
+
+        .destaque {
+            color: var(--terracota);
+            font-weight: bold;
+        }
+
+        .area-upload {
+            background:
+                linear-gradient(
+                    145deg,
+                    #fffaf6,
+                    #f5e7dc
+                );
+
+            border:
+                1px solid rgba(145,99,70,.20);
+
+            border-radius: 22px;
+
+            padding: 30px 20px;
+
+            margin: 25px auto;
+
+            max-width: 650px;
+        }
+
+        .icone-camera {
+            font-size: 3.2rem;
+            margin-bottom: 15px;
+        }
+
+        .area-upload h2 {
+            color: var(--terracota-escuro);
+
+            font-size: 1.45rem;
+
+            font-weight: normal;
+
+            margin-bottom: 10px;
+        }
+
+        .area-upload p {
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: .9rem;
+
+            line-height: 1.6;
+
+            margin-bottom: 22px;
+        }
+
+        .botao {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-height: 48px;
+
+            padding:
+                12px 25px;
+
+            border-radius: 30px;
+
+            border:
+                1px solid rgba(
+                    255,
+                    255,
+                    255,
+                    .75
+                );
+
+            color: #ffffff;
+
+            background:
+                var(--terracota);
+
+            text-decoration: none;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: .95rem;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 5px 18px
+                rgba(76,49,35,.22);
+
+            transition:
+                transform .2s ease,
+                background .2s ease,
+                box-shadow .2s ease;
+        }
+
+        .botao:hover {
+            transform: translateY(-2px);
+
+            background:
+                var(--terracota-escuro);
+
+            box-shadow:
+                0 8px 24px
+                rgba(76,49,35,.30);
+        }
+
+        .botao-voltar {
+            background:
+                rgba(145,99,70,.10);
+
+            color:
+                var(--terracota-escuro);
+
+            border:
+                1px solid
+                rgba(145,99,70,.30);
+
+            box-shadow: none;
+
+            margin-top: 25px;
+        }
+
+        .botao-voltar:hover {
+            background:
+                rgba(145,99,70,.18);
+
+            box-shadow: none;
+        }
+
+        .qr-area {
+            margin-top: 35px;
+
+            padding-top: 30px;
+
+            border-top:
+                1px solid
+                rgba(145,99,70,.18);
+        }
+
+        .qr-area h2 {
+            color:
+                var(--terracota-escuro);
+
+            font-size: 1.4rem;
+
+            font-weight: normal;
+
+            margin-bottom: 8px;
+        }
+
+        .qr-area p {
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: .85rem;
+
+            line-height: 1.5;
+
+            margin-bottom: 20px;
+        }
+
+        #qrcode {
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            width: 220px;
+            height: 220px;
+
+            margin:
+                0 auto 18px;
+
+            padding: 10px;
+
+            background: #ffffff;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(76,49,35,.15);
+        }
+
+        #qrcode img,
+        #qrcode canvas {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .endereco {
+            display: inline-block;
+
+            max-width: 600px;
+
+            padding:
+                9px 14px;
+
+            border-radius: 12px;
+
+            background:
+                rgba(145,99,70,.08);
+
+            color:
+                var(--terracota-escuro);
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: .72rem;
+
+            word-break: break-all;
+        }
+
+        .aviso {
+            margin-top: 22px;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: .76rem;
+
+            line-height: 1.6;
+
+            color: #806b5d;
+        }
+
+        .rodape {
+            margin-top: 30px;
+
+            color:
+                var(--terracota);
+
+            font-size: .9rem;
+
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 12px;
+            }
+
+            .pagina-fotos {
+                padding:
+                    32px 18px;
+
+                border-radius: 22px;
+            }
+
+            .titulo {
+                letter-spacing: 1px;
+            }
+
+            .area-upload {
+                padding:
+                    25px 15px;
+            }
+
+            #qrcode {
+                width: 200px;
+                height: 200px;
+            }
+
+            .botao {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="pagina-fotos">
+
+    <div class="flor">
+        ✦
+    </div>
+
+    <h1 class="titulo">
+        Compartilhe suas fotos
+    </h1>
+
+    <p class="subtitulo">
+        Faça parte das lembranças do nosso grande dia.
+        <br>
+        Registre os melhores momentos e compartilhe
+        suas fotos conosco. 🤎
+    </p>
+
+
+    <section class="area-upload">
+
+        <div class="icone-camera">
+            📸
+        </div>
+
+        <h2>
+            Envie suas fotos do casamento
+        </h2>
+
+        <p>
+            Clique no botão abaixo para abrir nossa
+            pasta de fotos e compartilhar seus registros
+            da celebração de
+            <span class="destaque">
+                Aryana & Raul Filipe
+            </span>.
+        </p>
+
+        <div class="upload-box">
+
+    <input
+        type="file"
+        id="fotoInput"
+        accept="image/*"
+        multiple
+        hidden
+    >
+
+    <button
+        type="button"
+        class="botao"
+        id="btnSelecionarFotos"
+    >
+        📸 Selecionar fotos
+    </button>
+
+    <div id="previewFotos"></div>
+
+    <button
+        type="button"
+        class="botao"
+        id="btnEnviarFotos"
+        style="display:none;"
+    >
+        📤 Enviar fotos
+    </button>
+
+    <div id="statusUpload"></div>
+
+</div>
+
+    </section>
+
+
+    <section class="qr-area">
+
+        <h2>
+            📱 Compartilhe com o celular
+        </h2>
+
+        <p>
+            Aponte a câmera do celular para o QR Code
+            abaixo e acesse esta página rapidamente.
+        </p>
+
+        <div id="qrcode"></div>
+
+        <div class="endereco" id="enderecoPagina">
+            Carregando endereço...
+        </div>
+
+    </section>
+
+
+    <p class="aviso">
+        Ao acessar o botão de envio, você será direcionado
+        para nossa pasta compartilhada de fotos.
+    </p>
+
+
+    <a
+        href="index.html"
+        class="botao botao-voltar"
+    >
+        ← Voltar ao início
+    </a>
+
+
+    <div class="rodape">
+        Aryana & Raul Filipe
+        <br>
+        11 de outubro de 2026
+    </div>
+
+</main>
+
+
+<!-- ==================================================
+     QR CODE
+================================================== -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+
+    const endereco =
+        window.location.href;
+
+    document.getElementById(
+        "enderecoPagina"
+    ).textContent = endereco;
+
+
+    new QRCode(
+        document.getElementById("qrcode"),
+        {
+            text: endereco,
+
+            width: 200,
+            height: 200,
+
+            colorDark: "#5d4436",
+            colorLight: "#ffffff",
+
+            correctLevel:
+                QRCode.CorrectLevel.H
+        }
+    );
+
+</script>
+<script>
+const CLOUD_NAME = "casamento_aryana_raulfilipe";
+const UPLOAD_PRESET = "casamento_aryana_raulfilipe";
+
+const inputFotos =
+    document.getElementById("fotoInput");
+
+const btnSelecionar =
+    document.getElementById("btnSelecionarFotos");
+
+const btnEnviar =
+    document.getElementById("btnEnviarFotos");
+
+const preview =
+    document.getElementById("previewFotos");
+
+const status =
+    document.getElementById("statusUpload");
+
+let fotosSelecionadas = [];
+
+
+btnSelecionar.addEventListener("click", () => {
+    inputFotos.click();
+});
+
+
+inputFotos.addEventListener("change", () => {
+
+    fotosSelecionadas =
+        Array.from(inputFotos.files);
+
+    preview.innerHTML = "";
+
+    if (!fotosSelecionadas.length) {
+        btnEnviar.style.display = "none";
+        return;
+    }
+
+    fotosSelecionadas.forEach((arquivo) => {
+
+        const imagem =
+            document.createElement("img");
+
+        imagem.src =
+            URL.createObjectURL(arquivo);
+
+        imagem.style.width = "90px";
+        imagem.style.height = "90px";
+        imagem.style.objectFit = "cover";
+        imagem.style.borderRadius = "12px";
+        imagem.style.margin = "5px";
+
+        preview.appendChild(imagem);
+    });
+
+    btnEnviar.style.display = "inline-flex";
+
+    status.textContent =
+        fotosSelecionadas.length +
+        " foto(s) selecionada(s).";
+});
+
+
+btnEnviar.addEventListener("click", async () => {
+
+    if (!fotosSelecionadas.length) {
+        status.textContent =
+            "Selecione pelo menos uma foto.";
+        return;
+    }
+
+    btnEnviar.disabled = true;
+
+    status.textContent =
+        "Enviando suas fotos...";
+
+    let enviadas = 0;
+
+    try {
+
+        for (const arquivo of fotosSelecionadas) {
+
+            if (!arquivo.type.startsWith("image/")) {
+                continue;
+            }
+
+            const formData =
+                new FormData();
+
+            formData.append(
+                "file",
+                arquivo
+            );
+
+            formData.append(
+                "upload_preset",
+                UPLOAD_PRESET
+            );
+
+            formData.append(
+                "folder",
+                "casamento-aryana-raul-filipe"
+            );
+
+            const resposta =
+                await fetch(
+                    `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+                    {
+                        method: "POST",
+                        body: formData
+                    }
+                );
+
+            if (!resposta.ok) {
+                throw new Error(
+                    "Falha no upload."
+                );
+            }
+
+            await resposta.json();
+
+            enviadas++;
+
+            status.textContent =
+                `Enviando... ${enviadas}/${fotosSelecionadas.length}`;
+        }
+
+
+        status.innerHTML =
+            "✓ <strong>Fotos enviadas com sucesso!</strong><br>" +
+            "Obrigado por compartilhar esse momento conosco. 🤎";
+
+        preview.innerHTML = "";
+
+        inputFotos.value = "";
+
+        fotosSelecionadas = [];
+
+        btnEnviar.style.display = "none";
+
+    } catch (erro) {
+
+        console.error(
+            "Erro no upload:",
+            erro
+        );
+
+        status.innerHTML =
+            "❌ Não foi possível enviar as fotos.<br>" +
+            "Tente novamente em alguns instantes.";
+    }
+
+    btnEnviar.disabled = false;
+});
+</script>
+</body>
+</html>
