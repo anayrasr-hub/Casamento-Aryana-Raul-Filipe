@@ -519,119 +519,128 @@
     </div>
 
 <!-- ==================================================
-     GALERIA AUTOMÁTICA
 ================================================== -->
 
-<section class="galeria-fotos" id="galeriaFotos">
+<script>
 
-    <div class="galeria-titulo">
-        <span>✦</span>
+const CLOUD_NAME = "jityftn1";
+const UPLOAD_PRESET = "casamento_aryana_raulfilipe";
 
-        <h2>Momentos do nosso dia</h2>
+const fotoInput = document.getElementById("fotoInput");
+const btnSelecionarFotos = document.getElementById("btnSelecionarFotos");
+const btnEnviarFotos = document.getElementById("btnEnviarFotos");
+const previewFotos = document.getElementById("previewFotos");
+const statusUpload = document.getElementById("statusUpload");
 
-        <p>
-            Compartilhe e reveja os momentos especiais
-            do nosso casamento. 🤎
-        </p>
-    </div>
+let fotosSelecionadas = [];
 
-    <div
-        id="statusGaleria"
-        class="status-galeria"
-    >
-        Carregando fotos...
-    </div>
+btnSelecionarFotos.addEventListener("click", () => {
+    fotoInput.click();
+});
 
-    <div
-        id="gradeGaleria"
-        class="grade-galeria"
-    ></div>
+fotoInput.addEventListener("change", () => {
 
-</section>
+    fotosSelecionadas = Array.from(fotoInput.files);
+    previewFotos.innerHTML = "";
 
-<style>
-.galeria-fotos {
-    width: min(1100px, 92%);
-    margin: 50px auto 70px;
-    text-align: center;
-}
-
-.galeria-titulo span {
-    display: block;
-    margin-bottom: 8px;
-    color: #916346;
-    font-size: 1.3rem;
-}
-
-.galeria-titulo h2 {
-    margin: 0;
-    color: #916346;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: clamp(1.7rem, 4vw, 2.5rem);
-    font-weight: normal;
-}
-
-.galeria-titulo p {
-    margin: 12px auto 30px;
-    max-width: 650px;
-    color: #6f5545;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: .95rem;
-    line-height: 1.6;
-}
-
-.status-galeria {
-    padding: 15px;
-    color: #916346;
-    font-family: Georgia, "Times New Roman", serif;
-}
-
-.grade-galeria {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
-}
-
-.item-galeria {
-    position: relative;
-    aspect-ratio: 1 / 1;
-    overflow: hidden;
-    border-radius: 12px;
-    background: #eee4dc;
-    box-shadow: 0 4px 14px rgba(0,0,0,.12);
-}
-
-.item-galeria img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-    cursor: pointer;
-    transition: transform .3s ease;
-}
-
-.item-galeria:hover img {
-    transform: scale(1.05);
-}
-
-@media (max-width: 700px) {
-    .grade-galeria {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 9px;
+    if (!fotosSelecionadas.length) {
+        btnEnviarFotos.style.display = "none";
+        statusUpload.textContent = "";
+        return;
     }
 
-    .galeria-fotos {
-        width: 92%;
-        margin-top: 40px;
+    fotosSelecionadas.forEach((arquivo) => {
+
+        if (!arquivo.type.startsWith("image/")) return;
+
+        const imagem = document.createElement("img");
+        imagem.src = URL.createObjectURL(arquivo);
+        imagem.style.width = "90px";
+        imagem.style.height = "90px";
+        imagem.style.objectFit = "cover";
+        imagem.style.borderRadius = "12px";
+        imagem.style.margin = "5px";
+
+        previewFotos.appendChild(imagem);
+    });
+
+    btnEnviarFotos.style.display = "inline-flex";
+
+    statusUpload.textContent =
+        `${fotosSelecionadas.length} foto(s) selecionada(s).`;
+});
+
+btnEnviarFotos.addEventListener("click", async () => {
+
+    if (!fotosSelecionadas.length) {
+        statusUpload.textContent = "Selecione pelo menos uma foto.";
+        return;
     }
-}
-</style>
-</main>
 
+    btnEnviarFotos.disabled = true;
+    btnSelecionarFotos.disabled = true;
 
-<!-- ==================================================
-     QR CODE
-================================================== -->
+    let enviadas = 0;
+
+    statusUpload.textContent = "Enviando suas fotos...";
+
+    try {
+
+        for (const arquivo of fotosSelecionadas) {
+
+            if (!arquivo.type.startsWith("image/")) continue;
+
+            const formData = new FormData();
+
+            formData.append("file", arquivo);
+            formData.append("upload_preset", UPLOAD_PRESET);
+            formData.append("folder", "casamento-aryana-raul-filipe");
+
+            const resposta = await fetch(
+                `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+            if (!resposta.ok) {
+                throw new Error("Falha no upload.");
+            }
+
+            await resposta.json();
+
+            enviadas++;
+
+            statusUpload.textContent =
+                `Enviando... ${enviadas}/${fotosSelecionadas.length}`;
+        }
+
+        statusUpload.innerHTML =
+            "✓ <strong>Fotos enviadas com sucesso!</strong><br>" +
+            "Obrigado por compartilhar esse momento conosco. 🤎";
+
+        previewFotos.innerHTML = "";
+        fotoInput.value = "";
+        fotosSelecionadas = [];
+        btnEnviarFotos.style.display = "none";
+
+    } catch (erro) {
+
+        console.error("Erro no upload:", erro);
+
+        statusUpload.innerHTML =
+            "❌ Não foi possível enviar as fotos.<br>" +
+            "Tente novamente em alguns instantes.";
+
+    } finally {
+
+        btnEnviarFotos.disabled = false;
+        btnSelecionarFotos.disabled = false;
+    }
+});
+
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
@@ -661,154 +670,6 @@
         }
     );
 
-</script>
-<script>
-const CLOUDINARY_CLOUD_NAME = "jityftn1";
-const CLOUDINARY_TAG = "casamento-aryana-raul-filipe";
-
-async function carregarGaleria() {
-
-    const statusGaleria =
-        document.getElementById("statusGaleria");
-
-    const gradeGaleria =
-        document.getElementById("gradeGaleria");
-
-    if (!statusGaleria || !gradeGaleria) {
-        console.error("Elementos da galeria não encontrados.");
-        return;
-    }
-
-    statusGaleria.textContent = "Carregando fotos...";
-
-    try {
-
-        const urlLista =
-            `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/list/${CLOUDINARY_TAG}.json?${Date.now()}`;
-
-        console.log("Consultando Cloudinary:", urlLista);
-
-        const resposta = await fetch(urlLista);
-
-        if (!resposta.ok) {
-            throw new Error(
-                `Cloudinary respondeu HTTP ${resposta.status}`
-            );
-        }
-
-        const dados = await resposta.json();
-
-        console.log("Fotos recebidas:", dados);
-
-        gradeGaleria.innerHTML = "";
-
-        if (
-            !dados.resources ||
-            dados.resources.length === 0
-        ) {
-
-            statusGaleria.textContent =
-                "Ainda não temos fotos compartilhadas. Seja o primeiro a enviar! 🤎";
-
-            return;
-        }
-
-        dados.resources
-            .slice()
-            .reverse()
-            .forEach((foto) => {
-
-                const item =
-                    document.createElement("div");
-
-                item.className =
-                    "item-galeria";
-
-                const imagem =
-                    document.createElement("img");
-
-                imagem.loading = "lazy";
-
-                imagem.alt =
-                    "Foto compartilhada no casamento de Aryana & Raul Filipe";
-
-                /*
-                 * Usa a versão fornecida pelo Cloudinary.
-                 * Isso evita problemas de cache.
-                 */
-                const urlImagem =
-                    `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/${foto.public_id}.${foto.format}`;
-
-                const urlOriginal =
-                    `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/${foto.public_id}.${foto.format}`;
-                    `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/${foto.public_id}.${foto.format}`;
-                    `https://res.cloudinary.com/${CLOUDINARY_CLOUD_NAME}/image/upload/${foto.public_id}.${foto.format}`;
-
-                console.log(
-                    "Imagem:",
-                    urlImagem
-                );
-
-                imagem.src = urlImagem;
-
-                imagem.onerror = function () {
-
-                    console.error(
-                        "Erro ao carregar imagem:",
-                        urlImagem
-                    );
-
-                    item.innerHTML =
-                        `<div style="
-                            display:flex;
-                            align-items:center;
-                            justify-content:center;
-                            width:100%;
-                            height:100%;
-                            padding:15px;
-                            text-align:center;
-                            color:#916346;
-                            font-family:Georgia,serif;
-                            font-size:.85rem;
-                        ">
-                            Não foi possível carregar esta foto.
-                        </div>`;
-                };
-
-                imagem.addEventListener(
-                    "click",
-                    () => {
-
-                        window.open(
-                            urlOriginal,
-                            "_blank"
-                        );
-
-                    }
-                );
-
-                item.appendChild(imagem);
-
-                gradeGaleria.appendChild(item);
-
-            });
-
-        statusGaleria.textContent =
-            `${dados.resources.length} foto(s) compartilhada(s) 🤎`;
-
-    } catch (erro) {
-
-        console.error(
-            "Erro ao carregar galeria:",
-            erro
-        );
-
-        statusGaleria.textContent =
-            "Não foi possível carregar as fotos agora. Tente novamente em instantes.";
-    }
-}
-
-carregarGaleria();
 </script>
 </body>
 </html>
