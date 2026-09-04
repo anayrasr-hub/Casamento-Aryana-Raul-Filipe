@@ -1057,6 +1057,38 @@ WHATSAPP
 
 }
 
+.btn-whatsapp-todos {
+
+    width: 100%;
+
+    max-width: 320px;
+
+    padding: 10px 14px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: var(--terracota);
+
+    color: white;
+
+    font-size: .78rem;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+}
+
+
+.btn-whatsapp-todos:hover {
+
+    background: var(--terracota-dark);
+
+}
 
 /*
 ==================================================
@@ -1247,9 +1279,10 @@ CELULAR
 
 
     .btn-whatsapp-convite,
+    .btn-whatsapp-todos,
     .btn-nova-confirmacao {
 
-        max-width: 100%;
+         max-width: 100%;
 
     }
 

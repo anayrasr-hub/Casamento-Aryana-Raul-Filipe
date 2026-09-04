@@ -1260,9 +1260,16 @@ function mostrarConfirmacoesSucesso(
     );
 
 
-    html += `
+        html += `
 
             </div>
+
+            <button
+                type="button"
+                class="btn-whatsapp-todos"
+            >
+                💬 Enviar todos os convites pelo WhatsApp
+            </button>
 
 
             <div class="mensagem-final-confirmacao">
@@ -1336,6 +1343,32 @@ function mostrarConfirmacoesSucesso(
         }
     );
 
+    /*
+    ======================================
+    BOTÃO ENVIAR TODOS
+    ======================================
+    */
+
+    const btnWhatsAppTodos =
+        card.querySelector(
+            ".btn-whatsapp-todos"
+        );
+
+
+    if (btnWhatsAppTodos) {
+
+        btnWhatsAppTodos.addEventListener(
+            "click",
+            function () {
+
+                enviarTodosConvitesWhatsApp(
+                    convidados
+                );
+
+            }
+        );
+
+    }
 
     /*
     ======================================
@@ -1476,6 +1509,115 @@ function mostrarConfirmacoesSucesso(
 
 }
 
+/*
+==================================================
+ENVIAR TODOS OS CONVITES
+==================================================
+*/
+
+function enviarTodosConvitesWhatsApp(
+    convidados
+) {
+
+    if (
+        !convidados ||
+        !convidados.length
+    ) {
+
+        alert(
+            "Nenhum convidado encontrado."
+        );
+
+        return;
+
+    }
+
+
+    /*
+    ------------------------------------------
+    PRIMEIRO NÚMERO
+    ------------------------------------------
+    */
+
+    const numero =
+        normalizarWhatsApp(
+            convidados[0].whatsapp
+        );
+
+
+    if (!numero) {
+
+        alert(
+            "O primeiro convidado não possui um WhatsApp válido."
+        );
+
+        return;
+
+    }
+
+
+    /*
+    ------------------------------------------
+    MENSAGEM
+    ------------------------------------------
+    */
+
+    let mensagem =
+        "Olá! A presença no casamento de Aryana & Raul Filipe foi confirmada! ❤️\n\n";
+
+
+    mensagem +=
+        "Segue a lista dos convidados e seus códigos:\n\n";
+
+
+    convidados.forEach(
+        function (
+            convidado,
+            indice
+        ) {
+
+            mensagem +=
+                "Convidado " +
+                (indice + 1) +
+                ": " +
+                convidado.nome +
+                "\n";
+
+            mensagem +=
+                "Código do convite: " +
+                convidado.codigo +
+                "\n\n";
+
+        }
+    );
+
+
+    mensagem +=
+        "Guarde os códigos dos convites. ❤️";
+
+
+    /*
+    ------------------------------------------
+    ABRIR WHATSAPP
+    ------------------------------------------
+    */
+
+    const urlWhatsApp =
+        "https://wa.me/" +
+        numero +
+        "?text=" +
+        encodeURIComponent(
+            mensagem
+        );
+
+
+    window.open(
+        urlWhatsApp,
+        "_blank"
+    );
+
+}
+
 
 /*
 ==================================================
@@ -1579,6 +1721,8 @@ window.enviarConfirmacao =
 window.enviarConviteWhatsApp =
     enviarConviteWhatsApp;
 
+window.enviarTodosConvitesWhatsApp =
+    enviarTodosConvitesWhatsApp;
 
 /*
 ==================================================
