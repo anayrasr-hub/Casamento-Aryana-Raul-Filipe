@@ -1492,24 +1492,11 @@ function enviarConviteWhatsApp(
             dados.whatsapp
         );
 
-
-    const urlSite =
-        window.location.origin +
-        "/convite.html?codigo=" +
-        encodeURIComponent(
-            dados.codigo
-        );
-
-
     const mensagem =
         "Olá! Sua presença no casamento de Aryana & Raul Filipe foi confirmada! ❤️\n\n" +
 
         "Seu código do convite é: " +
-        dados.codigo +
-        "\n\n" +
-
-        "Acesse seu convite:\n" +
-        urlSite;
+        dados.codigo;
 
 
     const urlWhatsApp =
