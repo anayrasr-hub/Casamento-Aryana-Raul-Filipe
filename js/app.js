@@ -16,12 +16,12 @@ const dataCasamento =
 
 /* ==================================================
    PRAZO DE CONFIRMAÇÃO
-   DISPONÍVEL ATÉ 11/09/2026
+   DISPONÍVEL ATÉ 20/09/2026
 ================================================== */
 
 const prazoConfirmacao =
     new Date(
-        "2026-09-11T23:59:59-03:00"
+        "2026-09-20T23:59:59-03:00"
     ).getTime();
 
 
