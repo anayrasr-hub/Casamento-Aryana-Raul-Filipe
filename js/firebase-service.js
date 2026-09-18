@@ -540,219 +540,89 @@ A função exige:
 */
 
 async function salvarPix(
-
     presente,
-
     convidado = "Convidado",
-
-    valor = 0,
-
-    comprovanteUrl = ""
-
+    valor = 0
 ) {
-
     try {
 
         if (!presente) {
-
-            throw new Error(
-                "Presente não informado."
-            );
-
+            throw new Error("Presente não informado.");
         }
 
-
-        /*
-        ========================================
-        VALIDAR CONVIDADO
-        ========================================
-        */
-
         const nomeConvidado =
-            String(
-                convidado || ""
-            ).trim();
+            String(convidado || "").trim();
 
-
-        if (
-            !nomeConvidado
-        ) {
-
+        if (!nomeConvidado) {
             throw new Error(
                 "Nome do convidado não informado."
             );
-
         }
 
-
-        /*
-        ========================================
-        VALIDAR VALOR
-        ========================================
-        */
-
         const valorNumerico =
-            Number(
-                valor
-            );
-
+            Number(valor);
 
         if (
-            !Number.isFinite(
-                valorNumerico
-            ) ||
+            !Number.isFinite(valorNumerico) ||
             valorNumerico <= 0
         ) {
-
             throw new Error(
                 "Valor do PIX inválido."
             );
-
         }
-
-
-        /*
-        ========================================
-        VALIDAR COMPROVANTE
-        ========================================
-        */
-
-        const urlComprovante =
-            String(
-                comprovanteUrl || ""
-            ).trim();
-
-
-        if (
-            !urlComprovante
-        ) {
-
-            throw new Error(
-                "Comprovante não informado."
-            );
-
-        }
-
-
-        /*
-        ========================================
-        1 — FIRESTORE
-        ========================================
-        */
 
         await addDoc(
-            collection(
-                db,
-                "pix"
-            ),
+            collection(db, "pix"),
             {
-
-                presenteId:
-                    presente.id,
-
-                presente:
-                    presente.nome,
-
-                convidado:
-                    nomeConvidado,
-
-                valor:
-                    valorNumerico,
-
-                comprovanteUrl:
-                    urlComprovante,
-
-                status:
-                    "Recebido",
-
-                data:
-                    new Date()
-
+                presenteId: presente.id,
+                presente: presente.nome,
+                convidado: nomeConvidado,
+                valor: valorNumerico,
+                comprovanteAnexado: true,
+                status: "Recebido",
+                data: new Date()
             }
         );
-
 
         console.log(
             "PIX salvo no Firestore."
         );
 
-
-        /*
-        ========================================
-        2 — GOOGLE SHEETS
-        ========================================
-        */
-
         const dadosSheets = {
-
-            acao:
-                "registrarPix",
-
-            presenteId:
-                String(
-                    presente.id
-                ),
-
-            presente:
-                String(
-                    presente.nome
-                ),
-
-            convidado:
-                nomeConvidado,
-
-            valor:
-                valorNumerico,
-
-            comprovanteUrl:
-                urlComprovante
-
+            acao: "registrarPix",
+            presenteId: String(presente.id),
+            presente: String(presente.nome),
+            convidado: nomeConvidado,
+            valor: valorNumerico,
+            comprovanteAnexado: true
         };
 
+        const resposta = await fetch(
+            GOOGLE_SHEETS_URL,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type":
+                        "text/plain;charset=utf-8"
+                },
+                body: JSON.stringify(
+                    dadosSheets
+                )
+            }
+        );
 
-        const resposta =
-            await fetch(
-                GOOGLE_SHEETS_URL,
-                {
-
-                    method:
-                        "POST",
-
-                    headers: {
-
-                        "Content-Type":
-                            "text/plain;charset=utf-8"
-
-                    },
-
-                    body:
-                        JSON.stringify(
-                            dadosSheets
-                        )
-
-                }
-            );
-
-
-        if (
-            !resposta.ok
-        ) {
-
+        if (!resposta.ok) {
             console.warn(
                 "Google Sheets retornou HTTP:",
                 resposta.status
             );
-
         }
-
 
         console.log(
             "PIX enviado para Google Sheets."
         );
 
-
         return true;
-
 
     } catch (error) {
 
@@ -761,11 +631,8 @@ async function salvarPix(
             error
         );
 
-
         return false;
-
     }
-
 }
 
 
