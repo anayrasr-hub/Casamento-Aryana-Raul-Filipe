@@ -1010,6 +1010,76 @@ async function excluirRegistro(
 
 }
 
+/*
+================================================
+BUSCAR PRESENTES ESCOLHIDOS
+================================================
+*/
+
+async function buscarPresentesEscolhidos() {
+
+    try {
+
+        const consulta =
+            query(
+                collection(
+                    db,
+                    "presentes_escolhidos"
+                ),
+                orderBy(
+                    "data",
+                    "desc"
+                )
+            );
+
+
+        const snapshot =
+            await getDocs(
+                consulta
+            );
+
+
+        const lista = [];
+
+
+        snapshot.forEach(
+            registro => {
+
+                lista.push({
+
+                    id:
+                        registro.id,
+
+                    ...registro.data()
+
+                });
+
+            }
+        );
+
+
+        console.log(
+            "Presentes escolhidos:",
+            lista
+        );
+
+
+        return lista;
+
+
+    } catch (error) {
+
+        console.error(
+            "Erro ao buscar presentes escolhidos:",
+            error
+        );
+
+
+        return [];
+
+    }
+
+}
 
 /*
 ================================================
