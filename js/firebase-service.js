@@ -891,10 +891,6 @@ window.buscarPresentesEscolhidos =
     buscarPresentesEscolhidos;
 
 
-window.enviarComprovantePix =
-    enviarComprovantePix;
-
-
 window.salvarPix =
     salvarPix;
 
