@@ -971,18 +971,42 @@ CONFIRMAR ESCOLHA
 
 async function confirmarEscolha(){
 
-    if(
-        !presenteSelecionado
-    ){
+    console.log("=================================");
+    console.log("CONFIRMAÇÃO DE PRESENTE INICIADA");
+    console.log("=================================");
+
+    /*
+    --------------------------------------------
+    VERIFICAR PRESENTE SELECIONADO
+    --------------------------------------------
+    */
+
+    if(!presenteSelecionado){
+
+        console.error(
+            "Nenhum presente está selecionado."
+        );
 
         alert(
-            "Selecione um presente."
+            "Selecione um presente antes de confirmar."
         );
 
         return;
 
     }
 
+
+    console.log(
+        "Presente selecionado:",
+        presenteSelecionado
+    );
+
+
+    /*
+    --------------------------------------------
+    NOME DO CONVIDADO
+    --------------------------------------------
+    */
 
     const campoNome =
         document.getElementById(
@@ -990,34 +1014,43 @@ async function confirmarEscolha(){
         );
 
 
-    const nome =
-        campoNome
-            ?
-            campoNome.value.trim()
-            :
-            "";
+    if(!campoNome){
 
-
-    if(
-        nome === ""
-    ){
-
-        alert(
-            "Informe seu nome."
+        console.error(
+            "Campo #nomeConvidado não encontrado."
         );
 
-
-        if(campoNome){
-
-            campoNome.focus();
-
-        }
-
+        alert(
+            "Não foi possível localizar o campo de nome."
+        );
 
         return;
 
     }
 
+
+    const nome =
+        campoNome.value.trim();
+
+
+    if(nome === ""){
+
+        alert(
+            "Informe seu nome."
+        );
+
+        campoNome.focus();
+
+        return;
+
+    }
+
+
+    /*
+    --------------------------------------------
+    MENSAGEM
+    --------------------------------------------
+    */
 
     const campoMensagem =
         document.getElementById(
@@ -1027,11 +1060,15 @@ async function confirmarEscolha(){
 
     const mensagem =
         campoMensagem
-            ?
-            campoMensagem.value.trim()
-            :
-            "";
+            ? campoMensagem.value.trim()
+            : "";
 
+
+    /*
+    --------------------------------------------
+    BOTÃO
+    --------------------------------------------
+    */
 
     const botao =
         document.getElementById(
@@ -1041,8 +1078,7 @@ async function confirmarEscolha(){
 
     if(botao){
 
-        botao.disabled =
-            true;
+        botao.disabled = true;
 
         botao.textContent =
             "Salvando...";
@@ -1052,17 +1088,38 @@ async function confirmarEscolha(){
 
     try{
 
+        /*
+        ========================================
+        VERIFICAR FUNÇÃO FIREBASE
+        ========================================
+        */
+
+        console.log(
+            "Verificando salvarEscolhaPresente..."
+        );
+
+
         if(
             typeof window.salvarEscolhaPresente !==
             "function"
         ){
 
+            console.error(
+                "window.salvarEscolhaPresente não está disponível."
+            );
+
             throw new Error(
-                "A função salvarEscolhaPresente() não está disponível."
+                "A função de salvamento dos presentes não está disponível."
             );
 
         }
 
+
+        /*
+        ========================================
+        MONTAR DADOS DO CONVIDADO
+        ========================================
+        */
 
         const convidado = {
 
@@ -1075,23 +1132,70 @@ async function confirmarEscolha(){
         };
 
 
-        const sucesso =
+        console.log(
+            "Dados que serão enviados:",
+            {
+                presente: presenteSelecionado,
+                convidado: convidado
+            }
+        );
+
+
+        /*
+        ========================================
+        SALVAR
+        ========================================
+        */
+
+        console.log(
+            "Chamando salvarEscolhaPresente()..."
+        );
+
+
+        const resultado =
             await window.salvarEscolhaPresente(
                 presenteSelecionado,
                 convidado
             );
 
 
-        if(!sucesso){
+        console.log(
+            "Retorno de salvarEscolhaPresente():",
+            resultado
+        );
+
+
+        /*
+        ========================================
+        IMPORTANTE
+        ========================================
+
+        Só considera erro se a função retornar
+        explicitamente false.
+
+        Assim, caso o Firebase salve e a função
+        não tenha return true, a confirmação
+        continuará funcionando.
+        */
+
+        if(resultado === false){
 
             throw new Error(
-                "Não foi possível salvar a escolha."
+                "O sistema informou que não foi possível salvar a escolha."
             );
 
         }
 
 
-        fecharModalPresente();
+        /*
+        ========================================
+        ATUALIZAR STATUS
+        ========================================
+        */
+
+        console.log(
+            "Escolha salva. Atualizando lista..."
+        );
 
 
         await carregarStatusPresentes();
@@ -1100,25 +1204,66 @@ async function confirmarEscolha(){
         carregarPresentes();
 
 
+        /*
+        ========================================
+        FECHAR MODAL
+        ========================================
+        */
+
+        fecharModalPresente();
+
+
+        /*
+        ========================================
+        MENSAGEM DE SUCESSO
+        ========================================
+        */
+
         mostrarMensagem(
             "Presente escolhido com sucesso! ❤️"
+        );
+
+
+        console.log(
+            "CONFIRMAÇÃO CONCLUÍDA COM SUCESSO."
         );
 
 
     }catch(error){
 
         console.error(
-            "Erro ao confirmar escolha:",
+            "================================="
+        );
+
+        console.error(
+            "ERRO AO CONFIRMAR PRESENTE"
+        );
+
+        console.error(
             error
+        );
+
+        console.error(
+            "================================="
         );
 
 
         alert(
-            "Não foi possível registrar sua escolha. Tente novamente."
+            "Não foi possível registrar sua escolha.\n\n" +
+            (
+                error?.message ||
+                "Verifique sua conexão e tente novamente."
+            )
         );
 
 
     }finally{
+
+        /*
+        ----------------------------------------
+        RESTAURAR BOTÃO
+        ----------------------------------------
+        */
 
         if(botao){
 
