@@ -6,21 +6,92 @@ SERVIÇOS FIREBASE
 Arquivo: firebase-service.js
 
 Firebase versão modular
+
+Funções:
+- Presentes
+- PIX
+- Upload de comprovante
+- Google Sheets
+- Confirmação de presença
+- Check-in
+================================================
+*/
+
+
+/*
+================================================
+FIREBASE FIRESTORE
 ================================================
 */
 
 import {
-    collection,
-    addDoc,
-    getDocs,
-    query,
-    orderBy,
-    doc,
-    updateDoc,
-    deleteDoc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-import { db } from "./firebase-config.js";
+    collection,
+
+    addDoc,
+
+    getDocs,
+
+    query,
+
+    orderBy,
+
+    doc,
+
+    updateDoc,
+
+    deleteDoc
+
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+
+/*
+================================================
+FIREBASE STORAGE
+================================================
+*/
+
+import {
+
+    getStorage,
+
+    ref,
+
+    uploadBytes,
+
+    getDownloadURL
+
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
+
+/*
+================================================
+CONFIGURAÇÃO FIREBASE
+================================================
+*/
+
+import {
+
+    app,
+
+    db
+
+}
+from "./firebase-config.js";
+
+
+/*
+================================================
+STORAGE
+================================================
+*/
+
+const storage =
+    getStorage(
+        app
+    );
 
 
 /*
@@ -54,6 +125,7 @@ async function salvarEscolhaPresente(
 
         }
 
+
         await addDoc(
             collection(
                 db,
@@ -76,12 +148,15 @@ async function salvarEscolhaPresente(
             }
         );
 
+
         console.log(
             "Presente salvo com sucesso:",
             presente.nome
         );
 
+
         return true;
+
 
     } catch (error) {
 
@@ -89,6 +164,7 @@ async function salvarEscolhaPresente(
             "Erro ao salvar presente:",
             error
         );
+
 
         return false;
 
@@ -171,13 +247,308 @@ async function buscarPresentesEscolhidos() {
 
 /*
 ================================================
+ENVIAR COMPROVANTE PIX
+================================================
+
+Recebe o arquivo selecionado pelo convidado.
+
+O arquivo é armazenado no:
+
+Firebase Storage
+
+Pasta:
+
+comprovantes_pix/
+================================================
+*/
+
+async function enviarComprovantePix(
+    arquivo,
+    presente
+) {
+
+    try {
+
+        if (!arquivo) {
+
+            throw new Error(
+                "Nenhum comprovante foi selecionado."
+            );
+
+        }
+
+
+        if (!presente) {
+
+            throw new Error(
+                "Presente não informado."
+            );
+
+        }
+
+
+        /*
+        ========================================
+        VALIDAR TAMANHO
+        ========================================
+        */
+
+        const tamanhoMaximo =
+            10 * 1024 * 1024;
+
+
+        if (
+            arquivo.size >
+            tamanhoMaximo
+        ) {
+
+            throw new Error(
+                "O comprovante deve ter no máximo 10 MB."
+            );
+
+        }
+
+
+        /*
+        ========================================
+        VALIDAR TIPO
+        ========================================
+        */
+
+        const tiposPermitidos = [
+
+            "image/jpeg",
+
+            "image/png",
+
+            "image/webp",
+
+            "application/pdf"
+
+        ];
+
+
+        if (
+            !tiposPermitidos.includes(
+                arquivo.type
+            )
+        ) {
+
+            throw new Error(
+                "Formato de comprovante não permitido."
+            );
+
+        }
+
+
+        /*
+        ========================================
+        NOME SEGURO
+        ========================================
+        */
+
+        const extensao =
+            obterExtensaoArquivo(
+                arquivo.name
+            );
+
+
+        const identificador =
+            Date.now() +
+            "_" +
+            Math.random()
+                .toString(36)
+                .substring(2, 10);
+
+
+        const nomeArquivo =
+            "pix_" +
+            String(
+                presente.id
+            ) +
+            "_" +
+            identificador +
+            extensao;
+
+
+        /*
+        ========================================
+        CAMINHO STORAGE
+        ========================================
+        */
+
+        const caminho =
+            "comprovantes_pix/" +
+            nomeArquivo;
+
+
+        console.log(
+            "Enviando comprovante:",
+            caminho
+        );
+
+
+        /*
+        ========================================
+        REFERÊNCIA
+        ========================================
+        */
+
+        const referencia =
+            ref(
+                storage,
+                caminho
+            );
+
+
+        /*
+        ========================================
+        METADADOS
+        ========================================
+        */
+
+        const metadata = {
+
+            contentType:
+                arquivo.type,
+
+            customMetadata: {
+
+                presenteId:
+                    String(
+                        presente.id
+                    ),
+
+                presente:
+                    String(
+                        presente.nome
+                    )
+
+            }
+
+        };
+
+
+        /*
+        ========================================
+        UPLOAD
+        ========================================
+        */
+
+        await uploadBytes(
+            referencia,
+            arquivo,
+            metadata
+        );
+
+
+        /*
+        ========================================
+        URL
+        ========================================
+        */
+
+        const url =
+            await getDownloadURL(
+                referencia
+            );
+
+
+        console.log(
+            "Comprovante enviado com sucesso:",
+            url
+        );
+
+
+        return url;
+
+
+    } catch (error) {
+
+        console.error(
+            "Erro ao enviar comprovante:",
+            error
+        );
+
+
+        throw error;
+
+    }
+
+}
+
+
+/*
+================================================
+OBTER EXTENSÃO
+================================================
+*/
+
+function obterExtensaoArquivo(
+    nome
+) {
+
+    const ultimoPonto =
+        String(
+            nome || ""
+        )
+        .lastIndexOf(".");
+
+
+    if(
+        ultimoPonto === -1
+    ){
+
+        return "";
+
+    }
+
+
+    return String(
+        nome
+    )
+    .substring(
+        ultimoPonto
+    )
+    .toLowerCase();
+
+}
+
+
+/*
+================================================
 REGISTRAR PIX
+================================================
+
+Fluxo:
+
+Site
+↓
+Firebase Storage
+↓
+URL do comprovante
+↓
+Google Sheets
+
+A função exige:
+
+- presente
+- convidado
+- valor
+- comprovanteUrl
 ================================================
 */
 
 async function salvarPix(
+
     presente,
-    convidado = "Convidado"
+
+    convidado = "Convidado",
+
+    valor = 0,
+
+    comprovanteUrl = ""
+
 ) {
 
     try {
@@ -190,6 +561,84 @@ async function salvarPix(
 
         }
 
+
+        /*
+        ========================================
+        VALIDAR CONVIDADO
+        ========================================
+        */
+
+        const nomeConvidado =
+            String(
+                convidado || ""
+            ).trim();
+
+
+        if (
+            !nomeConvidado
+        ) {
+
+            throw new Error(
+                "Nome do convidado não informado."
+            );
+
+        }
+
+
+        /*
+        ========================================
+        VALIDAR VALOR
+        ========================================
+        */
+
+        const valorNumerico =
+            Number(
+                valor
+            );
+
+
+        if (
+            !Number.isFinite(
+                valorNumerico
+            ) ||
+            valorNumerico <= 0
+        ) {
+
+            throw new Error(
+                "Valor do PIX inválido."
+            );
+
+        }
+
+
+        /*
+        ========================================
+        VALIDAR COMPROVANTE
+        ========================================
+        */
+
+        const urlComprovante =
+            String(
+                comprovanteUrl || ""
+            ).trim();
+
+
+        if (
+            !urlComprovante
+        ) {
+
+            throw new Error(
+                "Comprovante não informado."
+            );
+
+        }
+
+
+        /*
+        ========================================
+        1 — FIRESTORE
+        ========================================
+        */
 
         await addDoc(
             collection(
@@ -205,7 +654,16 @@ async function salvarPix(
                     presente.nome,
 
                 convidado:
-                    convidado,
+                    nomeConvidado,
+
+                valor:
+                    valorNumerico,
+
+                comprovanteUrl:
+                    urlComprovante,
+
+                status:
+                    "Recebido",
 
                 data:
                     new Date()
@@ -215,7 +673,81 @@ async function salvarPix(
 
 
         console.log(
-            "PIX registrado com sucesso."
+            "PIX salvo no Firestore."
+        );
+
+
+        /*
+        ========================================
+        2 — GOOGLE SHEETS
+        ========================================
+        */
+
+        const dadosSheets = {
+
+            acao:
+                "registrarPix",
+
+            presenteId:
+                String(
+                    presente.id
+                ),
+
+            presente:
+                String(
+                    presente.nome
+                ),
+
+            convidado:
+                nomeConvidado,
+
+            valor:
+                valorNumerico,
+
+            comprovanteUrl:
+                urlComprovante
+
+        };
+
+
+        const resposta =
+            await fetch(
+                GOOGLE_SHEETS_URL,
+                {
+
+                    method:
+                        "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "text/plain;charset=utf-8"
+
+                    },
+
+                    body:
+                        JSON.stringify(
+                            dadosSheets
+                        )
+
+                }
+            );
+
+
+        if (
+            !resposta.ok
+        ) {
+
+            console.warn(
+                "Google Sheets retornou HTTP:",
+                resposta.status
+            );
+
+        }
+
+
+        console.log(
+            "PIX enviado para Google Sheets."
         );
 
 
@@ -390,16 +922,20 @@ async function buscarConvidados() {
                 GOOGLE_SHEETS_URL +
                 "?acao=listarConvidados",
                 {
+
                     method:
                         "GET",
 
                     cache:
                         "no-store"
+
                 }
             );
 
 
-        if (!resposta.ok) {
+        if (
+            !resposta.ok
+        ) {
 
             throw new Error(
                 "Erro HTTP " +
@@ -532,16 +1068,20 @@ async function buscarConfirmacoesGoogleSheets() {
             await fetch(
                 GOOGLE_SHEETS_URL,
                 {
+
                     method:
                         "GET",
 
                     cache:
                         "no-store"
+
                 }
             );
 
 
-        if (!resposta.ok) {
+        if (
+            !resposta.ok
+        ) {
 
             throw new Error(
                 "Erro HTTP " +
@@ -553,12 +1093,6 @@ async function buscarConfirmacoesGoogleSheets() {
 
         const texto =
             await resposta.text();
-
-
-        console.log(
-            "Resposta Google Sheets:",
-            texto
-        );
 
 
         if (!texto) {
@@ -794,6 +1328,10 @@ window.buscarPresentesEscolhidos =
     buscarPresentesEscolhidos;
 
 
+window.enviarComprovantePix =
+    enviarComprovantePix;
+
+
 window.salvarPix =
     salvarPix;
 
@@ -824,4 +1362,8 @@ window.buscarConfirmacoesGoogleSheets =
 
 console.log(
     "Firebase Service carregado com sucesso."
+);
+
+console.log(
+    "Firebase Storage preparado para comprovantes PIX."
 );
