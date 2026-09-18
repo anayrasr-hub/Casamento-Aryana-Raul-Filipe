@@ -69,12 +69,6 @@ const GOOGLE_SHEETS_URL =
     "https://script.google.com/macros/s/AKfycbwxoY3KVrIxOjRvZ8nWJOhwA3dWoK_OVnR3Wj893rZLONMIhIpE_TrOFaRLsmm41q1Q/exec";
 
 
-/*
-================================================
-SALVAR PRESENTE ESCOLHIDO
-================================================
-*/
-
 async function salvarEscolhaPresente(
     presente,
     convidado = "Convidado"
@@ -90,6 +84,12 @@ async function salvarEscolhaPresente(
 
         }
 
+
+        /*
+        ================================================
+        1. FIRESTORE
+        ================================================
+        */
 
         await addDoc(
             collection(
@@ -115,10 +115,108 @@ async function salvarEscolhaPresente(
 
 
         console.log(
-            "Presente salvo com sucesso:",
+            "Presente salvo no Firebase:",
             presente.nome
         );
 
+
+        /*
+        ================================================
+        2. GOOGLE SHEETS
+        ================================================
+        */
+
+        try {
+
+            const dadosSheets = {
+
+                acao:
+                    "registrarPresente",
+
+                presenteId:
+                    presente.id || "",
+
+                presente:
+                    presente.nome ||
+                    "Presente",
+
+                convidado:
+                    convidado
+
+            };
+
+
+            console.log(
+                "Enviando escolha de presente para Google Sheets:",
+                dadosSheets
+            );
+
+
+            /*
+            --------------------------------------------
+            IMPORTANTE
+            --------------------------------------------
+
+            Usamos no-cors porque o navegador não pode
+            ler diretamente a resposta do Apps Script.
+
+            O envio é realizado, mas a resposta não é
+            lida pelo navegador.
+            --------------------------------------------
+            */
+
+            await fetch(
+                GOOGLE_SHEETS_URL,
+                {
+
+                    method:
+                        "POST",
+
+                    mode:
+                        "no-cors",
+
+                    headers: {
+
+                        "Content-Type":
+                            "text/plain;charset=utf-8"
+
+                    },
+
+                    body:
+                        JSON.stringify(
+                            dadosSheets
+                        )
+
+                }
+            );
+
+
+            console.log(
+                "Escolha de presente enviada para o Google Sheets."
+            );
+
+
+        } catch (erroSheets) {
+
+            /*
+            --------------------------------------------
+            O Firebase já foi salvo.
+            --------------------------------------------
+            */
+
+            console.warn(
+                "Presente salvo no Firebase, mas houve problema no envio ao Google Sheets:",
+                erroSheets
+            );
+
+        }
+
+
+        /*
+        ================================================
+        3. SUCESSO
+        ================================================
+        */
 
         return true;
 
@@ -136,79 +234,6 @@ async function salvarEscolhaPresente(
     }
 
 }
-
-
-/*
-================================================
-BUSCAR PRESENTES ESCOLHIDOS
-================================================
-*/
-
-async function buscarPresentesEscolhidos() {
-
-    try {
-
-        const consulta =
-            query(
-                collection(
-                    db,
-                    "presentes_escolhidos"
-                ),
-                orderBy(
-                    "data",
-                    "desc"
-                )
-            );
-
-
-        const snapshot =
-            await getDocs(
-                consulta
-            );
-
-
-        const escolhidos = [];
-
-
-        snapshot.forEach(
-            registro => {
-
-                escolhidos.push({
-
-                    id:
-                        registro.id,
-
-                    ...registro.data()
-
-                });
-
-            }
-        );
-
-
-        console.log(
-            "Presentes escolhidos:",
-            escolhidos
-        );
-
-
-        return escolhidos;
-
-
-    } catch (error) {
-
-        console.error(
-            "Erro ao buscar presentes escolhidos:",
-            error
-        );
-
-
-        return [];
-
-    }
-
-}
-
 
 /*
 ================================================
