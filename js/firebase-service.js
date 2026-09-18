@@ -10,10 +10,15 @@ Firebase versão modular
 Funções:
 - Presentes
 - PIX
-- Upload de comprovante
 - Google Sheets
 - Confirmação de presença
 - Check-in
+
+IMPORTANTE:
+- Firebase Storage NÃO é utilizado.
+- Comprovantes de PIX NÃO são armazenados.
+- O arquivo anexado serve apenas para validar
+  que o convidado possui um comprovante.
 ================================================
 */
 
@@ -27,23 +32,17 @@ FIREBASE FIRESTORE
 import {
 
     collection,
-
     addDoc,
-
     getDocs,
-
     query,
-
     orderBy,
-
     doc,
-
     updateDoc,
-
     deleteDoc
 
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
 
 /*
 ================================================
@@ -54,7 +53,6 @@ CONFIGURAÇÃO FIREBASE
 import {
 
     app,
-
     db
 
 }
@@ -211,27 +209,29 @@ async function buscarPresentesEscolhidos() {
 
 }
 
+
 /*
 ================================================
 REGISTRAR PIX
 ================================================
 
-Fluxo:
+IMPORTANTE:
 
-Site
-↓
-Firebase Storage
-↓
-URL do comprovante
-↓
-Google Sheets
+O comprovante NÃO é enviado para o Firebase.
 
-A função exige:
+O presentes.js apenas verifica se o convidado
+selecionou um arquivo válido.
+
+O Firestore registra somente:
 
 - presente
+- presenteId
 - convidado
 - valor
-- comprovanteUrl
+- comprovanteAnexado
+- status
+- data
+
 ================================================
 */
 
@@ -240,85 +240,228 @@ async function salvarPix(
     convidado = "Convidado",
     valor = 0
 ) {
+
     try {
 
+        /*
+        ----------------------------------------
+        VALIDAR PRESENTE
+        ----------------------------------------
+        */
+
         if (!presente) {
-            throw new Error("Presente não informado.");
+
+            throw new Error(
+                "Presente não informado."
+            );
+
         }
 
+
+        /*
+        ----------------------------------------
+        VALIDAR CONVIDADO
+        ----------------------------------------
+        */
+
         const nomeConvidado =
-            String(convidado || "").trim();
+            String(
+                convidado || ""
+            ).trim();
+
 
         if (!nomeConvidado) {
+
             throw new Error(
                 "Nome do convidado não informado."
             );
+
         }
+
+
+        /*
+        ----------------------------------------
+        VALIDAR VALOR
+        ----------------------------------------
+        */
 
         const valorNumerico =
             Number(valor);
 
+
         if (
-            !Number.isFinite(valorNumerico) ||
+            !Number.isFinite(
+                valorNumerico
+            ) ||
             valorNumerico <= 0
         ) {
+
             throw new Error(
                 "Valor do PIX inválido."
             );
+
         }
 
+
+        /*
+        ----------------------------------------
+        SALVAR NO FIRESTORE
+        ----------------------------------------
+        */
+
         await addDoc(
-            collection(db, "pix"),
+            collection(
+                db,
+                "pix"
+            ),
             {
-                presenteId: presente.id,
-                presente: presente.nome,
-                convidado: nomeConvidado,
-                valor: valorNumerico,
-                comprovanteAnexado: true,
-                status: "Recebido",
-                data: new Date()
+
+                presenteId:
+                    presente.id,
+
+                presente:
+                    presente.nome,
+
+                convidado:
+                    nomeConvidado,
+
+                valor:
+                    valorNumerico,
+
+                /*
+                --------------------------------
+                IMPORTANTE
+
+                Apenas registramos que o convidado
+                informou possuir um comprovante.
+
+                O arquivo NÃO é armazenado.
+                --------------------------------
+                */
+
+                comprovanteAnexado:
+                    true,
+
+                status:
+                    "Recebido",
+
+                data:
+                    new Date()
+
             }
         );
+
 
         console.log(
             "PIX salvo no Firestore."
         );
 
+
+        /*
+        ----------------------------------------
+        ENVIAR PARA GOOGLE SHEETS
+        ----------------------------------------
+        */
+
         const dadosSheets = {
-            acao: "registrarPix",
-            presenteId: String(presente.id),
-            presente: String(presente.nome),
-            convidado: nomeConvidado,
-            valor: valorNumerico,
-            comprovanteAnexado: true
+
+            acao:
+                "registrarPix",
+
+            presenteId:
+                String(
+                    presente.id
+                ),
+
+            presente:
+                String(
+                    presente.nome
+                ),
+
+            convidado:
+                nomeConvidado,
+
+            valor:
+                valorNumerico,
+
+            comprovanteAnexado:
+                true
+
         };
 
-        const resposta = await fetch(
-            GOOGLE_SHEETS_URL,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type":
-                        "text/plain;charset=utf-8"
-                },
-                body: JSON.stringify(
-                    dadosSheets
-                )
-            }
-        );
 
-        if (!resposta.ok) {
+        try {
+
+            const resposta =
+                await fetch(
+                    GOOGLE_SHEETS_URL,
+                    {
+
+                        method:
+                            "POST",
+
+                        headers: {
+
+                            "Content-Type":
+                                "text/plain;charset=utf-8"
+
+                        },
+
+                        body:
+                            JSON.stringify(
+                                dadosSheets
+                            )
+
+                    }
+                );
+
+
+            if (
+                !resposta.ok
+            ) {
+
+                console.warn(
+                    "Google Sheets retornou HTTP:",
+                    resposta.status
+                );
+
+            } else {
+
+                console.log(
+                    "PIX enviado para Google Sheets."
+                );
+
+            }
+
+        } catch (erroSheets) {
+
+            /*
+            ------------------------------------
+            IMPORTANTE
+
+            Se o Firestore salvou corretamente,
+            um eventual problema de comunicação
+            com o Google Sheets não desfaz o
+            registro no Firestore.
+            ------------------------------------
+            */
+
             console.warn(
-                "Google Sheets retornou HTTP:",
-                resposta.status
+                "Não foi possível enviar o PIX para o Google Sheets:",
+                erroSheets
             );
+
         }
 
-        console.log(
-            "PIX enviado para Google Sheets."
-        );
+
+        /*
+        ----------------------------------------
+        SUCESSO
+        ----------------------------------------
+        */
 
         return true;
+
 
     } catch (error) {
 
@@ -327,8 +470,11 @@ async function salvarPix(
             error
         );
 
+
         return false;
+
     }
+
 }
 
 
@@ -879,7 +1025,7 @@ async function excluirRegistro(
 
 /*
 ================================================
-DISPONIBILIZAR FUNÇÕES
+DISPONIBILIZAR FUNÇÕES GLOBAIS
 ================================================
 */
 
@@ -895,16 +1041,16 @@ window.salvarPix =
     salvarPix;
 
 
+window.buscarPix =
+    buscarPix;
+
+
 window.salvarConfirmacao =
     salvarConfirmacao;
 
 
 window.buscarConvidados =
     buscarConvidados;
-
-
-window.buscarPix =
-    buscarPix;
 
 
 window.editarRegistro =
@@ -919,10 +1065,20 @@ window.buscarConfirmacoesGoogleSheets =
     buscarConfirmacoesGoogleSheets;
 
 
+/*
+================================================
+LOG FINAL
+================================================
+*/
+
 console.log(
     "Firebase Service carregado com sucesso."
 );
 
 console.log(
-    "Firebase Storage preparado para comprovantes PIX."
+    "Firebase Storage desativado."
+);
+
+console.log(
+    "Comprovantes PIX não serão armazenados."
 );
