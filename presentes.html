@@ -64,7 +64,6 @@ href="css/presentes.css">
 </section>
 
 
-
 <!-- =========================================
      PESQUISA
 ========================================= -->
@@ -78,7 +77,6 @@ href="css/presentes.css">
         autocomplete="off">
 
 </section>
-
 
 
 <!-- =========================================
@@ -152,11 +150,9 @@ href="css/presentes.css">
 
 </section>
 
-</section>
-
 
 <!-- =========================================
-     BOTÃO VOLTAR AO INÍCIO
+     BOTÃO VOLTAR
 ========================================= -->
 
 <div class="area-voltar">
@@ -173,11 +169,6 @@ href="css/presentes.css">
 </div>
 
 
-
-<!-- =========================================
-     CONTADOR
-========================================= -->
-
 <!-- =========================================
      CONTADOR
 ========================================= -->
@@ -186,7 +177,6 @@ href="css/presentes.css">
     id="contadorPresentes"
     class="contador-presentes">
 </div>
-
 
 
 <!-- =========================================
@@ -200,7 +190,6 @@ href="css/presentes.css">
 </section>
 
 
-
 <!-- =========================================
      MODAL ESCOLHER PRESENTE
 ========================================= -->
@@ -209,10 +198,8 @@ href="css/presentes.css">
     id="modalPresente"
     class="modal">
 
-
     <div
         class="modal-conteudo">
-
 
         <span
             class="fechar"
@@ -273,42 +260,72 @@ href="css/presentes.css">
 
 <script src="js/data.js"></script>
 
-<script type="module"
-src="js/firebase-service.js"></script>
+<script
+    type="module"
+    src="js/firebase-service.js">
+</script>
 
-<script type="module"
-src="js/presentes.js"></script>
+<script
+    type="module"
+    src="js/presentes.js">
+</script>
+
 
 <!-- =========================================
      MODAL PIX
 ========================================= -->
 
-<div id="modalPix" class="modal">
+<div
+    id="modalPix"
+    class="modal">
 
-    <div class="modal-conteudo modal-pix">
+    <div
+        class="modal-conteudo modal-pix">
+
 
         <button
             type="button"
             class="fechar-pix"
             onclick="fecharPix()">
+
             &times;
+
         </button>
 
-        <h2>Presentear com PIX</h2>
+
+        <h2>
+            Presentear com PIX
+        </h2>
+
 
         <p class="pix-descricao">
+
             Você escolheu presentear:
+
         </p>
 
-        <h3 id="nomePresentePix">
+
+        <h3
+            id="nomePresentePix">
+
             -
+
         </h3>
+
+
+        <!-- =====================================
+             CHAVE PIX
+        ====================================== -->
 
         <div class="pix-area">
 
-            <label for="chavePix">
+            <label
+                for="chavePix">
+
                 Chave PIX
+
             </label>
+
 
             <div class="pix-chave">
 
@@ -317,6 +334,7 @@ src="js/presentes.js"></script>
                     id="chavePix"
                     value="anayrasr@gmail.com"
                     readonly>
+
 
                 <button
                     type="button"
@@ -331,27 +349,120 @@ src="js/presentes.js"></script>
 
         </div>
 
+
+        <!-- =====================================
+             NOME
+        ====================================== -->
+
         <div class="pix-area">
 
-            <label for="nomeConvidadoPix">
+            <label
+                for="nomeConvidadoPix">
+
                 Seu nome
+
             </label>
+
 
             <input
                 type="text"
                 id="nomeConvidadoPix"
-                placeholder="Digite seu nome">
+                placeholder="Digite seu nome"
+                autocomplete="name">
 
         </div>
 
+
+        <!-- =====================================
+             VALOR
+        ====================================== -->
+
+        <div class="pix-area">
+
+            <label
+                for="valorPix">
+
+                Valor a presentear
+
+            </label>
+
+
+            <input
+                type="text"
+                id="valorPix"
+                placeholder="Ex.: R$ 150,00"
+                inputmode="decimal"
+                autocomplete="off">
+
+        </div>
+
+
+        <!-- =====================================
+             COMPROVANTE
+        ====================================== -->
+
+        <div class="pix-area">
+
+            <label
+                for="comprovantePix">
+
+                Comprovante do PIX
+
+            </label>
+
+
+            <input
+                type="file"
+                id="comprovantePix"
+                accept="image/*,.pdf">
+
+
+            <small class="pix-ajuda">
+
+                Anexe o comprovante do pagamento
+                realizado.
+
+            </small>
+
+
+            <div
+                id="nomeArquivoPix"
+                class="nome-arquivo-pix">
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================
+             STATUS DO FORMULÁRIO
+        ====================================== -->
+
+        <div
+            id="statusPix"
+            class="status-pix">
+
+        </div>
+
+
+        <!-- =====================================
+             CONFIRMAR
+        ====================================== -->
+
         <button
             type="button"
+            id="btnConfirmarPix"
             class="btn-escolher-pix"
-            onclick="registrarPix()">
+            disabled>
 
-            Escolher PIX
+            Confirmar presente com PIX
 
         </button>
+
+
+        <!-- =====================================
+             CANCELAR
+        ====================================== -->
 
         <button
             type="button"
@@ -362,9 +473,11 @@ src="js/presentes.js"></script>
 
         </button>
 
+
     </div>
 
 </div>
+
 
 </body>
 
