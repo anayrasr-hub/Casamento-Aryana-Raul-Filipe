@@ -235,246 +235,83 @@ O Firestore registra somente:
 ================================================
 */
 
-async function salvarPix(
-    presente,
-    convidado = "Convidado",
-    valor = 0
-) {
+async function salvarPix(presente, convidado, valor) {
+    console.log("Iniciando salvamento do PIX...");
 
     try {
-
-        /*
-        ----------------------------------------
-        VALIDAR PRESENTE
-        ----------------------------------------
-        */
-
         if (!presente) {
-
-            throw new Error(
-                "Presente não informado."
-            );
-
+            throw new Error("Presente não informado.");
         }
 
-
-        /*
-        ----------------------------------------
-        VALIDAR CONVIDADO
-        ----------------------------------------
-        */
-
-        const nomeConvidado =
-            String(
-                convidado || ""
-            ).trim();
-
-
-        if (!nomeConvidado) {
-
-            throw new Error(
-                "Nome do convidado não informado."
-            );
-
+        if (!convidado) {
+            throw new Error("Nome do convidado não informado.");
         }
 
-
-        /*
-        ----------------------------------------
-        VALIDAR VALOR
-        ----------------------------------------
-        */
-
-        const valorNumerico =
-            Number(valor);
-
-
-        if (
-            !Number.isFinite(
-                valorNumerico
-            ) ||
-            valorNumerico <= 0
-        ) {
-
-            throw new Error(
-                "Valor do PIX inválido."
-            );
-
+        if (!valor || Number(valor) <= 0) {
+            throw new Error("Valor do PIX inválido.");
         }
 
+        // =========================================================
+        // 1. SALVA PRIMEIRO NO FIRESTORE
+        // =========================================================
 
-        /*
-        ----------------------------------------
-        SALVAR NO FIRESTORE
-        ----------------------------------------
-        */
-
-        await addDoc(
-            collection(
-                db,
-                "pix"
-            ),
-            {
-
-                presenteId:
-                    presente.id,
-
-                presente:
-                    presente.nome,
-
-                convidado:
-                    nomeConvidado,
-
-                valor:
-                    valorNumerico,
-
-                /*
-                --------------------------------
-                IMPORTANTE
-
-                Apenas registramos que o convidado
-                informou possuir um comprovante.
-
-                O arquivo NÃO é armazenado.
-                --------------------------------
-                */
-
-                comprovanteAnexado:
-                    true,
-
-                status:
-                    "Recebido",
-
-                data:
-                    new Date()
-
-            }
-        );
-
-
-        console.log(
-            "PIX salvo no Firestore."
-        );
-
-
-        /*
-        ----------------------------------------
-        ENVIAR PARA GOOGLE SHEETS
-        ----------------------------------------
-        */
-
-        const dadosSheets = {
-
-            acao:
-                "registrarPix",
-
-            presenteId:
-                String(
-                    presente.id
-                ),
-
-            presente:
-                String(
-                    presente.nome
-                ),
-
-            convidado:
-                nomeConvidado,
-
-            valor:
-                valorNumerico,
-
-            comprovanteAnexado:
-                true
-
+        const registroPix = {
+            presenteId: presente.id || null,
+            presente: presente.nome || presente.nomePresente || "Presente",
+            convidado: convidado,
+            valor: Number(valor),
+            comprovanteAnexado: true,
+            status: "Recebido",
+            data: new Date().toISOString()
         };
 
+        await addDoc(collection(db, "pix"), registroPix);
+
+        console.log("PIX salvo no Firestore.");
+
+        // =========================================================
+        // 2. TENTA ENVIAR PARA O GOOGLE SHEETS
+        // =========================================================
 
         try {
+            const dadosSheets = {
+                tipo: "pix",
+                presenteId: presente.id || null,
+                presente: presente.nome || presente.nomePresente || "Presente",
+                convidado: convidado,
+                valor: Number(valor),
+                comprovanteAnexado: true,
+                status: "Recebido",
+                data: new Date().toISOString()
+            };
 
-            const resposta =
-                await fetch(
-                    GOOGLE_SHEETS_URL,
-                    {
+            await fetch(GOOGLE_SHEETS_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8"
+                },
+                body: JSON.stringify(dadosSheets)
+            });
 
-                        method:
-                            "POST",
-
-                        headers: {
-
-                            "Content-Type":
-                                "text/plain;charset=utf-8"
-
-                        },
-
-                        body:
-                            JSON.stringify(
-                                dadosSheets
-                            )
-
-                    }
-                );
-
-
-            if (
-                !resposta.ok
-            ) {
-
-                console.warn(
-                    "Google Sheets retornou HTTP:",
-                    resposta.status
-                );
-
-            } else {
-
-                console.log(
-                    "PIX enviado para Google Sheets."
-                );
-
-            }
-
+            console.log("Dados do PIX enviados para o Google Sheets.");
         } catch (erroSheets) {
-
-            /*
-            ------------------------------------
-            IMPORTANTE
-
-            Se o Firestore salvou corretamente,
-            um eventual problema de comunicação
-            com o Google Sheets não desfaz o
-            registro no Firestore.
-            ------------------------------------
-            */
-
             console.warn(
-                "Não foi possível enviar o PIX para o Google Sheets:",
+                "PIX salvo no Firestore, mas não foi possível confirmar o envio ao Google Sheets:",
                 erroSheets
             );
-
         }
 
-
-        /*
-        ----------------------------------------
-        SUCESSO
-        ----------------------------------------
-        */
+        // =========================================================
+        // 3. O FIRESTORE É A CONFIRMAÇÃO PRINCIPAL
+        // =========================================================
 
         return true;
 
-
-    } catch (error) {
-
-        console.error(
-            "Erro ao registrar PIX:",
-            error
-        );
-
-
+    } catch (erro) {
+        console.error("Erro ao salvar PIX:", erro);
         return false;
-
     }
-
 }
 
 
