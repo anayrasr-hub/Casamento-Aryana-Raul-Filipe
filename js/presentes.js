@@ -13,8 +13,13 @@ Funções:
 - Escolha de presente
 - Registro Firebase
 - PIX
-- Upload de comprovante
+- Validação de comprovante
 - Registro PIX no Google Sheets
+
+IMPORTANTE:
+O comprovante do PIX NÃO é armazenado.
+Ele permanece somente no navegador para
+validar o envio antes do registro.
 ================================================
 */
 
@@ -45,157 +50,6 @@ CONFIGURAÇÃO PIX
 const CHAVE_PIX =
     "anayrasr@gmail.com";
 
-function configurarFormularioPix() {
-
-    const comprovante =
-        document.getElementById("comprovantePix");
-
-    const botao =
-        document.getElementById("btnConfirmarPix");
-
-    const nomeArquivo =
-        document.getElementById("nomeArquivoPix");
-
-    if (!comprovante || !botao) {
-        console.warn(
-            "Elementos do formulário PIX não encontrados."
-        );
-        return;
-    }
-
-    botao.disabled = true;
-
-    comprovante.addEventListener(
-        "change",
-        function () {
-
-            const arquivo =
-                this.files[0];
-
-            botao.disabled = true;
-
-            if (nomeArquivo) {
-                nomeArquivo.textContent = "";
-            }
-
-            if (!arquivo) {
-                return;
-            }
-
-            const tamanhoMaximo =
-                10 * 1024 * 1024;
-
-            const tiposPermitidos = [
-                "image/jpeg",
-                "image/png",
-                "image/webp",
-                "application/pdf"
-            ];
-
-            if (arquivo.size > tamanhoMaximo) {
-
-                alert(
-                    "O comprovante deve ter no máximo 10 MB."
-                );
-
-                this.value = "";
-                return;
-            }
-
-            if (
-                !tiposPermitidos.includes(
-                    arquivo.type
-                )
-            ) {
-
-                alert(
-                    "Formato de comprovante não permitido."
-                );
-
-                this.value = "";
-                return;
-            }
-
-            if (nomeArquivo) {
-                nomeArquivo.textContent =
-                    "✓ Comprovante anexado: " +
-                    arquivo.name;
-            }
-
-            botao.disabled = false;
-
-        }
-    );
-}
-
-function fecharPix() {
-
-    const modal =
-        document.getElementById("modalPix");
-
-    if (modal) {
-        modal.classList.remove("ativo");
-        modal.style.display = "none";
-    }
-
-    const nome =
-        document.getElementById(
-            "nomeConvidadoPix"
-        );
-
-    const valor =
-        document.getElementById(
-            "valorPix"
-        );
-
-    const comprovante =
-        document.getElementById(
-            "comprovantePix"
-        );
-
-    const nomeArquivo =
-        document.getElementById(
-            "nomeArquivoPix"
-        );
-
-    const status =
-        document.getElementById(
-            "statusPix"
-        );
-
-    const botao =
-        document.getElementById(
-            "btnConfirmarPix"
-        );
-
-    if (nome) {
-        nome.value = "";
-    }
-
-    if (valor) {
-        valor.value = "";
-    }
-
-    if (comprovante) {
-        comprovante.value = "";
-    }
-
-    if (nomeArquivo) {
-        nomeArquivo.textContent = "";
-    }
-
-    if (status) {
-        status.textContent = "";
-    }
-
-    if (botao) {
-        botao.disabled = true;
-        botao.textContent =
-            "Confirmar presente com PIX";
-    }
-
-    presenteSelecionado = null;
-}
 
 /*
 ================================================
@@ -231,25 +85,361 @@ document.addEventListener(
 
 /*
 ================================================
+CONFIGURAR FORMULÁRIO PIX
+================================================
+*/
+
+function configurarFormularioPix() {
+
+    const comprovante =
+        document.getElementById(
+            "comprovantePix"
+        );
+
+    const botao =
+        document.getElementById(
+            "btnConfirmarPix"
+        );
+
+    const nome =
+        document.getElementById(
+            "nomeConvidadoPix"
+        );
+
+    const valor =
+        document.getElementById(
+            "valorPix"
+        );
+
+    const nomeArquivo =
+        document.getElementById(
+            "nomeArquivoPix"
+        );
+
+
+    if (!comprovante || !botao) {
+
+        console.warn(
+            "Elementos do formulário PIX não encontrados."
+        );
+
+        return;
+
+    }
+
+
+    /*
+    --------------------------------------------
+    ESTADO INICIAL
+    --------------------------------------------
+    */
+
+    botao.disabled = true;
+
+
+    /*
+    --------------------------------------------
+    ANEXAR COMPROVANTE
+    --------------------------------------------
+    */
+
+    comprovante.addEventListener(
+        "change",
+        function () {
+
+            const arquivo =
+                this.files[0];
+
+
+            botao.disabled =
+                true;
+
+
+            if (nomeArquivo) {
+
+                nomeArquivo.textContent =
+                    "";
+
+            }
+
+
+            if (!arquivo) {
+
+                atualizarEstadoBotaoPix();
+
+                return;
+
+            }
+
+
+            const tamanhoMaximo =
+                10 * 1024 * 1024;
+
+
+            const tiposPermitidos = [
+
+                "image/jpeg",
+
+                "image/png",
+
+                "image/webp",
+
+                "application/pdf"
+
+            ];
+
+
+            if (
+                arquivo.size >
+                tamanhoMaximo
+            ) {
+
+                alert(
+                    "O comprovante deve ter no máximo 10 MB."
+                );
+
+                this.value = "";
+
+                atualizarEstadoBotaoPix();
+
+                return;
+
+            }
+
+
+            if (
+                !tiposPermitidos.includes(
+                    arquivo.type
+                )
+            ) {
+
+                alert(
+                    "Formato de comprovante não permitido."
+                );
+
+                this.value = "";
+
+                atualizarEstadoBotaoPix();
+
+                return;
+
+            }
+
+
+            if (nomeArquivo) {
+
+                nomeArquivo.textContent =
+                    "✓ Comprovante anexado: " +
+                    arquivo.name;
+
+            }
+
+
+            atualizarEstadoBotaoPix();
+
+        }
+    );
+
+
+    /*
+    --------------------------------------------
+    NOME
+    --------------------------------------------
+    */
+
+    if (nome) {
+
+        nome.addEventListener(
+            "input",
+            atualizarEstadoBotaoPix
+        );
+
+    }
+
+
+    /*
+    --------------------------------------------
+    VALOR
+    --------------------------------------------
+    */
+
+    if (valor) {
+
+        valor.addEventListener(
+            "input",
+            function () {
+
+                formatarValorPix();
+
+                atualizarEstadoBotaoPix();
+
+            }
+        );
+
+    }
+
+
+    /*
+    --------------------------------------------
+    BOTÃO
+    --------------------------------------------
+    */
+
+    botao.addEventListener(
+        "click",
+        registrarPix
+    );
+
+
+    console.log(
+        "Botão PIX configurado com sucesso."
+    );
+
+}
+
+
+/*
+================================================
+FECHAR PIX
+================================================
+*/
+
+function fecharPix() {
+
+    const modal =
+        document.getElementById(
+            "modalPix"
+        );
+
+
+    if (modal) {
+
+        modal.classList.remove(
+            "ativo"
+        );
+
+        modal.style.display =
+            "none";
+
+    }
+
+
+    const nome =
+        document.getElementById(
+            "nomeConvidadoPix"
+        );
+
+
+    const valor =
+        document.getElementById(
+            "valorPix"
+        );
+
+
+    const comprovante =
+        document.getElementById(
+            "comprovantePix"
+        );
+
+
+    const nomeArquivo =
+        document.getElementById(
+            "nomeArquivoPix"
+        );
+
+
+    const status =
+        document.getElementById(
+            "statusPix"
+        );
+
+
+    const botao =
+        document.getElementById(
+            "btnConfirmarPix"
+        );
+
+
+    if (nome) {
+
+        nome.value =
+            "";
+
+    }
+
+
+    if (valor) {
+
+        valor.value =
+            "";
+
+    }
+
+
+    if (comprovante) {
+
+        comprovante.value =
+            "";
+
+    }
+
+
+    if (nomeArquivo) {
+
+        nomeArquivo.textContent =
+            "";
+
+    }
+
+
+    if (status) {
+
+        status.textContent =
+            "";
+
+    }
+
+
+    if (botao) {
+
+        botao.disabled =
+            true;
+
+        botao.textContent =
+            "Confirmar presente com PIX";
+
+    }
+
+
+    presenteSelecionado =
+        null;
+
+}
+
+
+/*
+================================================
 OBTER LISTA DO DATA.JS
 ================================================
 */
 
-function obterPresentes(){
+function obterPresentes() {
 
-    if(
+    if (
         Array.isArray(
             window.presentes
         )
-    ){
+    ) {
 
         return window.presentes;
 
     }
 
+
     console.error(
         "A lista 'presentes' não foi encontrada no data.js."
     );
+
 
     return [];
 
@@ -262,7 +452,9 @@ NORMALIZAR TEXTO
 ================================================
 */
 
-function normalizarTexto(texto){
+function normalizarTexto(
+    texto
+) {
 
     return String(
         texto ?? ""
@@ -284,18 +476,20 @@ PESQUISA
 ================================================
 */
 
-function configurarPesquisa(){
+function configurarPesquisa() {
 
     const campo =
         document.getElementById(
             "buscar"
         );
 
-    if(!campo){
+
+    if (!campo) {
 
         return;
 
     }
+
 
     campo.addEventListener(
         "input",
@@ -305,6 +499,7 @@ function configurarPesquisa(){
                 normalizarTexto(
                     campo.value
                 );
+
 
             carregarPresentes();
 
@@ -320,12 +515,13 @@ FILTROS
 ================================================
 */
 
-function configurarCategorias(){
+function configurarCategorias() {
 
     const botoes =
         document.querySelectorAll(
             ".categorias button"
         );
+
 
     botoes.forEach(
         botao => {
@@ -338,6 +534,7 @@ function configurarCategorias(){
                         botao.dataset.cat ||
                         "Todos";
 
+
                     botoes.forEach(
                         btn => {
 
@@ -348,9 +545,11 @@ function configurarCategorias(){
                         }
                     );
 
+
                     botao.classList.add(
                         "ativo"
                     );
+
 
                     carregarPresentes();
 
@@ -369,19 +568,21 @@ MODAL
 ================================================
 */
 
-function configurarModal(){
+function configurarModal() {
 
     const modal =
         document.getElementById(
             "modalPresente"
         );
 
+
     const fechar =
         document.querySelector(
             ".fechar"
         );
 
-    if(fechar){
+
+    if (fechar) {
 
         fechar.addEventListener(
             "click",
@@ -394,15 +595,16 @@ function configurarModal(){
 
     }
 
-    if(modal){
+
+    if (modal) {
 
         modal.addEventListener(
             "click",
             event => {
 
-                if(
+                if (
                     event.target === modal
-                ){
+                ) {
 
                     fecharModalPresente();
 
@@ -413,13 +615,14 @@ function configurarModal(){
 
     }
 
+
     document.addEventListener(
         "keydown",
         event => {
 
-            if(
+            if (
                 event.key === "Escape"
-            ){
+            ) {
 
                 fecharModalPresente();
 
@@ -439,19 +642,21 @@ FECHAR MODAL PRESENTE
 ================================================
 */
 
-function fecharModalPresente(){
+function fecharModalPresente() {
 
     const modal =
         document.getElementById(
             "modalPresente"
         );
 
-    if(modal){
+
+    if (modal) {
 
         modal.style.display =
             "none";
 
     }
+
 
     presenteSelecionado =
         null;
@@ -465,51 +670,61 @@ STATUS FIREBASE
 ================================================
 */
 
-async function carregarStatusPresentes(){
+async function carregarStatusPresentes() {
 
-    try{
+    try {
 
-        if(
+        if (
             typeof window.buscarPresentesEscolhidos !==
             "function"
-        ){
+        ) {
 
             console.warn(
                 "window.buscarPresentesEscolhidos() não está disponível."
             );
 
-            presentesEscolhidos = [];
+
+            presentesEscolhidos =
+                [];
+
 
             return;
 
         }
 
+
         presentesEscolhidos =
             await window.buscarPresentesEscolhidos();
 
-        if(
+
+        if (
             !Array.isArray(
                 presentesEscolhidos
             )
-        ){
+        ) {
 
-            presentesEscolhidos = [];
+            presentesEscolhidos =
+                [];
 
         }
+
 
         console.log(
             "Presentes já escolhidos:",
             presentesEscolhidos.length
         );
 
-    }catch(error){
+
+    } catch (error) {
 
         console.error(
             "Erro ao carregar escolhas:",
             error
         );
 
-        presentesEscolhidos = [];
+
+        presentesEscolhidos =
+            [];
 
     }
 
@@ -522,41 +737,47 @@ CARREGAR PRESENTES
 ================================================
 */
 
-function carregarPresentes(){
+function carregarPresentes() {
 
     const container =
         document.getElementById(
             "listaPresentes"
         );
 
-    if(!container){
+
+    if (!container) {
 
         console.error(
             "Elemento #listaPresentes não encontrado."
         );
 
+
         return;
 
     }
 
-    container.innerHTML = "";
+
+    container.innerHTML =
+        "";
+
 
     const todosPresentes =
         obterPresentes();
+
 
     listaPresentes =
         [...todosPresentes];
 
 
     /*
-    ------------------------------
+    --------------------------------------------
     PESQUISA
-    ------------------------------
+    --------------------------------------------
     */
 
-    if(
+    if (
         textoPesquisa !== ""
-    ){
+    ) {
 
         listaPresentes =
             listaPresentes.filter(
@@ -567,10 +788,12 @@ function carregarPresentes(){
                             presente.nome
                         );
 
+
                     const categoria =
                         normalizarTexto(
                             presente.categoria
                         );
+
 
                     return (
 
@@ -593,19 +816,19 @@ function carregarPresentes(){
 
 
     /*
-    ------------------------------
+    --------------------------------------------
     CATEGORIA
-    ------------------------------
+    --------------------------------------------
     */
 
-    if(
+    if (
         normalizarTexto(
             categoriaAtual
         ) !==
         normalizarTexto(
             "Todos"
         )
-    ){
+    ) {
 
         listaPresentes =
             listaPresentes.filter(
@@ -630,13 +853,13 @@ function carregarPresentes(){
 
 
     /*
-    ------------------------------
+    --------------------------------------------
     ORDENAR
-    ------------------------------
+    --------------------------------------------
     */
 
     listaPresentes.sort(
-        (a,b) => {
+        (a, b) => {
 
             return String(
                 a.nome ?? ""
@@ -652,9 +875,9 @@ function carregarPresentes(){
 
 
     /*
-    ------------------------------
+    --------------------------------------------
     CONTADOR
-    ------------------------------
+    --------------------------------------------
     */
 
     const contador =
@@ -662,7 +885,8 @@ function carregarPresentes(){
             "contadorPresentes"
         );
 
-    if(contador){
+
+    if (contador) {
 
         contador.textContent =
             `${listaPresentes.length} presentes`;
@@ -671,34 +895,44 @@ function carregarPresentes(){
 
 
     /*
-    ------------------------------
+    --------------------------------------------
     NENHUM RESULTADO
-    ------------------------------
+    --------------------------------------------
     */
 
-    if(
+    if (
         listaPresentes.length === 0
-    ){
+    ) {
 
         const mensagem =
             document.createElement(
                 "div"
             );
 
+
         mensagem.className =
             "nenhum-presente";
 
+
         mensagem.textContent =
             "Nenhum presente encontrado.";
+
 
         container.appendChild(
             mensagem
         );
 
+
         return;
 
     }
 
+
+    /*
+    --------------------------------------------
+    CRIAR CARDS
+    --------------------------------------------
+    */
 
     listaPresentes.forEach(
         presente => {
@@ -723,12 +957,13 @@ CRIAR CARD
 function criarCardPresente(
     presente,
     container
-){
+) {
 
     const card =
         document.createElement(
             "div"
         );
+
 
     card.className =
         "card-presente";
@@ -761,9 +996,9 @@ function criarCardPresente(
         "";
 
 
-    if(
+    if (
         quantidadeEscolhas > 0
-    ){
+    ) {
 
         avisoEscolhido = `
 
@@ -822,7 +1057,9 @@ function criarCardPresente(
                 <button
                     type="button"
                     class="btn-presente btn-escolher"
-                    data-id="${escaparHTML(presente.id)}">
+                    data-id="${escaparHTML(
+                        presente.id
+                    )}">
 
                     Escolher presente
 
@@ -832,7 +1069,9 @@ function criarCardPresente(
                 <button
                     type="button"
                     class="btn-presente btn-pix"
-                    data-pix-id="${escaparHTML(presente.id)}">
+                    data-pix-id="${escaparHTML(
+                        presente.id
+                    )}">
 
                     Presentear com PIX
 
@@ -846,9 +1085,9 @@ function criarCardPresente(
 
 
     /*
-    ------------------------------
+    --------------------------------------------
     IMAGEM
-    ------------------------------
+    --------------------------------------------
     */
 
     const img =
@@ -857,18 +1096,19 @@ function criarCardPresente(
         );
 
 
-    if(img){
+    if (img) {
 
         img.addEventListener(
             "error",
             () => {
 
-                if(
+                if (
                     !img.dataset.erro
-                ){
+                ) {
 
                     img.dataset.erro =
                         "1";
+
 
                     img.src =
                         "imagens/presente-padrao.jpg";
@@ -882,9 +1122,9 @@ function criarCardPresente(
 
 
     /*
-    ------------------------------
+    --------------------------------------------
     ESCOLHER PRESENTE
-    ------------------------------
+    --------------------------------------------
     */
 
     const botaoEscolher =
@@ -893,7 +1133,7 @@ function criarCardPresente(
         );
 
 
-    if(botaoEscolher){
+    if (botaoEscolher) {
 
         botaoEscolher.addEventListener(
             "click",
@@ -910,9 +1150,9 @@ function criarCardPresente(
 
 
     /*
-    ------------------------------
+    --------------------------------------------
     PIX
-    ------------------------------
+    --------------------------------------------
     */
 
     const botaoPix =
@@ -921,7 +1161,7 @@ function criarCardPresente(
         );
 
 
-    if(botaoPix){
+    if (botaoPix) {
 
         botaoPix.addEventListener(
             "click",
@@ -950,7 +1190,9 @@ ESCOLHER PRESENTE
 ================================================
 */
 
-function escolherPresente(id){
+function escolherPresente(
+    id
+) {
 
     const presentesAtuais =
         obterPresentes();
@@ -967,14 +1209,15 @@ function escolherPresente(id){
         );
 
 
-    if(
+    if (
         !presenteSelecionado
-    ){
+    ) {
 
         console.error(
             "Presente não encontrado:",
             id
         );
+
 
         return;
 
@@ -987,7 +1230,7 @@ function escolherPresente(id){
         );
 
 
-    if(titulo){
+    if (titulo) {
 
         titulo.textContent =
             presenteSelecionado.nome;
@@ -1001,11 +1244,12 @@ function escolherPresente(id){
         );
 
 
-    if(imagem){
+    if (imagem) {
 
         imagem.src =
             presenteSelecionado.imagem ||
             "imagens/presente-padrao.jpg";
+
 
         imagem.alt =
             presenteSelecionado.nome;
@@ -1019,12 +1263,13 @@ function escolherPresente(id){
         );
 
 
-    if(valor){
+    if (valor) {
 
         valor.style.display =
             "none";
 
-        valor.innerHTML = "";
+        valor.innerHTML =
+            "";
 
     }
 
@@ -1035,9 +1280,10 @@ function escolherPresente(id){
         );
 
 
-    if(nome){
+    if (nome) {
 
-        nome.value = "";
+        nome.value =
+            "";
 
     }
 
@@ -1048,9 +1294,10 @@ function escolherPresente(id){
         );
 
 
-    if(mensagem){
+    if (mensagem) {
 
-        mensagem.value = "";
+        mensagem.value =
+            "";
 
     }
 
@@ -1061,7 +1308,7 @@ function escolherPresente(id){
         );
 
 
-    if(modal){
+    if (modal) {
 
         modal.style.display =
             "flex";
@@ -1070,7 +1317,7 @@ function escolherPresente(id){
         setTimeout(
             () => {
 
-                if(nome){
+                if (nome) {
 
                     nome.focus();
 
@@ -1091,7 +1338,7 @@ CONFIGURAR BOTÃO CONFIRMAR PRESENTE
 ================================================
 */
 
-function configurarBotaoConfirmar(){
+function configurarBotaoConfirmar() {
 
     const botao =
         document.getElementById(
@@ -1099,7 +1346,7 @@ function configurarBotaoConfirmar(){
         );
 
 
-    if(!botao){
+    if (!botao) {
 
         return;
 
@@ -1120,27 +1367,34 @@ CONFIRMAR ESCOLHA
 ================================================
 */
 
-async function confirmarEscolha(){
+async function confirmarEscolha() {
 
-    console.log("=================================");
-    console.log("CONFIRMAÇÃO DE PRESENTE INICIADA");
-    console.log("=================================");
+    console.log(
+        "================================="
+    );
 
-    /*
-    --------------------------------------------
-    VERIFICAR PRESENTE SELECIONADO
-    --------------------------------------------
-    */
 
-    if(!presenteSelecionado){
+    console.log(
+        "CONFIRMAÇÃO DE PRESENTE INICIADA"
+    );
+
+
+    console.log(
+        "================================="
+    );
+
+
+    if (!presenteSelecionado) {
 
         console.error(
             "Nenhum presente está selecionado."
         );
 
+
         alert(
             "Selecione um presente antes de confirmar."
         );
+
 
         return;
 
@@ -1153,27 +1407,23 @@ async function confirmarEscolha(){
     );
 
 
-    /*
-    --------------------------------------------
-    NOME DO CONVIDADO
-    --------------------------------------------
-    */
-
     const campoNome =
         document.getElementById(
             "nomeConvidado"
         );
 
 
-    if(!campoNome){
+    if (!campoNome) {
 
         console.error(
             "Campo #nomeConvidado não encontrado."
         );
 
+
         alert(
             "Não foi possível localizar o campo de nome."
         );
+
 
         return;
 
@@ -1184,24 +1434,22 @@ async function confirmarEscolha(){
         campoNome.value.trim();
 
 
-    if(nome === ""){
+    if (
+        nome === ""
+    ) {
 
         alert(
             "Informe seu nome."
         );
 
+
         campoNome.focus();
+
 
         return;
 
     }
 
-
-    /*
-    --------------------------------------------
-    MENSAGEM
-    --------------------------------------------
-    */
 
     const campoMensagem =
         document.getElementById(
@@ -1215,21 +1463,17 @@ async function confirmarEscolha(){
             : "";
 
 
-    /*
-    --------------------------------------------
-    BOTÃO
-    --------------------------------------------
-    */
-
     const botao =
         document.getElementById(
             "confirmarEscolha"
         );
 
 
-    if(botao){
+    if (botao) {
 
-        botao.disabled = true;
+        botao.disabled =
+            true;
+
 
         botao.textContent =
             "Salvando...";
@@ -1237,27 +1481,17 @@ async function confirmarEscolha(){
     }
 
 
-    try{
-
-        /*
-        ========================================
-        VERIFICAR FUNÇÃO FIREBASE
-        ========================================
-        */
+    try {
 
         console.log(
             "Verificando salvarEscolhaPresente..."
         );
 
 
-        if(
+        if (
             typeof window.salvarEscolhaPresente !==
             "function"
-        ){
-
-            console.error(
-                "window.salvarEscolhaPresente não está disponível."
-            );
+        ) {
 
             throw new Error(
                 "A função de salvamento dos presentes não está disponível."
@@ -1267,36 +1501,36 @@ async function confirmarEscolha(){
 
 
         /*
-        ========================================
-        MONTAR DADOS DO CONVIDADO
-        ========================================
+        ----------------------------------------
+        IMPORTANTE
+        ----------------------------------------
+
+        Mantemos o formato que o seu
+        firebase-service.js já espera:
+
+        convidado = texto
+
+        ----------------------------------------
         */
 
-        const convidado = {
-
-            nome:
-                nome,
-
-            mensagem:
-                mensagem
-
-        };
+        const convidado =
+            nome;
 
 
         console.log(
             "Dados que serão enviados:",
             {
-                presente: presenteSelecionado,
-                convidado: convidado
+                presente:
+                    presenteSelecionado,
+
+                convidado:
+                    convidado,
+
+                mensagem:
+                    mensagem
             }
         );
 
-
-        /*
-        ========================================
-        SALVAR
-        ========================================
-        */
 
         console.log(
             "Chamando salvarEscolhaPresente()..."
@@ -1316,20 +1550,9 @@ async function confirmarEscolha(){
         );
 
 
-        /*
-        ========================================
-        IMPORTANTE
-        ========================================
-
-        Só considera erro se a função retornar
-        explicitamente false.
-
-        Assim, caso o Firebase salve e a função
-        não tenha return true, a confirmação
-        continuará funcionando.
-        */
-
-        if(resultado === false){
+        if (
+            resultado === false
+        ) {
 
             throw new Error(
                 "O sistema informou que não foi possível salvar a escolha."
@@ -1339,15 +1562,10 @@ async function confirmarEscolha(){
 
 
         /*
-        ========================================
+        ----------------------------------------
         ATUALIZAR STATUS
-        ========================================
+        ----------------------------------------
         */
-
-        console.log(
-            "Escolha salva. Atualizando lista..."
-        );
-
 
         await carregarStatusPresentes();
 
@@ -1356,18 +1574,18 @@ async function confirmarEscolha(){
 
 
         /*
-        ========================================
+        ----------------------------------------
         FECHAR MODAL
-        ========================================
+        ----------------------------------------
         */
 
         fecharModalPresente();
 
 
         /*
-        ========================================
-        MENSAGEM DE SUCESSO
-        ========================================
+        ----------------------------------------
+        SUCESSO
+        ----------------------------------------
         */
 
         mostrarMensagem(
@@ -1380,19 +1598,22 @@ async function confirmarEscolha(){
         );
 
 
-    }catch(error){
+    } catch (error) {
 
         console.error(
             "================================="
         );
 
+
         console.error(
             "ERRO AO CONFIRMAR PRESENTE"
         );
 
+
         console.error(
             error
         );
+
 
         console.error(
             "================================="
@@ -1408,18 +1629,13 @@ async function confirmarEscolha(){
         );
 
 
-    }finally{
+    } finally {
 
-        /*
-        ----------------------------------------
-        RESTAURAR BOTÃO
-        ----------------------------------------
-        */
-
-        if(botao){
+        if (botao) {
 
             botao.disabled =
                 false;
+
 
             botao.textContent =
                 "Confirmar Escolha";
@@ -1433,106 +1649,11 @@ async function confirmarEscolha(){
 
 /*
 ================================================
-CONFIGURAR FORMULÁRIO PIX
-================================================
-*/
-
-const comprovantePix =
-    document.getElementById(
-        "comprovantePix"
-    );
-
-const btnConfirmarPix =
-    document.getElementById(
-        "btnConfirmarPix"
-    );
-
-if (comprovantePix) {
-
-    comprovantePix.addEventListener(
-        "change",
-        function () {
-
-            const arquivo =
-                this.files[0];
-
-            if (!arquivo) {
-
-                btnConfirmarPix.disabled =
-                    true;
-
-                document.getElementById(
-                    "nomeArquivoPix"
-                ).textContent = "";
-
-                return;
-            }
-
-            const tamanhoMaximo =
-                10 * 1024 * 1024;
-
-            const tiposPermitidos = [
-                "image/jpeg",
-                "image/png",
-                "image/webp",
-                "application/pdf"
-            ];
-
-            if (
-                arquivo.size >
-                tamanhoMaximo
-            ) {
-
-                alert(
-                    "O comprovante deve ter no máximo 10 MB."
-                );
-
-                this.value = "";
-
-                btnConfirmarPix.disabled =
-                    true;
-
-                return;
-            }
-
-            if (
-                !tiposPermitidos.includes(
-                    arquivo.type
-                )
-            ) {
-
-                alert(
-                    "Formato de comprovante não permitido."
-                );
-
-                this.value = "";
-
-                btnConfirmarPix.disabled =
-                    true;
-
-                return;
-            }
-
-            document.getElementById(
-                "nomeArquivoPix"
-            ).textContent =
-                "✓ Comprovante anexado: " +
-                arquivo.name;
-
-            btnConfirmarPix.disabled =
-                false;
-
-        }
-    );
-}
-
-/*
-================================================
 FORMATAR VALOR PIX
 ================================================
 */
 
-function formatarValorPix(){
+function formatarValorPix() {
 
     const campo =
         document.getElementById(
@@ -1540,7 +1661,7 @@ function formatarValorPix(){
         );
 
 
-    if(!campo){
+    if (!campo) {
 
         return;
 
@@ -1558,9 +1679,9 @@ function formatarValorPix(){
         );
 
 
-    if(
+    if (
         valor === ""
-    ){
+    ) {
 
         campo.value =
             "";
@@ -1595,7 +1716,7 @@ OBTER VALOR NUMÉRICO
 ================================================
 */
 
-function obterValorPixNumerico(){
+function obterValorPixNumerico() {
 
     const campo =
         document.getElementById(
@@ -1603,7 +1724,7 @@ function obterValorPixNumerico(){
         );
 
 
-    if(!campo){
+    if (!campo) {
 
         return 0;
 
@@ -1634,11 +1755,11 @@ function obterValorPixNumerico(){
         Number(valor);
 
 
-    if(
+    if (
         !Number.isFinite(
             numero
         )
-    ){
+    ) {
 
         return 0;
 
@@ -1652,65 +1773,11 @@ function obterValorPixNumerico(){
 
 /*
 ================================================
-MOSTRAR NOME DO ARQUIVO
-================================================
-*/
-
-function mostrarNomeArquivoPix(){
-
-    const campo =
-        document.getElementById(
-            "comprovantePix"
-        );
-
-
-    const area =
-        document.getElementById(
-            "nomeArquivoPix"
-        );
-
-
-    if(
-        !campo ||
-        !area
-    ){
-
-        return;
-
-    }
-
-
-    if(
-        !campo.files ||
-        campo.files.length === 0
-    ){
-
-        area.textContent =
-            "";
-
-        return;
-
-    }
-
-
-    const arquivo =
-        campo.files[0];
-
-
-    area.textContent =
-        "Comprovante selecionado: " +
-        arquivo.name;
-
-}
-
-
-/*
-================================================
 ATUALIZAR BOTÃO PIX
 ================================================
 */
 
-function atualizarEstadoBotaoPix(){
+function atualizarEstadoBotaoPix() {
 
     const botao =
         document.getElementById(
@@ -1759,7 +1826,7 @@ function atualizarEstadoBotaoPix(){
         comprovanteValido;
 
 
-    if(botao){
+    if (botao) {
 
         botao.disabled =
             !podeConfirmar;
@@ -1773,30 +1840,30 @@ function atualizarEstadoBotaoPix(){
         );
 
 
-    if(status){
+    if (status) {
 
-        if(!nomeValido){
+        if (!nomeValido) {
 
             status.textContent =
                 "Informe seu nome.";
 
         }
 
-        else if(!valorValido){
+        else if (!valorValido) {
 
             status.textContent =
                 "Informe o valor que deseja presentear.";
 
         }
 
-        else if(!comprovanteValido){
+        else if (!comprovanteValido) {
 
             status.textContent =
                 "Anexe o comprovante do PIX.";
 
         }
 
-        else{
+        else {
 
             status.textContent =
                 "Tudo certo! Você já pode confirmar o presente. ❤️";
@@ -1814,7 +1881,9 @@ ABRIR PIX
 ================================================
 */
 
-function abrirPix(id){
+function abrirPix(
+    id
+) {
 
     const presentesAtuais =
         obterPresentes();
@@ -1831,14 +1900,15 @@ function abrirPix(id){
         );
 
 
-    if(
+    if (
         !presenteSelecionado
-    ){
+    ) {
 
         console.error(
             "Presente não encontrado para PIX:",
             id
         );
+
 
         return;
 
@@ -1857,7 +1927,7 @@ function abrirPix(id){
         );
 
 
-    if(nomePresentePix){
+    if (nomePresentePix) {
 
         nomePresentePix.textContent =
             presenteSelecionado.nome;
@@ -1871,7 +1941,7 @@ function abrirPix(id){
         );
 
 
-    if(elementoChave){
+    if (elementoChave) {
 
         elementoChave.value =
             CHAVE_PIX;
@@ -1885,7 +1955,7 @@ function abrirPix(id){
         );
 
 
-    if(nomeConvidadoPix){
+    if (nomeConvidadoPix) {
 
         nomeConvidadoPix.value =
             "";
@@ -1899,7 +1969,7 @@ function abrirPix(id){
         );
 
 
-    if(valorPix){
+    if (valorPix) {
 
         valorPix.value =
             "";
@@ -1913,7 +1983,7 @@ function abrirPix(id){
         );
 
 
-    if(comprovantePix){
+    if (comprovantePix) {
 
         comprovantePix.value =
             "";
@@ -1927,7 +1997,7 @@ function abrirPix(id){
         );
 
 
-    if(nomeArquivoPix){
+    if (nomeArquivoPix) {
 
         nomeArquivoPix.textContent =
             "";
@@ -1935,10 +2005,38 @@ function abrirPix(id){
     }
 
 
-    atualizarEstadoBotaoPix();
+    const statusPix =
+        document.getElementById(
+            "statusPix"
+        );
 
 
-    if(modalPix){
+    if (statusPix) {
+
+        statusPix.textContent =
+            "Informe seu nome.";
+
+    }
+
+
+    const botao =
+        document.getElementById(
+            "btnConfirmarPix"
+        );
+
+
+    if (botao) {
+
+        botao.disabled =
+            true;
+
+        botao.textContent =
+            "Confirmar presente com PIX";
+
+    }
+
+
+    if (modalPix) {
 
         modalPix.style.display =
             "flex";
@@ -1947,7 +2045,7 @@ function abrirPix(id){
         setTimeout(
             () => {
 
-                if(nomeConvidadoPix){
+                if (nomeConvidadoPix) {
 
                     nomeConvidadoPix.focus();
 
@@ -1965,135 +2063,353 @@ function abrirPix(id){
 /*
 ================================================
 REGISTRAR PIX
+
+O comprovante é apenas validado localmente.
+
+NÃO:
+- envia para Firebase Storage
+- cria URL
+- armazena arquivo
+
+SIM:
+- registra o PIX no Firestore
+- registra no Google Sheets
 ================================================
 */
+
 async function registrarPix() {
 
     console.log(
         "Iniciando registro do presente por PIX..."
     );
 
+
     try {
 
         if (!presenteSelecionado) {
+
             throw new Error(
                 "Nenhum presente foi selecionado."
             );
+
         }
 
+
+        const campoNome =
+            document.getElementById(
+                "nomeConvidadoPix"
+            );
+
+
+        const campoValor =
+            document.getElementById(
+                "valorPix"
+            );
+
+
+        const campoComprovante =
+            document.getElementById(
+                "comprovantePix"
+            );
+
+
         const nome =
-            document
-                .getElementById("nomeConvidadoPix")
-                .value
-                .trim();
+            campoNome
+                ? campoNome.value.trim()
+                : "";
+
 
         const valorTexto =
-            document
-                .getElementById("valorPix")
-                .value
-                .trim();
+            campoValor
+                ? campoValor.value.trim()
+                : "";
+
 
         const arquivo =
-            document
-                .getElementById("comprovantePix")
-                .files[0];
+            campoComprovante &&
+            campoComprovante.files
+                ? campoComprovante.files[0]
+                : null;
+
+
+        /*
+        ----------------------------------------
+        NOME
+        ----------------------------------------
+        */
 
         if (!nome) {
+
             alert(
                 "Digite seu nome para continuar."
             );
+
+
+            if (campoNome) {
+
+                campoNome.focus();
+
+            }
+
+
+            atualizarEstadoBotaoPix();
+
+
             return;
+
         }
 
+
+        /*
+        ----------------------------------------
+        VALOR
+        ----------------------------------------
+        */
+
         if (!valorTexto) {
+
             alert(
                 "Informe o valor do PIX."
             );
+
+
+            if (campoValor) {
+
+                campoValor.focus();
+
+            }
+
+
+            atualizarEstadoBotaoPix();
+
+
             return;
+
         }
 
+
+        /*
+        ----------------------------------------
+        COMPROVANTE
+        ----------------------------------------
+        */
+
         if (!arquivo) {
+
             alert(
                 "Anexe o comprovante do PIX."
             );
+
+
+            if (campoComprovante) {
+
+                campoComprovante.click();
+
+            }
+
+
+            atualizarEstadoBotaoPix();
+
+
             return;
+
         }
+
+
+        /*
+        ----------------------------------------
+        VALIDAR TAMANHO
+        ----------------------------------------
+        */
 
         const tamanhoMaximo =
             10 * 1024 * 1024;
 
-        if (arquivo.size > tamanhoMaximo) {
+
+        if (
+            arquivo.size >
+            tamanhoMaximo
+        ) {
+
             alert(
                 "O comprovante deve ter no máximo 10 MB."
             );
+
+
+            campoComprovante.value =
+                "";
+
+
+            atualizarEstadoBotaoPix();
+
+
             return;
+
         }
 
+
+        /*
+        ----------------------------------------
+        VALIDAR FORMATO
+        ----------------------------------------
+        */
+
         const tiposPermitidos = [
+
             "image/jpeg",
+
             "image/png",
+
             "image/webp",
+
             "application/pdf"
+
         ];
+
 
         if (
             !tiposPermitidos.includes(
                 arquivo.type
             )
         ) {
+
             alert(
                 "Formato de comprovante não permitido."
             );
+
+
+            campoComprovante.value =
+                "";
+
+
+            atualizarEstadoBotaoPix();
+
+
             return;
+
         }
+
+
+        /*
+        ----------------------------------------
+        CONVERTER VALOR
+        ----------------------------------------
+        */
 
         let valorNumerico =
             valorTexto
-                .replace("R$", "")
-                .replace(/\s/g, "")
-                .replace(/\./g, "")
-                .replace(",", ".");
+                .replace(
+                    /R\$/gi,
+                    ""
+                )
+                .replace(
+                    /\s/g,
+                    ""
+                )
+                .replace(
+                    /\./g,
+                    ""
+                )
+                .replace(
+                    ",",
+                    "."
+                );
+
 
         valorNumerico =
-            Number(valorNumerico);
+            Number(
+                valorNumerico
+            );
+
 
         if (
-            !Number.isFinite(valorNumerico) ||
+            !Number.isFinite(
+                valorNumerico
+            ) ||
             valorNumerico <= 0
         ) {
+
             alert(
                 "Informe um valor de PIX válido."
             );
+
+
+            if (campoValor) {
+
+                campoValor.focus();
+
+            }
+
+
+            atualizarEstadoBotaoPix();
+
+
             return;
+
         }
 
+
+        /*
+        ----------------------------------------
+        BOTÃO
+        ----------------------------------------
+        */
+
         const status =
-            document.getElementById("statusPix");
+            document.getElementById(
+                "statusPix"
+            );
+
 
         const botao =
             document.getElementById(
                 "btnConfirmarPix"
             );
 
+
         if (status) {
+
             status.textContent =
                 "Registrando seu presente...";
+
         }
 
+
         if (botao) {
-            botao.disabled = true;
+
+            botao.disabled =
+                true;
+
+
             botao.textContent =
                 "Registrando...";
+
         }
+
+
+        /*
+        ----------------------------------------
+        VERIFICAR SERVIÇO
+        ----------------------------------------
+        */
 
         if (
             typeof window.salvarPix !==
             "function"
         ) {
+
             throw new Error(
                 "Serviço de registro do PIX não está disponível."
             );
+
         }
+
+
+        /*
+        ----------------------------------------
+        REGISTRAR PIX
+        ----------------------------------------
+        */
 
         const sucesso =
             await window.salvarPix(
@@ -2102,74 +2418,128 @@ async function registrarPix() {
                 valorNumerico
             );
 
+
         if (!sucesso) {
+
             throw new Error(
                 "Não foi possível registrar o presente com PIX."
             );
+
         }
+
 
         console.log(
             "Presente com PIX registrado com sucesso."
         );
 
+
         if (status) {
+
             status.textContent =
                 "Presente registrado com sucesso! ❤️";
+
         }
 
-        alert(
-            "Presente registrado com sucesso! ❤️\n\n" +
-            "Obrigado pelo carinho com os noivos!"
-        );
+
+        /*
+        ----------------------------------------
+        ATUALIZAR LISTA
+        ----------------------------------------
+        */
+
+        await carregarStatusPresentes();
+
+
+        carregarPresentes();
+
+
+        /*
+        ----------------------------------------
+        FECHAR MODAL
+        ----------------------------------------
+        */
 
         fecharPix();
 
-        if (
-            typeof carregarPresentesEscolhidos ===
-            "function"
-        ) {
-            await carregarPresentesEscolhidos();
-        }
 
-        if (
-            typeof renderizarPresentes ===
-            "function"
-        ) {
-            renderizarPresentes();
-        }
+        /*
+        ----------------------------------------
+        SUCESSO
+        ----------------------------------------
+        */
+
+        mostrarMensagem(
+            "Presente registrado com sucesso! ❤️"
+        );
+
+
+        console.log(
+            "REGISTRO PIX CONCLUÍDO COM SUCESSO."
+        );
+
 
     } catch (error) {
 
         console.error(
-            "Erro ao registrar presente com PIX:",
+            "================================="
+        );
+
+
+        console.error(
+            "ERRO AO REGISTRAR PIX"
+        );
+
+
+        console.error(
             error
         );
 
+
+        console.error(
+            "================================="
+        );
+
+
         const status =
-            document.getElementById("statusPix");
+            document.getElementById(
+                "statusPix"
+            );
+
 
         const botao =
             document.getElementById(
                 "btnConfirmarPix"
             );
 
+
         if (status) {
+
             status.textContent =
-                error.message ||
+                error?.message ||
                 "Não foi possível registrar o presente.";
+
         }
+
 
         if (botao) {
-            botao.disabled = false;
+
+            botao.disabled =
+                false;
+
+
             botao.textContent =
                 "Confirmar presente com PIX";
+
         }
 
+
         alert(
-            error.message ||
+            error?.message ||
             "Não foi possível registrar o presente."
         );
+
     }
+
 }
 
 
@@ -2179,9 +2549,9 @@ COPIAR PIX
 ================================================
 */
 
-async function copiarPix(){
+async function copiarPix() {
 
-    try{
+    try {
 
         const sucesso =
             await copiarTexto(
@@ -2189,13 +2559,13 @@ async function copiarPix(){
             );
 
 
-        if(sucesso){
+        if (sucesso) {
 
             mostrarMensagem(
                 "Chave PIX copiada! ❤️"
             );
 
-        }else{
+        } else {
 
             throw new Error(
                 "Não foi possível copiar."
@@ -2204,7 +2574,7 @@ async function copiarPix(){
         }
 
 
-    }catch(error){
+    } catch (error) {
 
         console.error(
             "Erro ao copiar PIX:",
@@ -2228,24 +2598,27 @@ COPIAR TEXTO
 ================================================
 */
 
-async function copiarTexto(texto){
+async function copiarTexto(
+    texto
+) {
 
-    try{
+    try {
 
-        if(
+        if (
             navigator.clipboard &&
             window.isSecureContext
-        ){
+        ) {
 
             await navigator.clipboard.writeText(
                 texto
             );
 
+
             return true;
 
         }
 
-    }catch(error){
+    } catch (error) {
 
         console.warn(
             "Clipboard moderno falhou:",
@@ -2255,7 +2628,7 @@ async function copiarTexto(texto){
     }
 
 
-    try{
+    try {
 
         const area =
             document.createElement(
@@ -2301,7 +2674,7 @@ async function copiarTexto(texto){
         return sucesso;
 
 
-    }catch(error){
+    } catch (error) {
 
         console.error(
             "Erro ao copiar texto:",
@@ -2322,7 +2695,7 @@ OBTER CHAVE PIX
 ================================================
 */
 
-function obterChavePix(){
+function obterChavePix() {
 
     return CHAVE_PIX;
 
@@ -2335,7 +2708,9 @@ MENSAGEM
 ================================================
 */
 
-function mostrarMensagem(texto){
+function mostrarMensagem(
+    texto
+) {
 
     const mensagem =
         document.getElementById(
@@ -2343,7 +2718,7 @@ function mostrarMensagem(texto){
         );
 
 
-    if(mensagem){
+    if (mensagem) {
 
         mensagem.textContent =
             texto;
@@ -2382,7 +2757,9 @@ ESCAPAR HTML
 ================================================
 */
 
-function escaparHTML(valor){
+function escaparHTML(
+    valor
+) {
 
     return String(
         valor ?? ""
@@ -2420,14 +2797,18 @@ FUNÇÕES GLOBAIS
 window.registrarPix =
     registrarPix;
 
+
 window.fecharPix =
     fecharPix;
+
 
 window.copiarPix =
     copiarPix;
 
+
 window.abrirPix =
     abrirPix;
+
 
 console.log(
     "presentes.js carregado com sucesso."
