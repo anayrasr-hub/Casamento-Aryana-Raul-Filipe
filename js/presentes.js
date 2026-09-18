@@ -45,6 +45,157 @@ CONFIGURAÇÃO PIX
 const CHAVE_PIX =
     "anayrasr@gmail.com";
 
+function configurarFormularioPix() {
+
+    const comprovante =
+        document.getElementById("comprovantePix");
+
+    const botao =
+        document.getElementById("btnConfirmarPix");
+
+    const nomeArquivo =
+        document.getElementById("nomeArquivoPix");
+
+    if (!comprovante || !botao) {
+        console.warn(
+            "Elementos do formulário PIX não encontrados."
+        );
+        return;
+    }
+
+    botao.disabled = true;
+
+    comprovante.addEventListener(
+        "change",
+        function () {
+
+            const arquivo =
+                this.files[0];
+
+            botao.disabled = true;
+
+            if (nomeArquivo) {
+                nomeArquivo.textContent = "";
+            }
+
+            if (!arquivo) {
+                return;
+            }
+
+            const tamanhoMaximo =
+                10 * 1024 * 1024;
+
+            const tiposPermitidos = [
+                "image/jpeg",
+                "image/png",
+                "image/webp",
+                "application/pdf"
+            ];
+
+            if (arquivo.size > tamanhoMaximo) {
+
+                alert(
+                    "O comprovante deve ter no máximo 10 MB."
+                );
+
+                this.value = "";
+                return;
+            }
+
+            if (
+                !tiposPermitidos.includes(
+                    arquivo.type
+                )
+            ) {
+
+                alert(
+                    "Formato de comprovante não permitido."
+                );
+
+                this.value = "";
+                return;
+            }
+
+            if (nomeArquivo) {
+                nomeArquivo.textContent =
+                    "✓ Comprovante anexado: " +
+                    arquivo.name;
+            }
+
+            botao.disabled = false;
+
+        }
+    );
+}
+
+function fecharPix() {
+
+    const modal =
+        document.getElementById("modalPix");
+
+    if (modal) {
+        modal.classList.remove("ativo");
+        modal.style.display = "none";
+    }
+
+    const nome =
+        document.getElementById(
+            "nomeConvidadoPix"
+        );
+
+    const valor =
+        document.getElementById(
+            "valorPix"
+        );
+
+    const comprovante =
+        document.getElementById(
+            "comprovantePix"
+        );
+
+    const nomeArquivo =
+        document.getElementById(
+            "nomeArquivoPix"
+        );
+
+    const status =
+        document.getElementById(
+            "statusPix"
+        );
+
+    const botao =
+        document.getElementById(
+            "btnConfirmarPix"
+        );
+
+    if (nome) {
+        nome.value = "";
+    }
+
+    if (valor) {
+        valor.value = "";
+    }
+
+    if (comprovante) {
+        comprovante.value = "";
+    }
+
+    if (nomeArquivo) {
+        nomeArquivo.textContent = "";
+    }
+
+    if (status) {
+        status.textContent = "";
+    }
+
+    if (botao) {
+        botao.disabled = true;
+        botao.textContent =
+            "Confirmar presente com PIX";
+    }
+
+    presenteSelecionado = null;
+}
 
 /*
 ================================================
