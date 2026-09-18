@@ -1286,125 +1286,94 @@ CONFIGURAR FORMULÁRIO PIX
 ================================================
 */
 
-function configurarFormularioPix(){
+const comprovantePix =
+    document.getElementById(
+        "comprovantePix"
+    );
 
-    const campoNome =
-        document.getElementById(
-            "nomeConvidadoPix"
-        );
+const btnConfirmarPix =
+    document.getElementById(
+        "btnConfirmarPix"
+    );
 
+if (comprovantePix) {
 
-    const campoValor =
-        document.getElementById(
-            "valorPix"
-        );
+    comprovantePix.addEventListener(
+        "change",
+        function () {
 
+            const arquivo =
+                this.files[0];
 
-    const campoComprovante =
-        document.getElementById(
-            "comprovantePix"
-        );
+            if (!arquivo) {
 
+                btnConfirmarPix.disabled =
+                    true;
 
-    /*
-    --------------------------------------------
-    NOME
-    --------------------------------------------
-    */
+                document.getElementById(
+                    "nomeArquivoPix"
+                ).textContent = "";
 
-    if(campoNome){
-
-        campoNome.addEventListener(
-            "input",
-            atualizarEstadoBotaoPix
-        );
-
-    }
-
-
-    /*
-    --------------------------------------------
-    VALOR
-    --------------------------------------------
-    */
-
-    if(campoValor){
-
-        campoValor.addEventListener(
-            "input",
-            () => {
-
-                formatarValorPix();
-
-                atualizarEstadoBotaoPix();
-
+                return;
             }
-        );
 
-    }
+            const tamanhoMaximo =
+                10 * 1024 * 1024;
 
+            const tiposPermitidos = [
+                "image/jpeg",
+                "image/png",
+                "image/webp",
+                "application/pdf"
+            ];
 
-    /*
-    --------------------------------------------
-    COMPROVANTE
-    --------------------------------------------
-    */
+            if (
+                arquivo.size >
+                tamanhoMaximo
+            ) {
 
-    if(campoComprovante){
+                alert(
+                    "O comprovante deve ter no máximo 10 MB."
+                );
 
-        campoComprovante.addEventListener(
-            "change",
-            () => {
+                this.value = "";
 
-                mostrarNomeArquivoPix();
+                btnConfirmarPix.disabled =
+                    true;
 
-                atualizarEstadoBotaoPix();
-
+                return;
             }
-        );
 
-    }
+            if (
+                !tiposPermitidos.includes(
+                    arquivo.type
+                )
+            ) {
 
+                alert(
+                    "Formato de comprovante não permitido."
+                );
 
-    /*
-    --------------------------------------------
-    BOTÃO PIX
-    --------------------------------------------
-    IMPORTANTE:
-    O botão precisa chamar registrarPix().
-    --------------------------------------------
-    */
+                this.value = "";
 
-    const botaoPix =
-        document.getElementById(
-            "btnConfirmarPix"
-        );
+                btnConfirmarPix.disabled =
+                    true;
 
+                return;
+            }
 
-    if(botaoPix){
+            document.getElementById(
+                "nomeArquivoPix"
+            ).textContent =
+                "✓ Comprovante anexado: " +
+                arquivo.name;
 
-        botaoPix.addEventListener(
-            "click",
-            registrarPix
-        );
+            btnConfirmarPix.disabled =
+                false;
 
-        console.log(
-            "Botão PIX configurado com sucesso."
-        );
-
-    }else{
-
-        console.error(
-            "Botão #btnConfirmarPix não encontrado."
-        );
-
-    }
-
-
-    atualizarEstadoBotaoPix();
-
+        }
+    );
 }
-
 
 /*
 ================================================
@@ -1847,479 +1816,209 @@ function abrirPix(id){
 REGISTRAR PIX
 ================================================
 */
-
-async function registrarPix(){
+async function registrarPix() {
 
     console.log(
         "Iniciando registro do presente por PIX..."
     );
 
+    try {
 
-    if(
-        !presenteSelecionado
-    ){
-
-        alert(
-            "Nenhum presente foi selecionado."
-        );
-
-        return;
-
-    }
-
-
-    /*
-    --------------------------------------------
-    NOME
-    --------------------------------------------
-    */
-
-    const campoNome =
-        document.getElementById(
-            "nomeConvidadoPix"
-        );
-
-
-    const convidado =
-        campoNome
-            ?
-            campoNome.value.trim()
-            :
-            "";
-
-
-    if(
-        convidado === ""
-    ){
-
-        alert(
-            "Informe seu nome."
-        );
-
-        if(campoNome){
-
-            campoNome.focus();
-
-        }
-
-        return;
-
-    }
-
-
-    /*
-    --------------------------------------------
-    VALOR
-    --------------------------------------------
-    */
-
-    const valor =
-        obterValorPixNumerico();
-
-
-    if(
-        valor <= 0
-    ){
-
-        alert(
-            "Informe o valor que deseja presentear."
-        );
-
-        const campoValor =
-            document.getElementById(
-                "valorPix"
-            );
-
-
-        if(campoValor){
-
-            campoValor.focus();
-
-        }
-
-        return;
-
-    }
-
-
-    /*
-    --------------------------------------------
-    COMPROVANTE
-    --------------------------------------------
-    */
-
-    const campoComprovante =
-        document.getElementById(
-            "comprovantePix"
-        );
-
-
-    if(
-        !campoComprovante ||
-        !campoComprovante.files ||
-        campoComprovante.files.length === 0
-    ){
-
-        alert(
-            "Anexe o comprovante do PIX antes de confirmar."
-        );
-
-        return;
-
-    }
-
-
-    const arquivo =
-        campoComprovante.files[0];
-
-
-    /*
-    --------------------------------------------
-    BOTÃO
-    --------------------------------------------
-    */
-
-    const botao =
-        document.getElementById(
-            "btnConfirmarPix"
-        );
-
-
-    if(botao){
-
-        botao.disabled =
-            true;
-
-        botao.textContent =
-            "Enviando comprovante...";
-
-    }
-
-
-    const status =
-        document.getElementById(
-            "statusPix"
-        );
-
-
-    try{
-
-        /*
-        ========================================
-        1 — VERIFICAR SERVIÇOS FIREBASE
-        ========================================
-        */
-
-        console.log(
-            "Verificando serviços Firebase..."
-        );
-
-
-        if(
-            typeof window.enviarComprovantePix !==
-            "function"
-        ){
-
+        if (!presenteSelecionado) {
             throw new Error(
-                "A função enviarComprovantePix() não está disponível."
+                "Nenhum presente foi selecionado."
             );
-
         }
 
+        const nome =
+            document
+                .getElementById("nomeConvidadoPix")
+                .value
+                .trim();
 
-        if(
+        const valorTexto =
+            document
+                .getElementById("valorPix")
+                .value
+                .trim();
+
+        const arquivo =
+            document
+                .getElementById("comprovantePix")
+                .files[0];
+
+        if (!nome) {
+            alert(
+                "Digite seu nome para continuar."
+            );
+            return;
+        }
+
+        if (!valorTexto) {
+            alert(
+                "Informe o valor do PIX."
+            );
+            return;
+        }
+
+        if (!arquivo) {
+            alert(
+                "Anexe o comprovante do PIX."
+            );
+            return;
+        }
+
+        const tamanhoMaximo =
+            10 * 1024 * 1024;
+
+        if (arquivo.size > tamanhoMaximo) {
+            alert(
+                "O comprovante deve ter no máximo 10 MB."
+            );
+            return;
+        }
+
+        const tiposPermitidos = [
+            "image/jpeg",
+            "image/png",
+            "image/webp",
+            "application/pdf"
+        ];
+
+        if (
+            !tiposPermitidos.includes(
+                arquivo.type
+            )
+        ) {
+            alert(
+                "Formato de comprovante não permitido."
+            );
+            return;
+        }
+
+        let valorNumerico =
+            valorTexto
+                .replace("R$", "")
+                .replace(/\s/g, "")
+                .replace(/\./g, "")
+                .replace(",", ".");
+
+        valorNumerico =
+            Number(valorNumerico);
+
+        if (
+            !Number.isFinite(valorNumerico) ||
+            valorNumerico <= 0
+        ) {
+            alert(
+                "Informe um valor de PIX válido."
+            );
+            return;
+        }
+
+        const status =
+            document.getElementById("statusPix");
+
+        const botao =
+            document.getElementById(
+                "btnConfirmarPix"
+            );
+
+        if (status) {
+            status.textContent =
+                "Registrando seu presente...";
+        }
+
+        if (botao) {
+            botao.disabled = true;
+            botao.textContent =
+                "Registrando...";
+        }
+
+        if (
             typeof window.salvarPix !==
             "function"
-        ){
-
+        ) {
             throw new Error(
-                "A função salvarPix() não está disponível."
+                "Serviço de registro do PIX não está disponível."
             );
-
         }
-
-
-        /*
-        ========================================
-        2 — STATUS
-        ========================================
-        */
-
-        if(status){
-
-            status.textContent =
-                "Enviando comprovante...";
-
-        }
-
-
-        /*
-        ========================================
-        3 — UPLOAD
-        ========================================
-        */
-
-        console.log(
-            "Enviando comprovante para o Firebase Storage..."
-        );
-
-
-        const comprovanteUrl =
-            await window.enviarComprovantePix(
-                arquivo,
-                presenteSelecionado
-            );
-
-
-        console.log(
-            "URL do comprovante:",
-            comprovanteUrl
-        );
-
-
-        if(
-            !comprovanteUrl
-        ){
-
-            throw new Error(
-                "Não foi possível enviar o comprovante."
-            );
-
-        }
-
-
-        /*
-        ========================================
-        4 — STATUS
-        ========================================
-        */
-
-        if(status){
-
-            status.textContent =
-                "Comprovante enviado. Registrando seu presente...";
-
-        }
-
-
-        /*
-        ========================================
-        5 — FIRESTORE + GOOGLE SHEETS
-        ========================================
-        */
-
-        console.log(
-            "Registrando presente por PIX..."
-        );
-
 
         const sucesso =
             await window.salvarPix(
-
                 presenteSelecionado,
-
-                convidado,
-
-                valor,
-
-                comprovanteUrl
-
+                nome,
+                valorNumerico
             );
 
-
-        console.log(
-            "Resultado do registro PIX:",
-            sucesso
-        );
-
-
-        if(!sucesso){
-
+        if (!sucesso) {
             throw new Error(
-                "Não foi possível registrar o presente por PIX."
+                "Não foi possível registrar o presente com PIX."
             );
-
         }
 
+        console.log(
+            "Presente com PIX registrado com sucesso."
+        );
 
-        /*
-        ========================================
-        6 — ATUALIZAR LISTA
-        ========================================
-        */
+        if (status) {
+            status.textContent =
+                "Presente registrado com sucesso! ❤️";
+        }
+
+        alert(
+            "Presente registrado com sucesso! ❤️\n\n" +
+            "Obrigado pelo carinho com os noivos!"
+        );
 
         fecharPix();
 
+        if (
+            typeof carregarPresentesEscolhidos ===
+            "function"
+        ) {
+            await carregarPresentesEscolhidos();
+        }
 
-        await carregarStatusPresentes();
+        if (
+            typeof renderizarPresentes ===
+            "function"
+        ) {
+            renderizarPresentes();
+        }
 
-
-        carregarPresentes();
-
-
-        /*
-        ========================================
-        7 — SUCESSO
-        ========================================
-        */
-
-        mostrarMensagem(
-            "Obrigado pelo carinho! ❤️\n\n" +
-            "Seu presente por PIX foi registrado com sucesso."
-        );
-
-
-    }catch(error){
+    } catch (error) {
 
         console.error(
-            "Erro ao registrar PIX:",
+            "Erro ao registrar presente com PIX:",
             error
         );
 
+        const status =
+            document.getElementById("statusPix");
 
-        if(status){
+        const botao =
+            document.getElementById(
+                "btnConfirmarPix"
+            );
 
+        if (status) {
             status.textContent =
-                "Não foi possível concluir o registro.";
-
+                error.message ||
+                "Não foi possível registrar o presente.";
         }
 
-
-        alert(
-            "Não foi possível confirmar o presente por PIX.\n\n" +
-            "Detalhes: " +
-            (
-                error?.message ||
-                "erro desconhecido"
-            )
-        );
-
-
-        atualizarEstadoBotaoPix();
-
-
-    }finally{
-
-        if(botao){
-
+        if (botao) {
+            botao.disabled = false;
             botao.textContent =
                 "Confirmar presente com PIX";
-
-            /*
-            Recalcula o estado do botão.
-            */
-
-            atualizarEstadoBotaoPix();
-
         }
 
-    }
-
-}
-
-
-/*
-================================================
-FECHAR PIX
-================================================
-*/
-
-function fecharPix(){
-
-    const modalPix =
-        document.getElementById(
-            "modalPix"
+        alert(
+            error.message ||
+            "Não foi possível registrar o presente."
         );
-
-
-    if(modalPix){
-
-        modalPix.style.display =
-            "none";
-
     }
-
-
-    /*
-    Limpar formulário.
-    */
-
-    const nome =
-        document.getElementById(
-            "nomeConvidadoPix"
-        );
-
-
-    const valor =
-        document.getElementById(
-            "valorPix"
-        );
-
-
-    const comprovante =
-        document.getElementById(
-            "comprovantePix"
-        );
-
-
-    const nomeArquivo =
-        document.getElementById(
-            "nomeArquivoPix"
-        );
-
-
-    if(nome){
-
-        nome.value =
-            "";
-
-    }
-
-
-    if(valor){
-
-        valor.value =
-            "";
-
-    }
-
-
-    if(comprovante){
-
-        comprovante.value =
-            "";
-
-    }
-
-
-    if(nomeArquivo){
-
-        nomeArquivo.textContent =
-            "";
-
-    }
-
-
-    const status =
-        document.getElementById(
-            "statusPix"
-        );
-
-
-    if(status){
-
-        status.textContent =
-            "";
-
-    }
-
-
-    atualizarEstadoBotaoPix();
-
-
-    presenteSelecionado =
-        null;
-
 }
 
 
