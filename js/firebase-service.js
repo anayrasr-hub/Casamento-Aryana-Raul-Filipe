@@ -215,103 +215,229 @@ async function buscarPresentesEscolhidos() {
 REGISTRAR PIX
 ================================================
 
-IMPORTANTE:
+O comprovante NÃO é enviado nem armazenado.
 
-O comprovante NÃO é enviado para o Firebase.
+O arquivo é apenas validado localmente
+pelo presentes.js.
 
-O presentes.js apenas verifica se o convidado
-selecionou um arquivo válido.
+O Firestore registra o PIX.
 
-O Firestore registra somente:
-
-- presente
-- presenteId
-- convidado
-- valor
-- comprovanteAnexado
-- status
-- data
+O Google Sheets recebe uma cópia
+administrativa do registro.
 
 ================================================
 */
 
 async function salvarPix(presente, convidado, valor) {
-    console.log("Iniciando salvamento do PIX...");
+
+    console.log(
+        "Iniciando salvamento do PIX..."
+    );
+
 
     try {
+
         if (!presente) {
-            throw new Error("Presente não informado.");
+
+            throw new Error(
+                "Presente não informado."
+            );
+
         }
+
 
         if (!convidado) {
-            throw new Error("Nome do convidado não informado.");
+
+            throw new Error(
+                "Nome do convidado não informado."
+            );
+
         }
 
-        if (!valor || Number(valor) <= 0) {
-            throw new Error("Valor do PIX inválido.");
+
+        if (
+            !valor ||
+            Number(valor) <= 0
+        ) {
+
+            throw new Error(
+                "Valor do PIX inválido."
+            );
+
         }
 
-        // =========================================================
-        // 1. SALVA PRIMEIRO NO FIRESTORE
-        // =========================================================
+
+        /*
+        ============================================
+        1. FIRESTORE
+        ============================================
+        */
 
         const registroPix = {
-            presenteId: presente.id || null,
-            presente: presente.nome || presente.nomePresente || "Presente",
-            convidado: convidado,
-            valor: Number(valor),
-            comprovanteAnexado: true,
-            status: "Recebido",
-            data: new Date().toISOString()
+
+            presenteId:
+                presente.id || null,
+
+            presente:
+                presente.nome ||
+                presente.nomePresente ||
+                "Presente",
+
+            convidado:
+                convidado,
+
+            valor:
+                Number(valor),
+
+            comprovanteAnexado:
+                true,
+
+            status:
+                "Recebido",
+
+            data:
+                new Date()
+
         };
 
-        await addDoc(collection(db, "pix"), registroPix);
 
-        console.log("PIX salvo no Firestore.");
+        await addDoc(
+            collection(
+                db,
+                "pix"
+            ),
+            registroPix
+        );
 
-        // =========================================================
-        // 2. TENTA ENVIAR PARA O GOOGLE SHEETS
-        // =========================================================
+
+        console.log(
+            "PIX salvo no Firestore."
+        );
+
+
+        /*
+        ============================================
+        2. GOOGLE SHEETS
+        ============================================
+        */
 
         try {
+
             const dadosSheets = {
-                tipo: "pix",
-                presenteId: presente.id || null,
-                presente: presente.nome || presente.nomePresente || "Presente",
-                convidado: convidado,
-                valor: Number(valor),
-                comprovanteAnexado: true,
-                status: "Recebido",
-                data: new Date().toISOString()
+
+                acao:
+                    "registrarPix",
+
+                presenteId:
+                    presente.id || "",
+
+                presente:
+                    presente.nome ||
+                    presente.nomePresente ||
+                    "Presente",
+
+                convidado:
+                    convidado,
+
+                valor:
+                    Number(valor),
+
+                comprovanteAnexado:
+                    true,
+
+                status:
+                    "Recebido"
+
             };
 
-            await fetch(GOOGLE_SHEETS_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: {
-                    "Content-Type": "text/plain;charset=utf-8"
-                },
-                body: JSON.stringify(dadosSheets)
-            });
 
-            console.log("Dados do PIX enviados para o Google Sheets.");
+            console.log(
+                "Enviando PIX para Google Sheets:",
+                dadosSheets
+            );
+
+
+            /*
+            IMPORTANTE:
+
+            mode no-cors impede que o navegador
+            leia a resposta do Apps Script.
+
+            Porém o POST é enviado.
+
+            O Firestore já foi salvo antes.
+            */
+
+            await fetch(
+                GOOGLE_SHEETS_URL,
+                {
+
+                    method:
+                        "POST",
+
+                    mode:
+                        "no-cors",
+
+                    headers: {
+
+                        "Content-Type":
+                            "text/plain;charset=utf-8"
+
+                    },
+
+                    body:
+                        JSON.stringify(
+                            dadosSheets
+                        )
+
+                }
+            );
+
+
+            console.log(
+                "PIX enviado para o Google Sheets."
+            );
+
+
         } catch (erroSheets) {
+
+            /*
+            O PIX já está salvo no Firestore.
+
+            Portanto um problema de comunicação
+            com o Google Sheets não deve cancelar
+            a confirmação.
+            */
+
             console.warn(
-                "PIX salvo no Firestore, mas não foi possível confirmar o envio ao Google Sheets:",
+                "PIX salvo no Firestore, mas houve problema no envio ao Google Sheets:",
                 erroSheets
             );
+
         }
 
-        // =========================================================
-        // 3. O FIRESTORE É A CONFIRMAÇÃO PRINCIPAL
-        // =========================================================
+
+        /*
+        ============================================
+        3. SUCESSO
+        ============================================
+        */
 
         return true;
 
+
     } catch (erro) {
-        console.error("Erro ao salvar PIX:", erro);
+
+        console.error(
+            "Erro ao salvar PIX:",
+            erro
+        );
+
+
         return false;
+
     }
+
 }
 
 
