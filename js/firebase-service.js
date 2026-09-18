@@ -7,18 +7,15 @@ Arquivo: firebase-service.js
 
 Firebase versão modular
 
-Funções:
-- Presentes
-- PIX
-- Google Sheets
-- Confirmação de presença
-- Check-in
+ETAPA 1:
+Firebase → Google Sheets
 
 IMPORTANTE:
+- Nenhuma exclusão automática nesta etapa.
+- Firebase ID é enviado para o Google Sheets.
+- Firebase continua sendo preservado.
 - Firebase Storage NÃO é utilizado.
 - Comprovantes de PIX NÃO são armazenados.
-- O arquivo anexado serve apenas para validar
-  que o convidado possui um comprovante.
 ================================================
 */
 
@@ -69,6 +66,78 @@ const GOOGLE_SHEETS_URL =
     "https://script.google.com/macros/s/AKfycbwxoY3KVrIxOjRvZ8nWJOhwA3dWoK_OVnR3Wj893rZLONMIhIpE_TrOFaRLsmm41q1Q/exec";
 
 
+/*
+================================================
+FUNÇÃO AUXILIAR
+ENVIA DADOS PARA GOOGLE SHEETS
+================================================
+*/
+
+async function enviarParaGoogleSheets(dados) {
+
+    try {
+
+        console.log(
+            "Enviando dados para Google Sheets:",
+            dados
+        );
+
+
+        await fetch(
+            GOOGLE_SHEETS_URL,
+            {
+
+                method:
+                    "POST",
+
+                mode:
+                    "no-cors",
+
+                headers: {
+
+                    "Content-Type":
+                        "text/plain;charset=utf-8"
+
+                },
+
+                body:
+                    JSON.stringify(
+                        dados
+                    )
+
+            }
+        );
+
+
+        console.log(
+            "Dados enviados para Google Sheets."
+        );
+
+
+        return true;
+
+
+    } catch (erro) {
+
+        console.warn(
+            "Não foi possível enviar dados para Google Sheets:",
+            erro
+        );
+
+
+        return false;
+
+    }
+
+}
+
+
+/*
+================================================
+SALVAR ESCOLHA DE PRESENTE
+================================================
+*/
+
 async function salvarEscolhaPresente(
     presente,
     convidado = "Convidado"
@@ -91,32 +160,56 @@ async function salvarEscolhaPresente(
         ================================================
         */
 
-        await addDoc(
-            collection(
-                db,
-                "presentes_escolhidos"
-            ),
-            {
+        const registroPresente = {
 
-                presenteId:
-                    presente.id,
+            presenteId:
+                presente.id,
 
-                nomePresente:
-                    presente.nome,
+            nomePresente:
+                presente.nome,
 
-                convidado:
-                    convidado,
+            convidado:
+                convidado,
 
-                data:
-                    new Date()
+            data:
+                new Date()
 
-            }
-        );
+        };
+
+
+        /*
+         * IMPORTANTE:
+         *
+         * addDoc retorna o DocumentReference.
+         *
+         * O ID real do documento está em:
+         *
+         * docRef.id
+         */
+
+        const docRef =
+            await addDoc(
+                collection(
+                    db,
+                    "presentes_escolhidos"
+                ),
+                registroPresente
+            );
+
+
+        const firebaseId =
+            docRef.id;
 
 
         console.log(
             "Presente salvo no Firebase:",
             presente.nome
+        );
+
+
+        console.log(
+            "Firebase ID do presente:",
+            firebaseId
         );
 
 
@@ -126,90 +219,28 @@ async function salvarEscolhaPresente(
         ================================================
         */
 
-        try {
+        await enviarParaGoogleSheets({
 
-            const dadosSheets = {
+            acao:
+                "registrarPresenteFirebase",
 
-                acao:
-                    "registrarPresente",
+            firebaseId:
+                firebaseId,
 
-                presenteId:
-                    presente.id || "",
+            presenteId:
+                presente.id || "",
 
-                presente:
-                    presente.nome ||
-                    "Presente",
+            presente:
+                presente.nome ||
+                "Presente",
 
-                convidado:
-                    convidado
+            convidado:
+                convidado,
 
-            };
+            data:
+                new Date().toISOString()
 
-
-            console.log(
-                "Enviando escolha de presente para Google Sheets:",
-                dadosSheets
-            );
-
-
-            /*
-            --------------------------------------------
-            IMPORTANTE
-            --------------------------------------------
-
-            Usamos no-cors porque o navegador não pode
-            ler diretamente a resposta do Apps Script.
-
-            O envio é realizado, mas a resposta não é
-            lida pelo navegador.
-            --------------------------------------------
-            */
-
-            await fetch(
-                GOOGLE_SHEETS_URL,
-                {
-
-                    method:
-                        "POST",
-
-                    mode:
-                        "no-cors",
-
-                    headers: {
-
-                        "Content-Type":
-                            "text/plain;charset=utf-8"
-
-                    },
-
-                    body:
-                        JSON.stringify(
-                            dadosSheets
-                        )
-
-                }
-            );
-
-
-            console.log(
-                "Escolha de presente enviada para o Google Sheets."
-            );
-
-
-        } catch (erroSheets) {
-
-            /*
-            --------------------------------------------
-            O Firebase já foi salvo.
-            --------------------------------------------
-            */
-
-            console.warn(
-                "Presente salvo no Firebase, mas houve problema no envio ao Google Sheets:",
-                erroSheets
-            );
-
-        }
+        });
 
 
         /*
@@ -235,6 +266,7 @@ async function salvarEscolhaPresente(
 
 }
 
+
 /*
 ================================================
 REGISTRAR PIX
@@ -253,7 +285,11 @@ administrativa do registro.
 ================================================
 */
 
-async function salvarPix(presente, convidado, valor) {
+async function salvarPix(
+    presente,
+    convidado,
+    valor
+) {
 
     console.log(
         "Iniciando salvamento do PIX..."
@@ -326,17 +362,32 @@ async function salvarPix(presente, convidado, valor) {
         };
 
 
-        await addDoc(
-            collection(
-                db,
-                "pix"
-            ),
-            registroPix
-        );
+        /*
+         * Captura o ID real do documento.
+         */
+
+        const docRef =
+            await addDoc(
+                collection(
+                    db,
+                    "pix"
+                ),
+                registroPix
+            );
+
+
+        const firebaseId =
+            docRef.id;
 
 
         console.log(
             "PIX salvo no Firestore."
+        );
+
+
+        console.log(
+            "Firebase ID do PIX:",
+            firebaseId
         );
 
 
@@ -346,100 +397,38 @@ async function salvarPix(presente, convidado, valor) {
         ============================================
         */
 
-        try {
+        await enviarParaGoogleSheets({
 
-            const dadosSheets = {
+            acao:
+                "registrarPixFirebase",
 
-                acao:
-                    "registrarPix",
+            firebaseId:
+                firebaseId,
 
-                presenteId:
-                    presente.id || "",
+            presenteId:
+                presente.id || "",
 
-                presente:
-                    presente.nome ||
-                    presente.nomePresente ||
-                    "Presente",
+            presente:
+                presente.nome ||
+                presente.nomePresente ||
+                "Presente",
 
-                convidado:
-                    convidado,
+            convidado:
+                convidado,
 
-                valor:
-                    Number(valor),
+            valor:
+                Number(valor),
 
-                comprovanteAnexado:
-                    true,
+            comprovanteAnexado:
+                true,
 
-                status:
-                    "Recebido"
+            status:
+                "Recebido",
 
-            };
+            data:
+                new Date().toISOString()
 
-
-            console.log(
-                "Enviando PIX para Google Sheets:",
-                dadosSheets
-            );
-
-
-            /*
-            IMPORTANTE:
-
-            mode no-cors impede que o navegador
-            leia a resposta do Apps Script.
-
-            Porém o POST é enviado.
-
-            O Firestore já foi salvo antes.
-            */
-
-            await fetch(
-                GOOGLE_SHEETS_URL,
-                {
-
-                    method:
-                        "POST",
-
-                    mode:
-                        "no-cors",
-
-                    headers: {
-
-                        "Content-Type":
-                            "text/plain;charset=utf-8"
-
-                    },
-
-                    body:
-                        JSON.stringify(
-                            dadosSheets
-                        )
-
-                }
-            );
-
-
-            console.log(
-                "PIX enviado para o Google Sheets."
-            );
-
-
-        } catch (erroSheets) {
-
-            /*
-            O PIX já está salvo no Firestore.
-
-            Portanto um problema de comunicação
-            com o Google Sheets não deve cancelar
-            a confirmação.
-            */
-
-            console.warn(
-                "PIX salvo no Firestore, mas houve problema no envio ao Google Sheets:",
-                erroSheets
-            );
-
-        }
+        });
 
 
         /*
@@ -559,26 +548,74 @@ async function salvarConfirmacao(
         }
 
 
-        await addDoc(
-            collection(
-                db,
-                "convidados"
-            ),
-            {
+        /*
+        ============================================
+        1. FIRESTORE
+        ============================================
+        */
 
-                ...dados,
+        const registroConvidado = {
 
-                data:
-                    new Date()
+            ...dados,
 
-            }
-        );
+            data:
+                new Date()
+
+        };
+
+
+        const docRef =
+            await addDoc(
+                collection(
+                    db,
+                    "convidados"
+                ),
+                registroConvidado
+            );
+
+
+        const firebaseId =
+            docRef.id;
 
 
         console.log(
             "Confirmação salva com sucesso."
         );
 
+
+        console.log(
+            "Firebase ID do convidado:",
+            firebaseId
+        );
+
+
+        /*
+        ============================================
+        2. GOOGLE SHEETS
+        ============================================
+        */
+
+        await enviarParaGoogleSheets({
+
+            acao:
+                "registrarConvidadoFirebase",
+
+            firebaseId:
+                firebaseId,
+
+            ...dados,
+
+            data:
+                new Date().toISOString()
+
+        });
+
+
+        /*
+        ============================================
+        3. SUCESSO
+        ============================================
+        */
 
         return true;
 
@@ -681,7 +718,12 @@ async function buscarConvidados() {
 
                     id:
                         convidado.id ||
+                        convidado.firebaseId ||
                         convidado.codigo ||
+                        "",
+
+                    firebaseId:
+                        convidado.firebaseId ||
                         "",
 
                     codigo:
@@ -877,141 +919,6 @@ async function buscarConfirmacoesGoogleSheets() {
 
 /*
 ================================================
-EDITAR REGISTRO
-================================================
-*/
-
-async function editarRegistro(
-    colecao,
-    id,
-    dados
-) {
-
-    try {
-
-        if (
-            !colecao ||
-            !id ||
-            !dados
-        ) {
-
-            throw new Error(
-                "Coleção, ID ou dados não informados."
-            );
-
-        }
-
-
-        const referencia =
-            doc(
-                db,
-                colecao,
-                id
-            );
-
-
-        await updateDoc(
-            referencia,
-            dados
-        );
-
-
-        console.log(
-            "Registro atualizado:",
-            colecao,
-            id
-        );
-
-
-        return true;
-
-
-    } catch (error) {
-
-        console.error(
-            "Erro ao editar registro:",
-            error
-        );
-
-
-        return false;
-
-    }
-
-}
-
-
-/*
-================================================
-EXCLUIR REGISTRO
-================================================
-*/
-
-async function excluirRegistro(
-    colecao,
-    id
-) {
-
-    try {
-
-        if (
-            !colecao ||
-            !id
-        ) {
-
-            throw new Error(
-                "Coleção ou ID não informado."
-            );
-
-        }
-
-
-        const referencia =
-            doc(
-                db,
-                colecao,
-                id
-            );
-
-
-        await deleteDoc(
-            referencia
-        );
-
-
-        console.log(
-            "Registro excluído:",
-            colecao,
-            id
-        );
-
-
-        return true;
-
-
-    } catch (error) {
-
-        console.error(
-            "Erro ao excluir registro:",
-            error
-        );
-
-
-        console.error(
-            "Código Firebase:",
-            error?.code ||
-            "sem código"
-        );
-
-
-        return false;
-
-    }
-
-}
-
-/*
-================================================
 BUSCAR PRESENTES ESCOLHIDOS
 ================================================
 */
@@ -1081,6 +988,664 @@ async function buscarPresentesEscolhidos() {
 
 }
 
+
+/*
+================================================
+SINCRONIZAÇÃO FIREBASE → GOOGLE SHEETS
+================================================
+
+ETAPA 1
+
+Esta função:
+
+1. Lê convidados do Firestore;
+2. Lê PIX do Firestore;
+3. Lê presentes escolhidos do Firestore;
+4. Envia tudo para o Google Sheets;
+5. O codigo.gs atualiza ou adiciona;
+6. NÃO exclui nada.
+
+================================================
+*/
+
+async function sincronizarFirebaseComSheets() {
+
+    console.log(
+        "========================================"
+    );
+
+    console.log(
+        "INICIANDO SINCRONIZAÇÃO FIREBASE → SHEETS"
+    );
+
+    console.log(
+        "ETAPA 1 - SEM EXCLUSÕES"
+    );
+
+    console.log(
+        "========================================"
+    );
+
+
+    try {
+
+        /*
+        ============================================
+        1. CONVIDADOS
+        ============================================
+        */
+
+        console.log(
+            "Lendo coleção convidados..."
+        );
+
+
+        const convidadosSnapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "convidados"
+                )
+            );
+
+
+        const convidados = [];
+
+
+        convidadosSnapshot.forEach(
+            registro => {
+
+                const dados =
+                    registro.data();
+
+
+                convidados.push({
+
+                    firebaseId:
+                        registro.id,
+
+                    ...dados
+
+                });
+
+            }
+        );
+
+
+        console.log(
+            "Convidados encontrados:",
+            convidados.length
+        );
+
+
+        /*
+        ============================================
+        2. PIX
+        ============================================
+        */
+
+        console.log(
+            "Lendo coleção pix..."
+        );
+
+
+        const pixSnapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "pix"
+                )
+            );
+
+
+        const pix = [];
+
+
+        pixSnapshot.forEach(
+            registro => {
+
+                const dados =
+                    registro.data();
+
+
+                pix.push({
+
+                    firebaseId:
+                        registro.id,
+
+                    ...dados
+
+                });
+
+            }
+        );
+
+
+        console.log(
+            "PIX encontrados:",
+            pix.length
+        );
+
+
+        /*
+        ============================================
+        3. PRESENTES
+        ============================================
+        */
+
+        console.log(
+            "Lendo coleção presentes_escolhidos..."
+        );
+
+
+        const presentesSnapshot =
+            await getDocs(
+                collection(
+                    db,
+                    "presentes_escolhidos"
+                )
+            );
+
+
+        const presentes = [];
+
+
+        presentesSnapshot.forEach(
+            registro => {
+
+                const dados =
+                    registro.data();
+
+
+                presentes.push({
+
+                    firebaseId:
+                        registro.id,
+
+                    ...dados
+
+                });
+
+            }
+        );
+
+
+        console.log(
+            "Presentes encontrados:",
+            presentes.length
+        );
+
+
+        /*
+        ============================================
+        4. ENVIAR CONVIDADOS
+        ============================================
+        */
+
+        let convidadosEnviados = 0;
+
+
+        for (
+            const convidado of convidados
+        ) {
+
+            const enviado =
+                await enviarParaGoogleSheets({
+
+                    acao:
+                        "registrarConvidadoFirebase",
+
+                    ...convidado
+
+                });
+
+
+            if (enviado) {
+
+                convidadosEnviados++;
+            }
+
+        }
+
+
+        /*
+        ============================================
+        5. ENVIAR PIX
+        ============================================
+        */
+
+        let pixEnviados = 0;
+
+
+        for (
+            const registroPix of pix
+        ) {
+
+            const enviado =
+                await enviarParaGoogleSheets({
+
+                    acao:
+                        "registrarPixFirebase",
+
+                    ...registroPix
+
+                });
+
+
+            if (enviado) {
+
+                pixEnviados++;
+            }
+
+        }
+
+
+        /*
+        ============================================
+        6. ENVIAR PRESENTES
+        ============================================
+        */
+
+        let presentesEnviados = 0;
+
+
+        for (
+            const presente of presentes
+        ) {
+
+            const enviado =
+                await enviarParaGoogleSheets({
+
+                    acao:
+                        "registrarPresenteFirebase",
+
+                    firebaseId:
+                        presente.firebaseId,
+
+                    presenteId:
+                        presente.presenteId ||
+                        "",
+
+                    presente:
+                        presente.nomePresente ||
+                        presente.presente ||
+                        "Presente",
+
+                    convidado:
+                        presente.convidado ||
+                        "Convidado",
+
+                    data:
+                        converterDataParaISO(
+                            presente.data
+                        )
+
+                });
+
+
+            if (enviado) {
+
+                presentesEnviados++;
+            }
+
+        }
+
+
+        /*
+        ============================================
+        7. RESULTADO
+        ============================================
+        */
+
+        const resultado = {
+
+            sucesso:
+                true,
+
+            etapa:
+                1,
+
+            exclusoes:
+                0,
+
+            firebase: {
+
+                convidados:
+                    convidados.length,
+
+                pix:
+                    pix.length,
+
+                presentes:
+                    presentes.length
+
+            },
+
+            enviados: {
+
+                convidados:
+                    convidadosEnviados,
+
+                pix:
+                    pixEnviados,
+
+                presentes:
+                    presentesEnviados
+
+            },
+
+            mensagem:
+                "Sincronização Firebase → Google Sheets concluída. Nenhum registro foi excluído."
+
+        };
+
+
+        console.log(
+            "========================================"
+        );
+
+        console.log(
+            "SINCRONIZAÇÃO CONCLUÍDA"
+        );
+
+        console.log(
+            resultado
+        );
+
+        console.log(
+            "========================================"
+        );
+
+
+        return resultado;
+
+
+    } catch (error) {
+
+        console.error(
+            "ERRO NA SINCRONIZAÇÃO:",
+            error
+        );
+
+
+        return {
+
+            sucesso:
+                false,
+
+            etapa:
+                1,
+
+            exclusoes:
+                0,
+
+            mensagem:
+                "Erro durante a sincronização.",
+
+            erro:
+                error.message
+
+        };
+
+    }
+
+}
+
+
+/*
+================================================
+CONVERTER DATA FIREBASE PARA ISO
+================================================
+*/
+
+function converterDataParaISO(valor) {
+
+    if (!valor) {
+
+        return "";
+    }
+
+
+    /*
+     * Timestamp do Firestore
+     */
+
+    if (
+        typeof valor === "object" &&
+        valor !== null
+    ) {
+
+        if (
+            typeof valor.toDate ===
+            "function"
+        ) {
+
+            return valor
+                .toDate()
+                .toISOString();
+        }
+
+
+        if (
+            valor.seconds !== undefined
+        ) {
+
+            return new Date(
+                Number(valor.seconds) * 1000
+            ).toISOString();
+        }
+    }
+
+
+    /*
+     * Date
+     */
+
+    if (
+        valor instanceof Date
+    ) {
+
+        return valor.toISOString();
+    }
+
+
+    /*
+     * String
+     */
+
+    if (
+        typeof valor === "string"
+    ) {
+
+        const data =
+            new Date(valor);
+
+
+        if (
+            !isNaN(
+                data.getTime()
+            )
+        ) {
+
+            return data.toISOString();
+        }
+    }
+
+
+    /*
+     * Número
+     */
+
+    if (
+        typeof valor === "number"
+    ) {
+
+        const data =
+            new Date(valor);
+
+
+        if (
+            !isNaN(
+                data.getTime()
+            )
+        ) {
+
+            return data.toISOString();
+        }
+    }
+
+
+    return "";
+
+}
+
+
+/*
+================================================
+EDITAR REGISTRO
+================================================
+*/
+
+async function editarRegistro(
+    colecao,
+    id,
+    dados
+) {
+
+    try {
+
+        if (
+            !colecao ||
+            !id ||
+            !dados
+        ) {
+
+            throw new Error(
+                "Coleção, ID ou dados não informados."
+            );
+
+        }
+
+
+        const referencia =
+            doc(
+                db,
+                colecao,
+                id
+            );
+
+
+        await updateDoc(
+            referencia,
+            dados
+        );
+
+
+        console.log(
+            "Registro atualizado:",
+            colecao,
+            id
+        );
+
+
+        return true;
+
+
+    } catch (error) {
+
+        console.error(
+            "Erro ao editar registro:",
+            error
+        );
+
+
+        return false;
+
+    }
+
+}
+
+
+/*
+================================================
+EXCLUIR REGISTRO
+================================================
+
+IMPORTANTE:
+
+Esta função continua disponível porque
+já fazia parte do sistema.
+
+A ETAPA 1 NÃO chama esta função
+automaticamente.
+
+================================================
+*/
+
+async function excluirRegistro(
+    colecao,
+    id
+) {
+
+    try {
+
+        if (
+            !colecao ||
+            !id
+        ) {
+
+            throw new Error(
+                "Coleção ou ID não informado."
+            );
+
+        }
+
+
+        const referencia =
+            doc(
+                db,
+                colecao,
+                id
+            );
+
+
+        await deleteDoc(
+            referencia
+        );
+
+
+        console.log(
+            "Registro excluído:",
+            colecao,
+            id
+        );
+
+
+        return true;
+
+
+    } catch (error) {
+
+        console.error(
+            "Erro ao excluir registro:",
+            error
+        );
+
+
+        console.error(
+            "Código Firebase:",
+            error?.code ||
+            "sem código"
+        );
+
+
+        return false;
+
+    }
+
+}
+
+
 /*
 ================================================
 DISPONIBILIZAR FUNÇÕES GLOBAIS
@@ -1124,6 +1689,14 @@ window.buscarConfirmacoesGoogleSheets =
 
 
 /*
+ * NOVA FUNÇÃO DA ETAPA 1
+ */
+
+window.sincronizarFirebaseComSheets =
+    sincronizarFirebaseComSheets;
+
+
+/*
 ================================================
 LOG FINAL
 ================================================
@@ -1139,4 +1712,8 @@ console.log(
 
 console.log(
     "Comprovantes PIX não serão armazenados."
+);
+
+console.log(
+    "Sincronização Firebase → Sheets disponível."
 );
