@@ -3337,3 +3337,22 @@ DRESS CODE — CELULAR
     }
 
 }
+
+/* ==================================================
+   COMPARTILHE SUAS FOTOS — PÁGINA PRINCIPAL
+================================================== */
+.compartilhe-fotos-principal{padding:55px 18px;background:linear-gradient(135deg,#f8f1eb,#fffaf6)}
+.compartilhe-fotos-card{max-width:760px;margin:0 auto;padding:38px 25px;text-align:center;background:rgba(255,255,255,.96);border:1px solid rgba(145,99,70,.18);border-radius:26px;box-shadow:0 12px 35px rgba(76,49,35,.14)}
+.compartilhe-fotos-ornamento{color:#b98967;font-size:1.8rem;margin-bottom:8px}
+.compartilhe-fotos-titulo{margin:0 0 8px;color:#956b4e;letter-spacing:2px;font-size:.85rem;text-transform:uppercase}
+.compartilhe-fotos-card h2{margin:0 0 12px;color:#75604f;font-family:Georgia,serif;font-weight:normal;font-size:clamp(1.7rem,5vw,2.4rem)}
+.compartilhe-fotos-texto{max-width:600px;margin:0 auto 22px;color:#75604f;line-height:1.7}
+.botao-compartilhar-principal{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 28px;border-radius:28px;color:#fff;background:#916346;text-decoration:none;font-family:Georgia,serif;box-shadow:0 5px 18px rgba(76,49,35,.22)}
+.botao-compartilhar-principal:hover{background:#784e36;transform:translateY(-2px)}
+.qr-principal-area{margin:30px auto 0;padding-top:25px;border-top:1px solid rgba(145,99,70,.18)}
+.qr-principal-area h3{margin:0 0 6px;color:#956b4e;font-family:Georgia,serif;font-weight:normal}
+.qr-principal-area p{margin:0 0 15px;color:#75604f;font-size:.9rem}
+.qrcode-principal{width:200px;height:200px;margin:0 auto 15px;padding:10px;background:#fff;border-radius:14px;box-shadow:0 5px 18px rgba(76,49,35,.12);display:flex;align-items:center;justify-content:center}
+.qrcode-principal img,.qrcode-principal canvas{max-width:100%;max-height:100%}
+.codigo-cloudinary-principal{display:inline-block;padding:8px 13px;border-radius:10px;background:#f4ebe4;color:#784e36;font-family:Arial,sans-serif;font-size:.78rem}
+@media (max-width:600px){.compartilhe-fotos-principal{padding:38px 12px}.compartilhe-fotos-card{padding:30px 16px}}
