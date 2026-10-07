@@ -280,6 +280,25 @@
 <main>
 
 
+    <!-- ==================================================
+         COMPARTILHE SUAS FOTOS
+    ================================================== -->
+    <section class="compartilhe-fotos-principal" id="compartilhe-fotos">
+        <div class="compartilhe-fotos-card">
+            <div class="compartilhe-fotos-ornamento">✦</div>
+            <p class="compartilhe-fotos-titulo">Momentos do grande dia</p>
+            <h2>📸 Compartilhe suas fotos</h2>
+            <p class="compartilhe-fotos-texto">Registre os momentos especiais e envie suas fotos para fazer parte das nossas lembranças.</p>
+            <a href="fotos.html" class="botao-compartilhar-principal">📤 Compartilhar Fotos</a>
+            <div class="qr-principal-area">
+                <h3>📱 Acesse pelo celular</h3>
+                <p>Aponte a câmera do celular para o QR Code:</p>
+                <div id="qrcodePrincipal" class="qrcode-principal"></div>
+                <span class="codigo-cloudinary-principal">Código da equipe: <strong>jityftn1</strong></span>
+            </div>
+        </div>
+    </section>
+
     <section
         class="historia-casamento"
         id="inicio"
@@ -596,7 +615,22 @@
 </script>
 
 
-<script src="app.js?v=20261007-03"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+(function () {
+    const area = document.getElementById("qrcodePrincipal");
+    if (!area || typeof QRCode === "undefined") return;
+    new QRCode(area, {
+        text: new URL("fotos.html", window.location.href).href,
+        width: 180,
+        height: 180,
+        colorDark: "#5d4436",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+    });
+})();
+</script>
+<script src="app.js?v=20261007-05"></script>
 
 </body>
 
