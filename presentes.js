@@ -1015,7 +1015,7 @@ function criarCardPresente(
 
     const imagem =
         presente.imagem ||
-        "imagens/presente-padrao.jpg";
+        "presente-padrao.jpg";
 
 
     card.innerHTML = `
@@ -1111,7 +1111,7 @@ function criarCardPresente(
 
 
                     img.src =
-                        "imagens/presente-padrao.jpg";
+                        "presente-padrao.jpg";
 
                 }
 
@@ -1248,7 +1248,7 @@ function escolherPresente(
 
         imagem.src =
             presenteSelecionado.imagem ||
-            "imagens/presente-padrao.jpg";
+            "presente-padrao.jpg";
 
 
         imagem.alt =
