@@ -16,7 +16,7 @@ const presentes = [
     categoria: "SALA",
     nome: "Almofadas",
     valor: 0,
-    imagem: "imagens/presentes/Almofadas.jpg"
+    imagem: "Almofadas.jpg"
 },
 
 {
@@ -24,7 +24,7 @@ const presentes = [
     categoria: "SALA",
     nome: "Capachos",
     valor: 0,
-    imagem: "imagens/presentes/Capachos.jpg"
+    imagem: "Capachos.jpg"
 },
 
 {
@@ -32,7 +32,7 @@ const presentes = [
     categoria: "SALA",
     nome: "Porta chaves",
     valor: 0,
-    imagem: "imagens/presentes/Porta chaves.jpg"
+    imagem: "Porta chaves.jpg"
 },
 
 {
@@ -40,7 +40,7 @@ const presentes = [
     categoria: "SALA",
     nome: "Sofá Retrátil 3 lugares Preto",
     valor: 0,
-    imagem: "imagens/presentes/Sofá Retrátil 3 lugares Preto.jpg"
+    imagem: "Sofá Retrátil 3 lugares Preto.jpg"
 },
 
 {
@@ -48,7 +48,7 @@ const presentes = [
     categoria: "SALA",
     nome: "Capa para sofa retrátil 3m",
     valor: 0,
-    imagem: "imagens/presentes/Capa para sofa retrátil 3m.jpg"
+    imagem: "Capa para sofa retrátil 3m.jpg"
 },
 
 {
@@ -56,7 +56,7 @@ const presentes = [
     categoria: "SALA",
     nome: "Tapete",
     valor: 0,
-    imagem: "imagens/presentes/Tapete.jpg"
+    imagem: "Tapete.jpg"
 },
 
 {
@@ -64,7 +64,7 @@ const presentes = [
     categoria: "SALA",
     nome: "Cortina com blackout",
     valor: 0,
-    imagem: "imagens/presentes/Cortina com blackout.jpg"
+    imagem: "Cortina com blackout.jpg"
 },
 
 {
@@ -72,7 +72,7 @@ const presentes = [
     categoria: "SALA",
     nome: "Poltrona",
     valor: 0,
-    imagem: "imagens/presentes/Poltrona.jpg"
+    imagem: "Poltrona.jpg"
 },
 
 {
@@ -80,7 +80,7 @@ const presentes = [
     categoria: "SALA DE JANTAR",
     nome: "Mesa com 4 ou 6 cadeiras",
     valor: 0,
-    imagem: "imagens/presentes/Mesa com 4 ou 6 cadeiras.jpg"
+    imagem: "Mesa com 4 ou 6 cadeiras.jpg"
 },
 
 {
@@ -88,7 +88,7 @@ const presentes = [
     categoria: "SALA DE JANTAR",
     nome: "Conjunto de pratos rasos e fundos",
     valor: 0,
-    imagem: "imagens/presentes/Conjunto de pratos rasos e fundos.jpg"
+    imagem: "Conjunto de pratos rasos e fundos.jpg"
 },
 
 {
@@ -96,7 +96,7 @@ const presentes = [
     categoria: "SALA DE JANTAR",
     nome: "Conjunto prato e copo de vidro",
     valor: 0,
-    imagem: "imagens/presentes/Conjunto prato e copo de vidro.jpg"
+    imagem: "Conjunto prato e copo de vidro.jpg"
 },
 
 {
@@ -104,7 +104,7 @@ const presentes = [
     categoria: "SALA DE JANTAR",
     nome: "Kit mesa posta (boleira, porta frios e mantegueira)",
     valor: 0,
-    imagem: "imagens/presentes/Kit mesa posta (boleira, porta frios e mantegueira).jpg"
+    imagem: "Kit mesa posta (boleira, porta frios e mantegueira).jpg"
 },
 
 {
@@ -112,7 +112,7 @@ const presentes = [
     categoria: "SALA DE JANTAR",
     nome: "Taças de vinho",
     valor: 0,
-    imagem: "imagens/presentes/Taças de vinho.jpg"
+    imagem: "Taças de vinho.jpg"
 },
 
 {
@@ -120,7 +120,7 @@ const presentes = [
     categoria: "SALA DE JANTAR",
     nome: "Descanso de panela",
     valor: 0,
-    imagem: "imagens/presentes/Descanso de panela.jpg"
+    imagem: "Descanso de panela.jpg"
 },
 
 {
@@ -128,7 +128,7 @@ const presentes = [
     categoria: "SALA DE JANTAR",
     nome: "Toalha de mesa para ocasiões especiais",
     valor: 0,
-    imagem: "imagens/presentes/Toalha de mesa para ocasiões especiais.jpg"
+    imagem: "Toalha de mesa para ocasiões especiais.jpg"
 },
 
 {
@@ -136,7 +136,7 @@ const presentes = [
     categoria: "SALA DE JANTAR",
     nome: "Toalhas de mesa para uso diário",
     valor: 0,
-    imagem: "imagens/presentes/Toalhas de mesa para uso diário.jpg"
+    imagem: "Toalhas de mesa para uso diário.jpg"
 },
 
 {
@@ -144,7 +144,7 @@ const presentes = [
     categoria: "SALA DE JANTAR",
     nome: "Jogo de sousplat para 8 pessoas",
     valor: 0,
-    imagem: "imagens/presentes/Jogo de sousplat para 8 pessoas.jpg"
+    imagem: "Jogo de sousplat para 8 pessoas.jpg"
 },
 
 {
@@ -152,7 +152,7 @@ const presentes = [
     categoria: "SALA DE JANTAR",
     nome: "Jogo de sousplat para 2 pessoas",
     valor: 0,
-    imagem: "imagens/presentes/Jogos de sousplat para 2 pessoas.jpg"
+    imagem: "Jogos de sousplat para 2 pessoas.jpg"
 },
 
 {
@@ -160,7 +160,7 @@ const presentes = [
     categoria: "SALA DE JANTAR",
     nome: "Sanduicheira",
     valor: 0,
-    imagem: "imagens/presentes/Sanduicheira.jpg"
+    imagem: "Sanduicheira.jpg"
 },
 
 {
@@ -168,7 +168,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Geladeira inverter frost free",
     valor: 0,
-    imagem: "imagens/presentes/Geladeira inverter frost free.jpg"
+    imagem: "Geladeira inverter frost free.jpg"
 },
 
 {
@@ -176,7 +176,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Garrafa de água",
     valor: 0,
-    imagem: "imagens/presentes/Garrafa de água.jpg"
+    imagem: "Garrafa de água.jpg"
 },
 
 {
@@ -184,7 +184,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Assadeiras Air fryer forno",
     valor: 0,
-    imagem: "imagens/presentes/Assadeiras Air fryer forno.jpg"
+    imagem: "Assadeiras Air fryer forno.jpg"
 },
 
 {
@@ -192,7 +192,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Porta sabão, esponja",
     valor: 0,
-    imagem: "imagens/presentes/Porta sabão, esponja.jpg"
+    imagem: "Porta sabão, esponja.jpg"
 },
 
 {
@@ -200,7 +200,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Freezer vertical",
     valor: 0,
-    imagem: "imagens/presentes/Freezer vertical.jpg"
+    imagem: "Freezer vertical.jpg"
 },
 
 {
@@ -208,7 +208,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Fogão 5 bocas acendimento automático",
     valor: 0,
-    imagem: "imagens/presentes/Fogão 5 bocas acendimento automático.jpg"
+    imagem: "Fogão 5 bocas acendimento automático.jpg"
 },
 
 {
@@ -216,7 +216,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Armário com balcão",
     valor: 0,
-    imagem: "imagens/presentes/Armário com balcão.jpg"
+    imagem: "Armário com balcão.jpg"
 },
 
 {
@@ -224,7 +224,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Abridor de latas",
     valor: 0,
-    imagem: "imagens/presentes/Abridor de latas.jpg"
+    imagem: "Abridor de latas.jpg"
 },
 
 {
@@ -232,7 +232,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Cafeteira",
     valor: 0,
-    imagem: "imagens/presentes/Cafeteira.jpg"
+    imagem: "Cafeteira.jpg"
 },
 
 {
@@ -240,7 +240,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Assadeiras para bolos, pizza e tortas",
     valor: 0,
-    imagem: "imagens/presentes/Assadeiras para bolos, pizza e tortas.jpg"
+    imagem: "Assadeiras para bolos, pizza e tortas.jpg"
 },
 
 {
@@ -248,7 +248,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Conjunto refratário com tampa",
     valor: 0,
-    imagem: "imagens/presentes/Conjunto refratário com tampa.jpg"
+    imagem: "Conjunto refratário com tampa.jpg"
 },
 
 {
@@ -256,7 +256,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Boleiras",
     valor: 0,
-    imagem: "imagens/presentes/Boleira.jpg"
+    imagem: "Boleira.jpg"
 },
 
 {
@@ -264,7 +264,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Conjunto de potes para grãos (arroz, feijão, açúcar...)",
     valor: 0,
-    imagem: "imagens/presentes/Conjunto de potes para grãos (arroz, feijão, açúcar...).jpg"
+    imagem: "Conjunto de potes para grãos (arroz, feijão, açúcar...).jpg"
 },
 
 {
@@ -272,7 +272,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Cestas de lixo (cozinha)",
     valor: 0,
-    imagem: "imagens/presentes/Cestas de lixo (cozinha).jpg"
+    imagem: "Cestas de lixo (cozinha).jpg"
 },
 
 {
@@ -280,7 +280,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Coador",
     valor: 0,
-    imagem: "imagens/presentes/Coador.jpg"
+    imagem: "Coador.jpg"
 },
 
 {
@@ -288,7 +288,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Caçarola e caldeirão de alumínio",
     valor: 0,
-    imagem: "imagens/presentes/Caçarola e caldeirão de alumínio.jpg"
+    imagem: "Caçarola e caldeirão de alumínio.jpg"
 },
 
 {
@@ -296,7 +296,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Utensílios de cozinha (concha, escumadeira...)",
     valor: 0,
-    imagem: "imagens/presentes/Utensílios de cozinha (concha, escumadeira...).jpg"
+    imagem: "Utensílios de cozinha (concha, escumadeira...).jpg"
 },
 
 {
@@ -304,7 +304,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Conjunto para sobremesa",
     valor: 0,
-    imagem: "imagens/presentes/Conjunto para sobremesa.jpg"
+    imagem: "Conjunto para sobremesa.jpg"
 },
 
 {
@@ -312,7 +312,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Copo medidor",
     valor: 0,
-    imagem: "imagens/presentes/Copo medidor.jpg"
+    imagem: "Copo medidor.jpg"
 },
 
 {
@@ -320,7 +320,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Coqueteleira",
     valor: 0,
-    imagem: "imagens/presentes/Coqueteleira.jpg"
+    imagem: "Coqueteleira.jpg"
 },
 
 {
@@ -328,7 +328,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Cortador de pizza",
     valor: 0,
-    imagem: "imagens/presentes/Cortador de pizza.jpg"
+    imagem: "Cortador de pizza.jpg"
 },
 
 {
@@ -336,7 +336,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Escorredor de arroz e massas",
     valor: 0,
-    imagem: "imagens/presentes/Escorredor de arroz e massas.jpg"
+    imagem: "Escorredor de arroz e massas.jpg"
 },
 
 {
@@ -344,7 +344,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Escorredor de louça",
     valor: 0,
-    imagem: "imagens/presentes/Escorredor de louça.jpg"
+    imagem: "Escorredor de louça.jpg"
 },
 
 {
@@ -352,7 +352,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Talheres (facas, colher, garfo)",
     valor: 0,
-    imagem: "imagens/presentes/Talheres (facas, colher, garfo).jpg"
+    imagem: "Talheres (facas, colher, garfo).jpg"
 },
 
 {
@@ -360,7 +360,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Fruteira",
     valor: 0,
-    imagem: "imagens/presentes/Fruteira.jpg"
+    imagem: "Fruteira.jpg"
 },
 
 {
@@ -368,7 +368,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Garrafa de café",
     valor: 0,
-    imagem: "imagens/presentes/Garrafa de café.jpg"
+    imagem: "Garrafa de café.jpg"
 },
 
 {
@@ -376,7 +376,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Jarras para água e suco",
     valor: 0,
-    imagem: "imagens/presentes/Jarras para água e suco.jpg"
+    imagem: "Jarras para água e suco.jpg"
 },
 
 {
@@ -384,7 +384,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Jogo americano",
     valor: 0,
-    imagem: "imagens/presentes/Jogo americano.jpg"
+    imagem: "Jogo americano.jpg"
 },
 
 {
@@ -392,7 +392,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Jogo de copos",
     valor: 0,
-    imagem: "imagens/presentes/Jogo de copos.jpg"
+    imagem: "Jogo de copos.jpg"
 },
 
 {
@@ -400,7 +400,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Jogo de panelas",
     valor: 0,
-    imagem: "imagens/presentes/Jogo de panelas.jpg"
+    imagem: "Jogo de panelas.jpg"
 },
 
 {
@@ -408,7 +408,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Jogo de prato de vidro",
     valor: 0,
-    imagem: "imagens/presentes/Jogo de prato de vidro.jpg"
+    imagem: "Jogo de prato de vidro.jpg"
 },
 
 {
@@ -416,7 +416,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Ralador",
     valor: 0,
-    imagem: "imagens/presentes/Ralador.jpg"
+    imagem: "Ralador.jpg"
 },
 
 {
@@ -424,7 +424,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Rodo de pia",
     valor: 0,
-    imagem: "imagens/presentes/Rodo para pia.jpg"
+    imagem: "Rodo para pia.jpg"
 },
 
 {
@@ -432,7 +432,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Suporte de papel toalha",
     valor: 0,
-    imagem: "imagens/presentes/Suporte de papel toalha.jpg"
+    imagem: "Suporte de papel toalha.jpg"
 },
 
 {
@@ -440,7 +440,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Kit faca e espátula",
     valor: 0,
-    imagem: "imagens/presentes/Kit faca e espátula.jpg"
+    imagem: "Kit faca e espátula.jpg"
 },
 
 {
@@ -448,7 +448,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Kit peneiras",
     valor: 0,
-    imagem: "imagens/presentes/Kit peneiras.jpg"
+    imagem: "Kit peneiras.jpg"
 },
 
 {
@@ -456,7 +456,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Xícaras de café",
     valor: 0,
-    imagem: "imagens/presentes/Xícaras de café.jpg"
+    imagem: "Xícaras de café.jpg"
 },
 
 {
@@ -464,7 +464,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "1 par de pegador de panela",
     valor: 0,
-    imagem: "imagens/presentes/Par de pegador de panela.jpg"
+    imagem: "Par de pegador de panela.jpg"
 },
 
 {
@@ -472,7 +472,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Liquidificador",
     valor: 0,
-    imagem: "imagens/presentes/Liquidificador.jpg"
+    imagem: "Liquidificador.jpg"
 },
 
 {
@@ -480,7 +480,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Espremedor de futas",
     valor: 0,
-    imagem: "imagens/presentes/Espremedor de frutas.jpg"
+    imagem: "Espremedor de frutas.jpg"
 },
 
 {
@@ -488,7 +488,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Mixer",
     valor: 0,
-    imagem: "imagens/presentes/Mixer.jpg"
+    imagem: "Mixer.jpg"
 },
 
 {
@@ -496,7 +496,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Jogo tapete cozinha",
     valor: 0,
-    imagem: "imagens/presentes/Jogo tapete cozinha.jpg"
+    imagem: "Jogo tapete cozinha.jpg"
 },
 
 {
@@ -504,7 +504,7 @@ const presentes = [
     categoria: "COZINHA",
     nome: "Batedeira planetária",
     valor: 0,
-    imagem: "imagens/presentes/Batedeira planetária.jpg"
+    imagem: "Batedeira planetária.jpg"
 },
 
 {
@@ -512,7 +512,7 @@ const presentes = [
     categoria: "QUARTO",
     nome: "Cama box baú com colchão Queen_King size",
     valor: 0,
-    imagem: "imagens/presentes/Cama box baú com colchão Queen_King size.jpg"
+    imagem: "Cama box baú com colchão Queen_King size.jpg"
 },
 
 {
@@ -520,7 +520,7 @@ const presentes = [
     categoria: "QUARTO",
     nome: "Guarda roupa casal",
     valor: 0,
-    imagem: "imagens/presentes/Guarda roupa casal.jpg"
+    imagem: "Guarda roupa casal.jpg"
 },
 
 {
@@ -528,7 +528,7 @@ const presentes = [
     categoria: "QUARTO",
     nome: "Jogo de cama queen_king size casal",
     valor: 0,
-    imagem: "imagens/presentes/Jogo de cama queen_king size casal.jpg"
+    imagem: "Jogo de cama queen_king size casal.jpg"
 },
 
 {
@@ -536,7 +536,7 @@ const presentes = [
     categoria: "QUARTO",
     nome: "Jogo de cama solteiro_menina",
     valor: 0,
-    imagem: "imagens/presentes/Jogo de cama solteiro_menina.jpg"
+    imagem: "Jogo de cama solteiro_menina.jpg"
 },
 
 {
@@ -544,7 +544,7 @@ const presentes = [
     categoria: "QUARTO",
     nome: "Jogo de cama solteiro_menino",
     valor: 0,
-    imagem: "imagens/presentes/Jogo de cama solteiro_menino.jpg"
+    imagem: "Jogo de cama solteiro_menino.jpg"
 },
 
 {
@@ -552,7 +552,7 @@ const presentes = [
     categoria: "QUARTO",
     nome: "Cobredrom solteiro masculino",
     valor: 0,
-    imagem: "imagens/presentes/Cobredrom solteiro masculino.jpg"
+    imagem: "Cobredrom solteiro masculino.jpg"
 },
 
 {
@@ -560,7 +560,7 @@ const presentes = [
     categoria: "QUARTO",
     nome: "Cobredrom solteiro feminino",
     valor: 0,
-    imagem: "imagens/presentes/Cobredrom solteiro feminino.jpg"
+    imagem: "Cobredrom solteiro feminino.jpg"
 },
 
 {
@@ -568,7 +568,7 @@ const presentes = [
     categoria: "QUARTO",
     nome: "Cobredrom casal",
     valor: 0,
-    imagem: "imagens/presentes/Cobredrom casal.jpg"
+    imagem: "Cobredrom casal.jpg"
 },
 
 {
@@ -576,7 +576,7 @@ const presentes = [
     categoria: "QUARTO",
     nome: "Cômoda",
     valor: 0,
-    imagem: "imagens/presentes/Cômoda.jpg"
+    imagem: "Cômoda.jpg"
 },
 
 {
@@ -584,7 +584,7 @@ const presentes = [
     categoria: "QUARTO",
     nome: "Sapateira",
     valor: 0,
-    imagem: "imagens/presentes/Sapateira.jpg"
+    imagem: "Sapateira.jpg"
 },
 
 {
@@ -592,7 +592,7 @@ const presentes = [
     categoria: "QUARTO",
     nome: "Criado mudo",
     valor: 0,
-    imagem: "imagens/presentes/Criado mudo.jpg"
+    imagem: "Criado mudo.jpg"
 },
 
 {
@@ -600,7 +600,7 @@ const presentes = [
     categoria: "QUARTO",
     nome: "Cortina com blackout quarto",
     valor: 0,
-    imagem: "imagens/presentes/Cortina com blackout quarto.jpg"
+    imagem: "Cortina com blackout quarto.jpg"
 },
 
 {
@@ -608,7 +608,7 @@ const presentes = [
     categoria: "QUARTO",
     nome: "Cabeceira cama box",
     valor: 0,
-    imagem: "imagens/presentes/Cabeceira cama box.jpg"
+    imagem: "Cabeceira cama box.jpg"
 },
 
 {
@@ -616,7 +616,7 @@ const presentes = [
     categoria: "QUARTO",
     nome: "Ar condicionado split",
     valor: 0,
-    imagem: "imagens/presentes/Ar condicionado split.jpg"
+    imagem: "Ar condicionado split.jpg"
 },
 
 {
@@ -624,7 +624,7 @@ const presentes = [
     categoria: "QUARTO",
     nome: "Puff baú",
     valor: 0,
-    imagem: "imagens/presentes/Puff baú.jpg"
+    imagem: "Puff baú.jpg"
 },
 
 {
@@ -632,7 +632,7 @@ const presentes = [
     categoria: "LAVANDERIA",
     nome: "Máquina de lavar 12 a 16kg",
     valor: 0,
-    imagem: "imagens/presentes/Máquina de lavar 12 a 16kg.jpg"
+    imagem: "Máquina de lavar 12 a 16kg.jpg"
 },
 
 {
@@ -640,7 +640,7 @@ const presentes = [
     categoria: "LAVANDERIA",
     nome: "Escada de alumínio",
     valor: 0,
-    imagem: "imagens/presentes/Escada de alumínio.jpg"
+    imagem: "Escada de alumínio.jpg"
 },
 
 {
@@ -648,7 +648,7 @@ const presentes = [
     categoria: "LAVANDERIA",
     nome: "Balde",
     valor: 0,
-    imagem: "imagens/presentes/Balde.jpg"
+    imagem: "Balde.jpg"
 },
 
 {
@@ -656,7 +656,7 @@ const presentes = [
     categoria: "LAVANDERIA",
     nome: "Porta toalhas banho",
     valor: 0,
-    imagem: "imagens/presentes/Porta toalhas banho.jpg"
+    imagem: "Porta toalhas banho.jpg"
 },
 
 {
@@ -664,7 +664,7 @@ const presentes = [
     categoria: "LAVANDERIA",
     nome: "Cestas de lixo (banheiro)",
     valor: 0,
-    imagem: "imagens/presentes/Cestas de lixo (banheiro).jpg"
+    imagem: "Cestas de lixo (banheiro).jpg"
 },
 
 {
@@ -672,7 +672,7 @@ const presentes = [
     categoria: "LAVANDERIA",
     nome: "Cesto de roupa",
     valor: 0,
-    imagem: "imagens/presentes/Cesto de roupa.jpg"
+    imagem: "Cesto de roupa.jpg"
 },
 
 {
@@ -680,7 +680,7 @@ const presentes = [
     categoria: "LAVANDERIA",
     nome: "Ferro de passar roupa",
     valor: 0,
-    imagem: "imagens/presentes/Ferro de passar roupa.jpg"
+    imagem: "Ferro de passar roupa.jpg"
 },
 
 {
@@ -688,7 +688,7 @@ const presentes = [
     categoria: "LAVANDERIA",
     nome: "Pá de lixo",
     valor: 0,
-    imagem: "imagens/presentes/Pá de lixo.jpg"
+    imagem: "Pá de lixo.jpg"
 },
 
 {
@@ -696,7 +696,7 @@ const presentes = [
     categoria: "LAVANDERIA",
     nome: "Panos de chão",
     valor: 0,
-    imagem: "imagens/presentes/Panos de chão.jpg"
+    imagem: "Panos de chão.jpg"
 },
 
 {
@@ -704,7 +704,7 @@ const presentes = [
     categoria: "LAVANDERIA",
     nome: "Pregadores de roupa",
     valor: 0,
-    imagem: "imagens/presentes/Pregadores de roupa.jpg"
+    imagem: "Pregadores de roupa.jpg"
 },
 
 {
@@ -712,7 +712,7 @@ const presentes = [
     categoria: "LAVANDERIA",
     nome: "Tapetes de banheiro",
     valor: 0,
-    imagem: "imagens/presentes/Tapetes de banheiro.jpg"
+    imagem: "Tapetes de banheiro.jpg"
 },
 
 {
@@ -720,7 +720,7 @@ const presentes = [
     categoria: "LAVANDERIA",
     nome: "Rodo",
     valor: 0,
-    imagem: "imagens/presentes/Rodo.jpg"
+    imagem: "Rodo.jpg"
 },
 
 {
@@ -728,7 +728,7 @@ const presentes = [
     categoria: "LAVANDERIA",
     nome: "Saboneteira",
     valor: 0,
-    imagem: "imagens/presentes/Saboneteira.jpg"
+    imagem: "Saboneteira.jpg"
 },
 
 {
@@ -736,7 +736,7 @@ const presentes = [
     categoria: "LAVANDERIA",
     nome: "Varal de pé",
     valor: 0,
-    imagem: "imagens/presentes/Varal de pé.jpg"
+    imagem: "Varal de pé.jpg"
 },
 
 {
@@ -744,7 +744,7 @@ const presentes = [
     categoria: "LAVANDERIA",
     nome: "Varal suspenso",
     valor: 0,
-    imagem: "imagens/presentes/Varal suspenso.jpg"
+    imagem: "Varal suspenso.jpg"
 },
 
 {
@@ -752,7 +752,7 @@ const presentes = [
     categoria: "LAVANDERIA",
     nome: "Vassoura",
     valor: 0,
-    imagem: "imagens/presentes/Vassoura.jpg"
+    imagem: "Vassoura.jpg"
 },
 
 {
@@ -760,7 +760,7 @@ const presentes = [
     categoria: "LAVANDERIA",
     nome: "Tapetes antiderrapante para banheiro",
     valor: 0,
-    imagem: "imagens/presentes/Tapetes antiderrapante para banheiro.jpg"
+    imagem: "Tapetes antiderrapante para banheiro.jpg"
 },
 
 {
@@ -768,7 +768,7 @@ const presentes = [
     categoria: "LAVANDERIA",
     nome: "Mopp",
     valor: 0,
-    imagem: "imagens/presentes/Mopp.jpg"
+    imagem: "Mopp.jpg"
 },
 
 {
@@ -776,7 +776,7 @@ const presentes = [
     categoria: "ESCRITÓRIO",
     nome: "Mesa home ofice",
     valor: 0,
-    imagem: "imagens/presentes/Mesa home office.jpg"
+    imagem: "Mesa home office.jpg"
 },
 
 {
@@ -784,7 +784,7 @@ const presentes = [
     categoria: "ESCRITÓRIO",
     nome: "Cadeira",
     valor: 0,
-    imagem: "imagens/presentes/Cadeira.jpg"
+    imagem: "Cadeira.jpg"
 },
 
 {
@@ -792,7 +792,7 @@ const presentes = [
     categoria: "ESCRITÓRIO",
     nome: "Impressora",
     valor: 0,
-    imagem: "imagens/presentes/Impressora.jpg"
+    imagem: "Impressora.jpg"
 },
 
 {
@@ -800,7 +800,7 @@ const presentes = [
     categoria: "ESCRITÓRIO",
     nome: "Cestas de lixo (escritório)",
     valor: 0,
-    imagem: "imagens/presentes/Cestas de lixo (escritório).jpg"
+    imagem: "Cestas de lixo (escritório).jpg"
 }
 
 ];
