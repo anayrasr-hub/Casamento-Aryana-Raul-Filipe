@@ -649,6 +649,18 @@ function normalizarWhatsApp(numero) {
 
 /*
 ==================================================
+GERAR CÓDIGO DO CONVITE
+==================================================
+*/
+function gerarCodigo() {
+    const agora = Date.now().toString(36).toUpperCase();
+    const aleatorio = Math.random().toString(36).substring(2, 7).toUpperCase();
+    return "ARF-" + agora.slice(-5) + aleatorio;
+}
+
+
+/*
+==================================================
 SALVAR GOOGLE SHEETS
 ==================================================
 */
@@ -742,24 +754,36 @@ async function salvarNoGoogleSheets(
         resultado.resultados &&
         resultado.resultados.length
     ) {
-
-        return resultado.resultados[0];
-
+        return {
+            ...resultado.resultados[0],
+            codigo: resultado.resultados[0].codigo || dados.codigo
+        };
     }
-
 
     if (
         Array.isArray(resultado) &&
         resultado.length
     ) {
-
-        return resultado[0];
-
+        return {
+            ...resultado[0],
+            codigo: resultado[0].codigo || dados.codigo
+        };
     }
 
+    /*
+     * O Apps Script atual retorna sucesso=true e quantidade,
+     * mas não devolve o código criado. Como o código já foi
+     * enviado dentro de dados.codigo, podemos confirmá-lo aqui.
+     */
+    if (resultado.sucesso === true && dados.codigo) {
+        return {
+            ...resultado,
+            codigo: dados.codigo
+        };
+    }
 
     throw new Error(
-        "Google Sheets não retornou código."
+        "Google Sheets não confirmou o salvamento."
     );
 
 }
@@ -1032,6 +1056,19 @@ async function enviarConfirmacao(
                 convidado
             );
 
+
+            /*
+            GERA O CÓDIGO ANTES DO ENVIO
+            Assim o mesmo código é gravado no
+            Google Sheets e no Firebase.
+            */
+
+            convidado.codigo = gerarCodigo();
+
+            console.log(
+                "Código gerado:",
+                convidado.codigo
+            );
 
             /*
             GOOGLE
